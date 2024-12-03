@@ -1,0 +1,60 @@
+End Points:
+*USER*
+- Post: /user (Create user)(sem jwt)
+- Get: /user (Get all users)
+- Get: /user/{id} (Get user by id, and abilities)
+- Delete: /user/{id} (Delete user by id)
+- Update: /user/{id} (Update user by id)
+- Post: /user/ability/{idAbility} (Adiciona uma habilidade nova ao perfil do usuário)
+- Delete: /user/ability/{idAbility} (Delete uma habilidade específica do perfil do usuário)
+
+*AUTH*
+- Post: /auth (Login)(sem jwt)
+- Get: /auth/(Get admin)
+
+*ABILITY*
+- Post: /ability(Post ability's user)
+- Get: /ability (Retorna todas as habilidades possíveis)
+- Delete: /ability/{idAbility} (Delete one ability)
+
+*CAREER*
+- Post: /career (Post new focous)
+- Delete: /career (Retorna todas os focos da carreira)
+- Get: /career (Retorna todos os focos possíveis)
+
+*FORUM*
+- Post: /forum (Create new forum)
+- Get: /forum (Get all forum)
+- Get: /forum/{id} (Get one forum e todas as questões que tem nele)
+- Delete: /forum/{id} (Delete forum)
+
+*QUESTION*
+- Post: /question (Create new question)
+- Get: /question/{id} (Pega uma questão específica e todas as respostas dela, fazer a verificação se tem uma reação na resposta)
+- Delete: /question/{id} (Delete question)
+
+*ANSWER*
+- Post: /answer (Create new answer)
+- Delete: /answer (Delete answer)
+- Post: /answer/up/{idAnswer} (Coloca uma nova reação positiva na resposta) 
+- Post: /answer/down{idAnswer} (Coloca uma nova reação negativa na resposta)
+
+*NOTIFICATION*
+- Get: /notification (Pega as notificações da pessoa)
+
+*PROJECT*
+- Post: /project (Cria um novo projeto, com os usuários dentro dele e o nome do projeto, automaticamente cria um chat desse projeto)
+- Post: /project/user (Adiciona um novo usuário no projeto, caso a pessoa tenha esquecido de adicionar antes)
+- Delete: /project/user (Tirar um usuário do projeto)
+- Get: /project/{id} (Vem o grupo inteiro, só as informações do projeto)
+
+- Post: /project/message (Mandar uma msg no projeto)
+- Get: /project/{id}/message (Pegar todas as msg daquele projeto)
+
+- Post: /project/feedback (Mandar um feedback pra um participante do projeto, tem q ter o id do projeto, o id da pessoa que ta enviando, o id da pessoa que ta recebendo, o feedback em si e se é privado ou público)
+- Get: /project/{idProject}/feedback/{idUser} (Pega todos os feedbacks que um usuário recebeu em um projeto)
+- Get: /project/{idProject}/feedback (Pega todos os feedbacks daquele projeto)
+
+*FEEDBACK*
+- Post: feedback (Mandar um feedback pra um participante, tem q ter o id da pessoa que ta enviando, o id da pessoa que ta recebendo, o feedback em si e se é privado ou público)
+- Get: /feedback/{idUser} (Pega todos os feedbacks que um usuário)
