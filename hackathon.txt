@@ -66,3 +66,7 @@ End Points:
 - Post: /topic
 - Get: /topic (pega todos os topicos, com paginação para os topicos)
 - Get: /topic/{id} (pega um topico por id, com paginação para as mensagens)
+- Delete: /topic/{id} (deleta topico por id)
+
+- Post: /topic/message 
+- Delete: /topic/message/{id}
