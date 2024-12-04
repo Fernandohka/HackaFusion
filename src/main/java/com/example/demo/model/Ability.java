@@ -1,12 +1,14 @@
 package com.example.demo.model;
 
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Ability {
@@ -20,16 +22,16 @@ public class Ability {
     @Column
     private String name;
 
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name="userId")
-    private User user;
-
-    public User getUser() {
-        return user;
+    private Set<User> users;
+    
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     public Long getId() {
@@ -56,5 +58,5 @@ public class Ability {
         this.name = name;
     }
 
-    
+
 }

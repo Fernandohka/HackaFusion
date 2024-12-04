@@ -1,6 +1,5 @@
 package com.example.demo.model;
 
-import java.security.Permission;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -43,10 +42,13 @@ public class User {
     @Column
     private String description;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany()
     private Set<Ability> abilitys;
     
-    @OneToMany(mappedBy = "user")
+    @OneToMany()
     private Set<Carrer> carrers;
+
+    @OneToMany()
+    private Set<MessageTopic> messagesTopic;
 
 }

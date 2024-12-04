@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-import java.util.Set;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,26 +8,26 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Carrer {
+public class MessageTopic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
-    private String name;
+    private LocalDateTime a; 
 
-    @OneToMany
-    @JoinColumn(name="userId")
-    private Set<User> users;
+    @Column
+    private String description;
     
-    public Set<User> getUsers() {
-        return users;
-    }
+    @ManyToOne
+    @JoinColumn(name="userId")
+    private User user; 
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
+    @ManyToOne
+    @JoinColumn(name = "topicId")
+    private Topic topic; 
+
 }
