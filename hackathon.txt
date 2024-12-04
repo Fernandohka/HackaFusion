@@ -65,8 +65,16 @@ End Points:
 *TOPIC*
 - Post: /topic
 - Get: /topic (pega todos os topicos, com paginação para os topicos)
-- Get: /topic/{id} (pega um topico por id, com paginação para as mensagens)
+- Get: /topic/{id} (pega um topico por id)
 - Delete: /topic/{id} (deleta topico por id)
 
 - Post: /topic/message 
 - Delete: /topic/message/{id}
+
+*CHAT*
+- Post: /chat
+- Get: /chat 
+
+- Post: /chat/message
+- Get: /chat/{id}/message
+- Delete: /chat/message/{id}
