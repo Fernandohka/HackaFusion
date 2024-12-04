@@ -42,7 +42,6 @@ public class Project {
     private Category category;
 
     @ManyToMany
-    @JoinColumn(name="userId")
     private Set<User> users; 
 
     @OneToMany(mappedBy = "project")
