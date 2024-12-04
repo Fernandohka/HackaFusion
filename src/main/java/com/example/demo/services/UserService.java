@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import java.util.List;
 import com.example.demo.dto.ResponseDto;
+import com.example.demo.model.User;
 
 public interface UserService {
     public User create(String nome, String edv, String email, String password, String numero, Boolean admin, Boolean ets, String image, String description);
