@@ -63,4 +63,10 @@ public class User {
     @OneToMany()
     private Set<Chat> chats;
 
+    @OneToMany()
+    private Set<Project> projects;
+
+    @OneToMany()
+    private Set<FeedBackProject> feedBackProjects;
+
 }
