@@ -1,5 +1,6 @@
 package com.example.demo.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import com.example.demo.model.Forum;
 import com.example.demo.repositories.ForumRepository;
 import com.example.demo.services.ForumService;
 
-public class ForumImplementation implements ForumService {
+public class ForumImpl implements ForumService {
 
     @Autowired
     ForumRepository forumRepo;
@@ -28,19 +29,39 @@ public class ForumImplementation implements ForumService {
         forum.setDescription(description);
         forumRepo.save(forum);
 
-        return new ForumDto(forum.getName(), forum.getDescription());
+        return new ForumDto(forum.getId(), forum.getName(), forum.getDescription());
     }
 
     @Override
     public List<ForumDto> getAll(Integer page, Integer size) {
-        return null;
+        if(page == null || size == null || page < 1 || size < 1)
+            return null;
+
+        var listForum = forumRepo.findAll();
+
+        Integer start = 0;
+        Integer end = listForum.size();
+
+        if(size > 0 || page > 0){
+            start = size*page;
+            if(start >= listForum.size())
+                return null;
+            end = start+size<listForum.size()?start+size:listForum.size();
+        }
+
+        var newList = new ArrayList<ForumDto>();
+
+        for(int i=start;i<end;i++)
+            newList.add(new ForumDto(listForum.get(i).getId(), listForum.get(i).getName(), listForum.get(i).getDescription()));
+
+        return newList;
     }
 
     @Override
     public ForumDto getById(Long idForum) {
         try {
             var forum = forumRepo.findById(idForum).get();
-            return new ForumDto(forum.getName(), forum.getDescription());
+            return new ForumDto(forum.getId(), forum.getName(), forum.getDescription());
         } catch (Exception e) {
             return null;
         }
