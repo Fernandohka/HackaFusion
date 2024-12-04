@@ -7,7 +7,7 @@ import com.example.demo.dto.ResponseDto;
 import com.example.demo.model.Project;
 
 public interface ProjectService {
-    public Project post(String name, String description, Boolean status, LocalDateTime startDate, LocalDateTime endDate, String category);
+    public Project create(String name, String description, Boolean status, LocalDateTime startDate, LocalDateTime endDate, String category);
     public ResponseDto addUser(Long idProject, Long idUser);
     public ResponseDto deleteUser(Long idProject, Long idUser);
     public List<Project> getAll(Integer page, Integer size);

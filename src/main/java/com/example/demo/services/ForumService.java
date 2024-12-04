@@ -6,7 +6,7 @@ import com.example.demo.dto.ResponseDto;
 import com.example.demo.model.Forum;
 
 public interface ForumService {
-    public Forum post(String name, String description);
+    public Forum create(String name, String description);
     public List<Forum> getAll(Integer page, Integer size);
     public Forum getById(Long idForum);
     public ResponseDto delete(Long idForum);
