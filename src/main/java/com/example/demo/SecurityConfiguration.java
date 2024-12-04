@@ -10,7 +10,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.example.demo.dto.Token;
 import com.example.demo.filters.JWTAuthenticationFilter;
-import com.example.demo.services.JWTService;
+import com.example.demo.services.JwtService;
 
 @Configuration
 @EnableWebSecurity
@@ -18,7 +18,7 @@ public class SecurityConfiguration {
     
 
     @Autowired
-    JWTService<Token> jwtService;
+    JwtService<Token> jwtService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

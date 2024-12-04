@@ -2,12 +2,15 @@ package com.example.demo.model;
 
 import java.util.Set;
 
+import com.example.demo.dto.Image;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -17,7 +20,12 @@ public class Ability {
     private Long id;
 
     @Column
-    private String image;
+    private String imageName;
+    @Lob
+    @Column(length = 1000)
+    private byte[] imageData;
+
+    
 
     @Column
     private String name;
@@ -42,14 +50,6 @@ public class Ability {
         this.id = id;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public String getName() {
         return name;
     }
@@ -58,5 +58,19 @@ public class Ability {
         this.name = name;
     }
 
+    public String getImageName() {
+        return imageName;
+    }
 
+    public byte[] getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
 }

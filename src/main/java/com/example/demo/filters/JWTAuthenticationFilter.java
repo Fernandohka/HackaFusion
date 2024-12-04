@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.example.demo.dto.Token;
-import com.example.demo.services.JWTService;
+import com.example.demo.services.JwtService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -16,8 +16,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
-    final JWTService<Token> jwtService;
-    public JWTAuthenticationFilter(JWTService<Token> jwtService) {
+    final JwtService<Token> jwtService;
+    public JWTAuthenticationFilter(JwtService<Token> jwtService) {
         this.jwtService = jwtService;
     }
 
