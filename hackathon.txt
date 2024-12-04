@@ -10,7 +10,6 @@ End Points:
 
 *AUTH*
 - Post: /auth (Login)(sem jwt)
-- Get: /auth/(Get admin)
 
 *ABILITY*
 - Post: /ability(Post ability's user)
