@@ -1,28 +1,35 @@
 package com.example.demo.model;
 
-
-import java.util.Set;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 
 @Entity
-public class Forum {
+public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
-    private String name;
-    
+    private String name; 
+
     @Column
     private String description;
+    
+    @Column
+    private boolean status;
 
-    @OneToMany(mappedBy = "forum")
-    private Set<Question> questions;
+    @Column
+    private Date startDate;
 
+    @Column
+    private Date endDate;
+
+    @Column
+    private boolean priv;
+    
 }

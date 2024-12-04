@@ -51,4 +51,16 @@ public class User {
     @OneToMany()
     private Set<MessageTopic> messagesTopic;
 
+    @OneToMany()
+    private Set<Question> questions;
+
+    @OneToMany()
+    private Set<Answer> answers;
+
+    @OneToMany()
+    private Set<Vote> votes;
+
+    @OneToMany()
+    private Set<Chat> chats;
+
 }

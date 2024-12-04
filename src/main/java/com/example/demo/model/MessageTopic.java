@@ -17,7 +17,7 @@ public class MessageTopic {
     private Long id;
 
     @Column
-    private LocalDateTime a; 
+    private LocalDateTime timestamp; 
 
     @Column
     private String description;
