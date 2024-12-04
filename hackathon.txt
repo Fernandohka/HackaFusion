@@ -45,7 +45,7 @@ End Points:
 *PROJECT*
 - Post: /project (Cria um novo projeto, com os usuários dentro dele e o nome do projeto, automaticamente cria um chat desse projeto)
 - Post: /project/user (Adiciona um novo usuário no projeto, caso a pessoa tenha esquecido de adicionar antes)
-- Delete: /project/user (Tirar um usuário do projeto)
+- Delete: /project/user (Tirar um usuário do projeto)(Json)
 - Get: /project/{id} (Vem o grupo inteiro, só as informações do projeto)
 
 - Post: /project/message (Mandar uma msg no projeto)
