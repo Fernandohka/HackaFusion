@@ -38,18 +38,17 @@ public class ForumImpl implements ForumService {
             return null;
 
         var listForum = forumRepo.findAll();
+        var newList = new ArrayList<ForumDto>();
 
         Integer start = 0;
         Integer end = listForum.size();
-
+        
         if(size > 0 || page > 0){
-            start = size*page;
+            start = (size-1)*page;
             if(start >= listForum.size())
-                return null;
+                return newList;
             end = start+size<listForum.size()?start+size:listForum.size();
         }
-
-        var newList = new ArrayList<ForumDto>();
 
         for(int i=start;i<end;i++)
             newList.add(new ForumDto(listForum.get(i).getId(), listForum.get(i).getName(), listForum.get(i).getDescription()));
