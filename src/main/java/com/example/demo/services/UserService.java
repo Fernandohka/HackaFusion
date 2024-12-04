@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import java.util.List;
+import com.example.demo.dto.ResponseDto;
 
 public interface UserService {
     public User post(String nome, String edv, String email, String password, String numero, Boolean admin, Boolean ets, String image, String description);

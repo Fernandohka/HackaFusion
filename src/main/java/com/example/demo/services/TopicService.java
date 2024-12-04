@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import java.util.List;
+import com.example.demo.dto.ResponseDto;
 
 public interface TopicService {
     public Topic post(String name, String description);

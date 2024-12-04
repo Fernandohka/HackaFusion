@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import com.example.demo.dto.ResponseDto;
 
 public interface ProjectService {
     public Project post(String name, String description, Boolean status, LocalDateTime startDate, LocalDateTime endDate, String category);
