@@ -30,6 +30,7 @@ End Points:
 
 *QUESTION*
 - Post: /question (Create new question)
+- Get: /question
 - Get: /question/{id} (Pega uma questão específica e todas as respostas dela, fazer a verificação se tem uma reação na resposta)
 - Delete: /question/{id} (Delete question)
 
