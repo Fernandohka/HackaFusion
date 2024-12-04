@@ -19,6 +19,30 @@ public class Category {
     private String name;
 
     @OneToMany(mappedBy = "category")
-    private Set<Project> projects;  
+    private Set<Project> projects;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
+    }  
     
 }

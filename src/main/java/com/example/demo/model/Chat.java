@@ -25,5 +25,37 @@ public class Chat {
     private User userB; 
 
     @OneToMany(mappedBy = "chat")
-    private Set<MessageChat> messages; 
+    private Set<MessageChat> messages;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUserA() {
+        return userA;
+    }
+
+    public void setUserA(User userA) {
+        this.userA = userA;
+    }
+
+    public User getUserB() {
+        return userB;
+    }
+
+    public void setUserB(User userB) {
+        this.userB = userB;
+    }
+
+    public Set<MessageChat> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(Set<MessageChat> messages) {
+        this.messages = messages;
+    } 
 }

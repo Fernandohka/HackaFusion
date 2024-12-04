@@ -27,4 +27,44 @@ public class FeedBackProject {
     @ManyToOne
     @JoinColumn(name="projectId")
     private Project project;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isPriv() {
+        return priv;
+    }
+
+    public void setPriv(boolean priv) {
+        this.priv = priv;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
 }
