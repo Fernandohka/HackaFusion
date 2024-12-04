@@ -77,3 +77,9 @@ End Points:
 - Post: /chat/message
 - Get: /chat/{id}/message
 - Delete: /chat/message/{id}
+
+*ArchivesProject*
+- Post: /project/archive
+- Get: /project/archive
+- Get: /project/archive/{idArchive}
+- Delete: /project/archive/{id}
