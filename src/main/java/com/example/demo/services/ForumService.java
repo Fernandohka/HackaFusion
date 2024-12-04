@@ -1,7 +1,9 @@
 package com.example.demo.services;
 
 import java.util.List;
+
 import com.example.demo.dto.ResponseDto;
+import com.example.demo.model.Forum;
 
 public interface ForumService {
     public Forum post(String name, String description);

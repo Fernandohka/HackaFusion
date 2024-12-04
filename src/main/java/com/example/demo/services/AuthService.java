@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import com.example.demo.model.User;
+
 public interface AuthService {
     public User login(String login, String password);
     public Boolean validateEdvIsFree(String edv);

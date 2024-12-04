@@ -1,10 +1,12 @@
 package com.example.demo.services;
 
 import java.util.List;
+
 import com.example.demo.dto.ResponseDto;
+import com.example.demo.model.Carrer;
 
 public interface CareerService {
-    public Career post(String name);
+    public Carrer post(String name);
     public ResponseDto delete(Long idCareer);
-    public List<Career> getAll(Integer page, Integer size);
+    public List<Carrer> getAll(Integer page, Integer size);
 }
