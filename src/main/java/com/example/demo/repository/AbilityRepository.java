@@ -8,5 +8,6 @@ import com.example.demo.model.Ability;
 
 
 public interface AbilityRepository extends JpaRepository<Ability, Long>{
-    Optional<Ability> findOneByImageName(String name);
+    Optional<Ability> findOneByName(String name);
+    Ability findOneById(Long id);
 }

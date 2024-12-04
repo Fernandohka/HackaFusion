@@ -19,13 +19,9 @@ public class Ability {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String imageName;
     @Lob
-    @Column(length = 1000)
-    private byte[] imageData;
-
-    
+    @Column
+    private String imageRoute;
 
     @Column
     private String name;
@@ -58,19 +54,11 @@ public class Ability {
         this.name = name;
     }
 
-    public String getImageName() {
-        return imageName;
+    public String getImageRoute() {
+        return imageRoute;
     }
 
-    public byte[] getImageData() {
-        return imageData;
-    }
-
-    public void setImageData(byte[] imageData) {
-        this.imageData = imageData;
-    }
-
-    public void setImageName(String imageName) {
-        this.imageName = imageName;
+    public void setImageRoute(String imageRoute) {
+        this.imageRoute = imageRoute;
     }
 }
