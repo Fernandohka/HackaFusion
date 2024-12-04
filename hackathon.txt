@@ -47,7 +47,9 @@ End Points:
 - Post: /project (Cria um novo projeto, com os usuários dentro dele e o nome do projeto, automaticamente cria um chat desse projeto)
 - Post: /project/user (Adiciona um novo usuário no projeto, caso a pessoa tenha esquecido de adicionar antes)
 - Delete: /project/user (Tirar um usuário do projeto)(Json)
+- Get: /project (get all public projects)
 - Get: /project/{id} (Vem o grupo inteiro, só as informações do projeto)
+- Get: /project/{iduser} (pega todos os projetos em que o id do usuario inserido faz parte);
 
 - Post: /project/message (Mandar uma msg no projeto)
 - Get: /project/{id}/message (Pegar todas as msg daquele projeto)
@@ -59,3 +61,8 @@ End Points:
 *FEEDBACK*
 - Post: feedback (Mandar um feedback pra um participante, tem q ter o id da pessoa que ta enviando, o id da pessoa que ta recebendo, o feedback em si e se é privado ou público)
 - Get: /feedback/{idUser} (Pega todos os feedbacks que um usuário)
+
+*TOPIC*
+- Post: /topic
+- Get: /topic (pega todos os topicos, com paginação para os topicos)
+- Get: /topic/{id} (pega um topico por id, com paginação para as mensagens)
