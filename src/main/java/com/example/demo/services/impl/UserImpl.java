@@ -37,7 +37,7 @@ public class UserImpl implements UserService{
             newUser.setNumber(numero);
             newUser.setAdmin(false);
             newUser.setEts(false);
-            newUser.setImage(imageServ.compressImage(image));
+            newUser.setImage("");
             newUser.setDescription(description);
             return repo.save(newUser);
         } catch (Exception e) {
@@ -46,45 +46,68 @@ public class UserImpl implements UserService{
     }
 
     @Override
-    public List<User> getAll(Integer page, Integer size) {
+    public List<UserDto> getAll(Integer page, Integer size) {
         var listUser = repo.findAll();
-
+        
         Integer start = 0;
         Integer end = listUser.size();
-
-        if(size >0 || page>0){
-            start = size*page;
-            if(start>=listUser.size())
-                return null;
-            end = start+size<listUser.size()?start+size:listUser.size();
-        }
-
+        
         var newList = new ArrayList<UserDto>();
 
+        if(size >0 || page>0){
+            start = (size-1)*page;
+            if(start>=listUser.size())
+            return newList;
+            end = start+size<listUser.size()?start+size:listUser.size();
+        }
+        
 
-        for(int i=0;i<0;i++){
-
+        for(int i=start;i<end;i++){
+            var user = listUser.get(i);
+            newList.add(new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(),user.getNumber(),user.getImage()));
         }
 
+        return newList;
     }
 
     @Override
-    public User getById(Long idUser) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+    public UserDto getById(Long idUser) {
+        var opUser = repo.findById(idUser);
+        if(!opUser.isPresent())
+            return null;
+        var user = opUser.get();
+        return new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), user.getImage());
     }
 
     @Override
     public ResponseDto delete(Long idUser) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        var opUser = repo.findById(idUser);
+        if(!opUser.isPresent())
+            return new ResponseDto(false, "Usuario não encontrado!!");
+        var user = opUser.get();
+        repo.delete(user);
+        return new ResponseDto(true, "Usuario deletado com sucesso!!");
     }
 
     @Override
-    public ResponseDto update(Long idUser, String nome, String edv, String email, String password, String numero,
-            Boolean admin, Boolean ets, String image, String description) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public ResponseDto update(Long idUser, String nome, String edv, String email, String password, String numero,Boolean admin, Boolean ets, String image, String description) {
+        var opUser = repo.findById(idUser);
+        if(!opUser.isPresent())
+            return new ResponseDto(false, "Usuario não encontrado!!");
+
+        var user = opUser.get();
+
+        user.setName(nome);
+        user.setEdv(edv);
+        user.setEmail(email);
+        user.setPassword(crypt.encode(password));
+        user.setNumber(numero);
+        user.setAdmin(false);
+        user.setEts(false);
+        user.setImage("");
+
+        return null;
+        
     }
     
 }

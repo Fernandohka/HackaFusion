@@ -42,7 +42,7 @@ public class User {
     private boolean ets;
     
     @Column
-    private byte[] image;
+    private String image;
 
     
     @Column
@@ -102,11 +102,11 @@ public class User {
         this.email = email;
     }
     
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
