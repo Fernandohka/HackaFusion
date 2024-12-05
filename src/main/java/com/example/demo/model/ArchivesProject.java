@@ -18,7 +18,7 @@ public class ArchivesProject {
     private String name;
 
     @Column
-    private String filename;
+    private byte[] file;
 
     @ManyToOne
     @JoinColumn(name="projectId") 

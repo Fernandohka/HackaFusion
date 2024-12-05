@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.UserDto;
 import com.example.demo.model.User;
+import com.example.demo.repositories.ImageRepo;
 import com.example.demo.repositories.UserRepo;
 import com.example.demo.services.ImageStorageService;
 import com.example.demo.services.UserService;
@@ -26,6 +27,7 @@ public class UserImpl implements UserService{
 
 
 
+
     @Override
     public User create(String nome, String edv, String email, String password, String numero, MultipartFile image, String description) {
         try {
@@ -37,7 +39,7 @@ public class UserImpl implements UserService{
             newUser.setNumber(numero);
             newUser.setAdmin(false);
             newUser.setEts(false);
-            newUser.setImage("");
+            newUser.setImage(""); 
             newUser.setDescription(description);
             return repo.save(newUser);
         } catch (Exception e) {
