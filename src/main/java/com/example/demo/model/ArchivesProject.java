@@ -1,17 +1,15 @@
 package com.example.demo.model;
 
-import java.util.Set;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Carrer {
+public class ArchivesProject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,17 +17,12 @@ public class Carrer {
     @Column
     private String name;
 
-    @OneToMany
-    @JoinColumn(name="userId")
-    private Set<User> users;
-    
-    public Set<User> getUsers() {
-        return users;
-    }
+    @Column
+    private byte[] file;
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
+    @ManyToOne
+    @JoinColumn(name="projectId") 
+    private Project project;
 
     public Long getId() {
         return id;
@@ -45,5 +38,21 @@ public class Carrer {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }

@@ -1,7 +1,5 @@
 package com.example.demo.model;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,24 +9,24 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class MessageTopic {
+public class FeedBackProject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
-    private LocalDateTime timestamp; 
+    private boolean priv;
 
     @Column
     private String description;
-    
-    @ManyToOne
-    @JoinColumn(name="userId")
-    private User user; 
 
     @ManyToOne
-    @JoinColumn(name = "topicId")
-    private Topic topic;
+    @JoinColumn(name="userId")
+    private User user;
+    
+    @ManyToOne
+    @JoinColumn(name="projectId")
+    private Project project;
 
     public Long getId() {
         return id;
@@ -38,12 +36,12 @@ public class MessageTopic {
         this.id = id;
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
+    public boolean isPriv() {
+        return priv;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
+    public void setPriv(boolean priv) {
+        this.priv = priv;
     }
 
     public String getDescription() {
@@ -62,12 +60,11 @@ public class MessageTopic {
         this.user = user;
     }
 
-    public Topic getTopic() {
-        return topic;
+    public Project getProject() {
+        return project;
     }
 
-    public void setTopic(Topic topic) {
-        this.topic = topic;
-    } 
-
+    public void setProject(Project project) {
+        this.project = project;
+    }
 }

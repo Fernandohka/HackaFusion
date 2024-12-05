@@ -27,4 +27,44 @@ public class FeedBackUser {
 
     @Column
     private boolean priv;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUserSender() {
+        return userSender;
+    }
+
+    public void setUserSender(User userSender) {
+        this.userSender = userSender;
+    }
+
+    public User getUserReceived() {
+        return userReceived;
+    }
+
+    public void setUserReceived(User userReceived) {
+        this.userReceived = userReceived;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isPriv() {
+        return priv;
+    }
+
+    public void setPriv(boolean priv) {
+        this.priv = priv;
+    }
 }

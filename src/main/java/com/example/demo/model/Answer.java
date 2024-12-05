@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-import java.time.LocalDateTime;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,26 +9,27 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
-public class MessageTopic {
+public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
-    private LocalDateTime timestamp; 
-
-    @Column
     private String description;
-    
+
+    @ManyToOne
+    @JoinColumn(name="questionId")
+    private Question question;
+
     @ManyToOne
     @JoinColumn(name="userId")
     private User user; 
 
-    @ManyToOne
-    @JoinColumn(name = "topicId")
-    private Topic topic;
+    @OneToMany(mappedBy = "answer")
+    private Set<Vote> votes;
 
     public Long getId() {
         return id;
@@ -36,14 +37,6 @@ public class MessageTopic {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
     }
 
     public String getDescription() {
@@ -54,6 +47,14 @@ public class MessageTopic {
         this.description = description;
     }
 
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
     public User getUser() {
         return user;
     }
@@ -62,12 +63,12 @@ public class MessageTopic {
         this.user = user;
     }
 
-    public Topic getTopic() {
-        return topic;
+    public Set<Vote> getVotes() {
+        return votes;
     }
 
-    public void setTopic(Topic topic) {
-        this.topic = topic;
-    } 
-
+    public void setVotes(Set<Vote> votes) {
+        this.votes = votes;
+    }  
+     
 }

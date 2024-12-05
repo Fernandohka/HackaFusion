@@ -7,11 +7,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 
 @Entity
-public class Carrer {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,17 +18,8 @@ public class Carrer {
     @Column
     private String name;
 
-    @OneToMany
-    @JoinColumn(name="userId")
-    private Set<User> users;
-    
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
+    @OneToMany(mappedBy = "category")
+    private Set<Project> projects;
 
     public Long getId() {
         return id;
@@ -46,4 +36,13 @@ public class Carrer {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Set<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
+    }  
+    
 }

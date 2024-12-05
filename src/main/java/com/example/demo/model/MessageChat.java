@@ -11,7 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class MessageTopic {
+public class MessageChat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,14 +21,14 @@ public class MessageTopic {
 
     @Column
     private String description;
-    
-    @ManyToOne
-    @JoinColumn(name="userId")
-    private User user; 
 
     @ManyToOne
-    @JoinColumn(name = "topicId")
-    private Topic topic;
+    @JoinColumn(name = "userId")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "chatId")
+    private Chat chat;
 
     public Long getId() {
         return id;
@@ -62,12 +62,12 @@ public class MessageTopic {
         this.user = user;
     }
 
-    public Topic getTopic() {
-        return topic;
+    public Chat getChat() {
+        return chat;
     }
 
-    public void setTopic(Topic topic) {
-        this.topic = topic;
-    } 
+    public void setChat(Chat chat) {
+        this.chat = chat;
+    }
 
 }
