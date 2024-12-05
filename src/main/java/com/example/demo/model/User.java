@@ -42,7 +42,7 @@ public class User {
     private boolean ets;
     
     @Column
-    private String image;
+    private Long image;
 
     
     @Column
@@ -102,11 +102,11 @@ public class User {
         this.email = email;
     }
     
-    public String getImage() {
+    public Long getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(Long image) {
         this.image = image;
     }
 
