@@ -15,6 +15,7 @@ import com.example.demo.model.User;
 import com.example.demo.repositories.ForumRepository;
 import com.example.demo.repositories.QuestionRepository;
 import com.example.demo.repositories.UserRepo;
+import com.example.demo.services.ImageStorageService;
 import com.example.demo.services.QuestionService;
 
 public class QuestionImpl implements QuestionService {
@@ -27,6 +28,9 @@ public class QuestionImpl implements QuestionService {
 
     @Autowired
     ForumRepository forumRepo;
+
+    @Autowired
+    ImageStorageService imageServ;
 
     @Override
     public QuestionDto create(Long idUser, Long idForum, String title, String description) {
@@ -50,11 +54,11 @@ public class QuestionImpl implements QuestionService {
         question.setDescription(description);
         questionRepo.save(question);
 
-        return new QuestionDto(question.getId(), new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), user.getImage()), new ForumDto(forum.getId(), forum.getName(), forum.getDescription()), question.getTitle(), question.getDescription());
+        return new QuestionDto(question.getId(), new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage())), new ForumDto(forum.getId(), forum.getName(), forum.getDescription()), question.getTitle(), question.getDescription());
     }
 
     @Override
-    public List<QuestionDto> getAll(Long idUser, Long idForum, Integer page, Integer size) {
+    public List<QuestionDto> getAll(Integer page, Integer size) {
         if(page == null || size == null || page < 1 || size < 1)
             return null;
 
@@ -71,32 +75,29 @@ public class QuestionImpl implements QuestionService {
             end = start+size<listQuestion.size()?start+size:listQuestion.size();
         }
 
-        User user;
-        Forum forum;
-        
-        try {
-            user = userRepo.findById(idUser).get();
-            forum = forumRepo.findById(idForum).get();
-        } catch (Exception e) {
-            return null;
-        }
-
         for(int i=start;i<end;i++)
-            // newList.add(new QuestionDto(listQuestion.get(i).getId(), new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), user.getImage()), new ForumDto(forum.getId(), forum.getName(), forum.getDescription()), listQuestion.get(i).getDescription()));
+            newList.add(new QuestionDto(listQuestion.get(i).getId(), new UserDto(listQuestion.get(i).getUser().getId(), listQuestion.get(i).getUser().getName(), listQuestion.get(i).getUser().getEdv(), listQuestion.get(i).getUser().getEmail(), listQuestion.get(i).getUser().getNumber(), imageServ.toUrl(listQuestion.get(i).getUser().getImage())), new ForumDto(listQuestion.get(i).getForum().getId(), listQuestion.get(i).getForum().getName(), listQuestion.get(i).getForum().getDescription()), listQuestion.get(i).getTitle(), listQuestion.get(i).getDescription()));
 
         return newList;
     }
 
     @Override
     public QuestionDto getById(Long idQuestion, Integer answerPage, Integer answerSize) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        try {
+            var question = questionRepo.findById(idQuestion).get();
+            return new QuestionDto(question.getId(), new UserDto(question.getUser().getId(), question.getUser().getName(), question.getUser().getEdv(), question.getUser().getEmail(), question.getUser().getNumber(), imageServ.toUrl(question.getUser().getImage())), new ForumDto(question.getForum().getId(), question.getForum().getName(), question.getForum().getDescription()), question.getTitle(), question.getDescription());
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public ResponseDto delete(Long idQuestion) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        try {
+            questionRepo.deleteById(idQuestion);
+            return new ResponseDto(true, "Question deletion success");
+        } catch (Exception e) {
+            return new ResponseDto(false, "Question deletion failed");
+        }
     }
-    
 }
