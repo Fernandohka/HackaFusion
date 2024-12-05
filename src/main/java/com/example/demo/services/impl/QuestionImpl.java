@@ -76,8 +76,8 @@ public class QuestionImpl implements QuestionService {
         }
 
         for(int i=start;i<end;i++)
-            newList.add(new QuestionDto(listQuestion.get(i).getId(), new UserDto(listQuestion.get(i).getUser().getId(), listQuestion.get(i).getUser().getName(), listQuestion.get(i).getUser().getEdv(), listQuestion.get(i).getUser().getEmail(), listQuestion.get(i).getUser().getNumber(), imageServ.toUrl(listQuestion.get(i).getUser().getImage())), new ForumDto(listQuestion.get(i).getForum().getId(), listQuestion.get(i).getForum().getName(), listQuestion.get(i).getForum().getDescription()), listQuestion.get(i).getTitle(), listQuestion.get(i).getDescription()));
-
+            // newList.add(new QuestionDto(listQuestion.get(i).getId(), new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), user.getImage()), new ForumDto(forum.getId(), forum.getName(), forum.getDescription()), listQuestion.get(i).getDescription()));
+        
         return newList;
     }
 
