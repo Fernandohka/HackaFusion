@@ -4,7 +4,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.demo.services.BcryptService;
 
-public class BcryptImpl implements BcryptService{
+public class BcryptImpl implements BcryptService {
 
     @Override
     public String encode(String password) {

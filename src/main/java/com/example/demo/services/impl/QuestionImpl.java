@@ -83,7 +83,7 @@ public class QuestionImpl implements QuestionService {
 
         for(int i=start;i<end;i++)
             // newList.add(new QuestionDto(listQuestion.get(i).getId(), new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), user.getImage()), new ForumDto(forum.getId(), forum.getName(), forum.getDescription()), listQuestion.get(i).getDescription()));
-
+        
         return newList;
     }
 
