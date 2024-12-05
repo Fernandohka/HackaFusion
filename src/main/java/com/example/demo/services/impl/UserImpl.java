@@ -25,9 +25,6 @@ public class UserImpl implements UserService{
     @Autowired
     ImageStorageService imageServ;
 
-
-
-
     @Override
     public User create(String nome, String edv, String email, String password, String numero, MultipartFile image, String description) {
         try {
@@ -39,7 +36,7 @@ public class UserImpl implements UserService{
             newUser.setNumber(numero);
             newUser.setAdmin(false);
             newUser.setEts(false);
-            newUser.setImage(""); 
+            newUser.setImage(imageServ.UploadImage(image)); 
             newUser.setDescription(description);
             return repo.save(newUser);
         } catch (Exception e) {
@@ -66,7 +63,7 @@ public class UserImpl implements UserService{
 
         for(int i=start;i<end;i++){
             var user = listUser.get(i);
-            newList.add(new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(),user.getNumber(),user.getImage()));
+            newList.add(new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage())));
         }
 
         return newList;
@@ -78,7 +75,7 @@ public class UserImpl implements UserService{
         if(!opUser.isPresent())
             return null;
         var user = opUser.get();
-        return new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), user.getImage());
+        return new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage()));
     }
 
     @Override
@@ -92,7 +89,8 @@ public class UserImpl implements UserService{
     }
 
     @Override
-    public ResponseDto update(Long idUser, String nome, String edv, String email, String password, String numero,Boolean admin, Boolean ets, String image, String description) {
+    public ResponseDto update(Long idUser, String nome, String edv, String email, String password, String numero,Boolean admin, Boolean ets, MultipartFile image, String description) {
+        try {
         var opUser = repo.findById(idUser);
         if(!opUser.isPresent())
             return new ResponseDto(false, "Usuario não encontrado!!");
@@ -106,9 +104,19 @@ public class UserImpl implements UserService{
         user.setNumber(numero);
         user.setAdmin(false);
         user.setEts(false);
-        user.setImage("");
+        user.setDescription(description);
+        var res = imageServ.UpdateImage(user.getImage(),image);
+        if(!res.success()){
+            return res;
+        }
+        repo.save(user);
 
-        return null;
+        return new ResponseDto(true,"Usuario modificado usuario!!");
+
+        } catch (Exception e) {
+            return new ResponseDto(false,"Erro ao modificar usuario!!");
+        }
+
         
     }
     

@@ -20,10 +20,19 @@ public class ArchivesProject {
     @Column
     private byte[] file;
 
+    
     @ManyToOne
     @JoinColumn(name="projectId") 
     private Project project;
+    
+    public byte[] getFile() {
+        return file;
+    }
 
+    public void setFile(byte[] file) {
+        this.file = file;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -38,14 +47,6 @@ public class ArchivesProject {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
     }
 
     public Project getProject() {
