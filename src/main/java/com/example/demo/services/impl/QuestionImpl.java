@@ -11,10 +11,12 @@ import com.example.demo.dto.ListPageDto;
 import com.example.demo.dto.QuestionDto;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.UserDto;
+import com.example.demo.dto.VoteDto;
 import com.example.demo.model.Answer;
 import com.example.demo.model.Forum;
 import com.example.demo.model.Question;
 import com.example.demo.model.User;
+import com.example.demo.model.Vote;
 import com.example.demo.repositories.ForumRepository;
 import com.example.demo.repositories.QuestionRepository;
 import com.example.demo.repositories.UserRepo;
@@ -73,10 +75,10 @@ public class QuestionImpl implements QuestionService {
 
         var listQuestion = questionRepo.findAll();
         var newList = new ArrayList<QuestionDto>();
-        Integer pages = (int)Math.floor(listQuestion.size()/size);
 
         Integer start = 0;
         Integer end = listQuestion.size();
+        Integer pages = (int)Math.floor(listQuestion.size()/size);
         
         if(size > 0 || page > 0){
             start = (size-1)*page;
@@ -94,7 +96,6 @@ public class QuestionImpl implements QuestionService {
                 listQuestion.get(i).getDescription(),
                 null));
         return new ListPageDto<>(pages, newList);
-
     }
 
     @Override
@@ -106,7 +107,17 @@ public class QuestionImpl implements QuestionService {
             for(int i = 0; i < question.getAnswers().size(); i++){
                 if(iterator.hasNext()){
                     Answer answer = iterator.next();
-                    answers[i] = new AnswerDto(answer.getId(), answer.getDescription());
+
+                    var votes = new VoteDto[answer.getVotes().size()];
+                    var iteratorVotes = answer.getVotes().iterator();
+                    for(int j = 0; j < answer.getVotes().size(); j++){
+                        if(iteratorVotes.hasNext()){
+                            Vote vote = iteratorVotes.next();
+                            votes[j] = new VoteDto(vote.getId(), vote.isUp(), new UserDto(vote.getUser().getId(), vote.getUser().getName(), vote.getUser().getEdv(), vote.getUser().getEmail(), vote.getUser().getNumber(), imageServ.toUrl(vote.getUser().getImage())));
+                        }
+                    }
+
+                    answers[i] = new AnswerDto(answer.getId(), answer.getDescription(), new UserDto(answer.getUser().getId(), answer.getUser().getName(), answer.getUser().getEdv(), answer.getUser().getEmail(), answer.getUser().getNumber(), imageServ.toUrl(answer.getUser().getImage())), votes);
                 }
             }
 
