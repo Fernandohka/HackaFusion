@@ -12,4 +12,5 @@ public interface ImageStorageService {
     public ResponseDto UpdateImage(Long idImage,MultipartFile file) throws IOException;
     public byte[] descompressImage(byte[] file);
     public String toUrl(Long idImage);
+    public byte[] getImageBybId(Long idImage);
 }

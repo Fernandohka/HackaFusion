@@ -1,26 +1,64 @@
 package com.example.demo.services.impl;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Base64;
+import java.util.Optional;
 
-import com.example.demo.dto.Image;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.example.demo.dto.ResponseDto;
+import com.example.demo.model.Image;
+import com.example.demo.repositories.ImageRepo;
 import com.example.demo.services.ImageStorageService;
 import com.example.demo.util.ImageUtils;
-
-import org.springframework.web.multipart.MultipartFile;
 
 
 public class ImageStorageImplementation implements ImageStorageService {
 
+    @Autowired
+    ImageRepo repository;
+
+
+
     @Override
-    public byte[] uploadImage(MultipartFile file) throws IOException {
-        return ImageUtils.compressImage(file.getBytes());
+    public Long UploadImage(MultipartFile file) throws IOException {
+        Image image = new Image();
+        image.setImage(ImageUtils.compressImage(file.getBytes()));
+        repository.save(image);
+
+        return image.getId();
     }
 
     @Override
-    public byte[] downloadImage(byte[] file) throws IOException{
+    public ResponseDto UpdateImage(Long idImage, MultipartFile file) throws IOException {
+        if(idImage == null || file == null)
+            return new ResponseDto(false, "Parâmetros inváldos");
+
+        Optional<Image> image_opt = repository.findById(idImage);
+        if(!image_opt.isPresent())
+            return new ResponseDto(false, "Id inválido!");
+        
+        Image image = image_opt.get();
+        image.setImage(ImageUtils.compressImage(file.getBytes()));
+        repository.save(image);
+
+        return new ResponseDto(true, "Imagem atualizada com sucesso!");
+    }
+
+    @Override
+    public byte[] descompressImage(byte[] file) {
         return ImageUtils.decompressImage(file);
     }
+
+    @Override
+    public String toUrl(Long idImage) {
+        return "https://localhost:8080/image/" + idImage;
+    }
+
+    @Override
+    public byte[] getImageBybId(Long idImage) {
+        
+    }
+
+    
 }

@@ -1,5 +1,6 @@
 package com.example.demo.services.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.UserDto;
 import com.example.demo.model.User;
-import com.example.demo.repositories.ImageRepo;
 import com.example.demo.repositories.UserRepo;
 import com.example.demo.services.ImageStorageService;
 import com.example.demo.services.UserService;
@@ -39,7 +39,9 @@ public class UserImpl implements UserService{
             newUser.setNumber(numero);
             newUser.setAdmin(false);
             newUser.setEts(false);
-            newUser.setImage(""); 
+
+            Long imageId = imageServ.UploadImage(image);
+            newUser.setImage(imageId); 
             newUser.setDescription(description);
             return repo.save(newUser);
         } catch (Exception e) {
@@ -59,8 +61,8 @@ public class UserImpl implements UserService{
         if(size >0 || page>0){
             start = (size-1)*page;
             if(start>=listUser.size())
-            return newList;
-            end = start+size<listUser.size()?start+size:listUser.size();
+                return newList;
+                    end = start+size<listUser.size()?start+size:listUser.size();
         }
         
 
@@ -92,7 +94,10 @@ public class UserImpl implements UserService{
     }
 
     @Override
-    public ResponseDto update(Long idUser, String nome, String edv, String email, String password, String numero,Boolean admin, Boolean ets, String image, String description) {
+    public ResponseDto update(Long idUser, String nome, String edv, String email, String password, String numero,Boolean admin, Boolean ets, MultipartFile image, String description) throws IOException {
+        if(idUser == null || nome == null || edv == null || email == null || password == null || numero == null || admin == null || ets == null || image == null || description == null)
+            return new ResponseDto(false, "Parâmetros inválidos!");
+        
         var opUser = repo.findById(idUser);
         if(!opUser.isPresent())
             return new ResponseDto(false, "Usuario não encontrado!!");
@@ -106,7 +111,9 @@ public class UserImpl implements UserService{
         user.setNumber(numero);
         user.setAdmin(false);
         user.setEts(false);
-        user.setImage("");
+
+        Long imageId = imageServ.UploadImage(image);
+        user.setImage(imageId);
 
         return null;
         
