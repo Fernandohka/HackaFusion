@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.example.demo.dto.AnswerDto;
 import com.example.demo.dto.ForumDto;
 import com.example.demo.dto.QuestionDto;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.UserDto;
+import com.example.demo.model.Answer;
 import com.example.demo.model.Forum;
 import com.example.demo.model.Question;
 import com.example.demo.model.User;
@@ -54,7 +56,13 @@ public class QuestionImpl implements QuestionService {
         question.setDescription(description);
         questionRepo.save(question);
 
-        return new QuestionDto(question.getId(), new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage())), new ForumDto(forum.getId(), forum.getName(), forum.getDescription()), question.getTitle(), question.getDescription());
+        return new QuestionDto(
+            question.getId(), 
+            new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage())), 
+            new ForumDto(forum.getId(), forum.getName(), forum.getDescription()), 
+            question.getTitle(), 
+            question.getDescription(), 
+            null);
     }
 
     @Override
@@ -76,8 +84,13 @@ public class QuestionImpl implements QuestionService {
         }
 
         for(int i=start;i<end;i++)
-            newList.add(new QuestionDto(listQuestion.get(i).getId(), new UserDto(listQuestion.get(i).getUser().getId(), listQuestion.get(i).getUser().getName(), listQuestion.get(i).getUser().getEdv(), listQuestion.get(i).getUser().getEmail(), listQuestion.get(i).getUser().getNumber(), imageServ.toUrl(listQuestion.get(i).getUser().getImage())), new ForumDto(listQuestion.get(i).getForum().getId(), listQuestion.get(i).getForum().getName(), listQuestion.get(i).getForum().getDescription()), listQuestion.get(i).getTitle(), listQuestion.get(i).getDescription()));
-
+            newList.add(new QuestionDto(
+                listQuestion.get(i).getId(), 
+                new UserDto(listQuestion.get(i).getUser().getId(), listQuestion.get(i).getUser().getName(), listQuestion.get(i).getUser().getEdv(), listQuestion.get(i).getUser().getEmail(), listQuestion.get(i).getUser().getNumber(), imageServ.toUrl(listQuestion.get(i).getUser().getImage())), 
+                new ForumDto(listQuestion.get(i).getForum().getId(), listQuestion.get(i).getForum().getName(), listQuestion.get(i).getForum().getDescription()), 
+                listQuestion.get(i).getTitle(), 
+                listQuestion.get(i).getDescription(),
+                null));
         return newList;
     }
 
@@ -85,7 +98,22 @@ public class QuestionImpl implements QuestionService {
     public QuestionDto getById(Long idQuestion, Integer answerPage, Integer answerSize) {
         try {
             var question = questionRepo.findById(idQuestion).get();
-            return new QuestionDto(question.getId(), new UserDto(question.getUser().getId(), question.getUser().getName(), question.getUser().getEdv(), question.getUser().getEmail(), question.getUser().getNumber(), imageServ.toUrl(question.getUser().getImage())), new ForumDto(question.getForum().getId(), question.getForum().getName(), question.getForum().getDescription()), question.getTitle(), question.getDescription());
+            var answers = new AnswerDto[question.getAnswers().size()];
+            var iterator = question.getAnswers().iterator();
+            for(int i = 0; i < question.getAnswers().size(); i++){
+                if(iterator.hasNext()){
+                    Answer answer = iterator.next();
+                    answers[i] = new AnswerDto(answer.getId(), answer.getDescription());
+                }
+            }
+
+            return new QuestionDto(
+                question.getId(), 
+                new UserDto(question.getUser().getId(), question.getUser().getName(), question.getUser().getEdv(), question.getUser().getEmail(), question.getUser().getNumber(), imageServ.toUrl(question.getUser().getImage())), 
+                new ForumDto(question.getForum().getId(), question.getForum().getName(), question.getForum().getDescription()), 
+                question.getTitle(), 
+                question.getDescription(), 
+                answers);
         } catch (Exception e) {
             return null;
         }

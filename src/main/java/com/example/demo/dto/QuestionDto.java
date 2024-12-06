@@ -5,7 +5,8 @@ public record QuestionDto(
     UserDto user,
     ForumDto forum,
     String title,
-    String description
+    String description,
+    AnswerDto[] answers
 ) {
     
 }
