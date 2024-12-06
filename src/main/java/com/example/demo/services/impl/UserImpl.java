@@ -36,7 +36,9 @@ public class UserImpl implements UserService {
             newUser.setNumber(numero);
             newUser.setAdmin(false);
             newUser.setEts(false);
-            newUser.setImage(imageServ.UploadImage(image));
+
+            Long imageId = imageServ.UploadImage(image);
+            newUser.setImage(imageId); 
             newUser.setDescription(description);
             return repo.save(newUser);
         } catch (Exception e) {
@@ -62,8 +64,7 @@ public class UserImpl implements UserService {
 
         for (int i = start; i < end; i++) {
             var user = listUser.get(i);
-            newList.add(new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(),
-                    imageServ.toUrl(user.getImage())));
+            newList.add(new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(),user.getNumber(),imageServ.toUrl(user.getImage())));
         }
 
         return newList;
@@ -75,8 +76,7 @@ public class UserImpl implements UserService {
         if (!opUser.isPresent())
             return null;
         var user = opUser.get();
-        return new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(),
-                imageServ.toUrl(user.getImage()));
+        return new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage()));
     }
 
     @Override
@@ -97,7 +97,7 @@ public class UserImpl implements UserService {
             if (!opUser.isPresent())
                 return new ResponseDto(false, "Usuario não encontrado!!");
 
-            var user = opUser.get();
+        var user = opUser.get();
 
             user.setName(nome);
             user.setEdv(edv);

@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -16,8 +17,9 @@ public class Ability {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Lob
     @Column
-    private String image;
+    private String imageRoute;
 
     @Column
     private String name;
@@ -42,14 +44,6 @@ public class Ability {
         this.id = id;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public String getName() {
         return name;
     }
@@ -58,5 +52,11 @@ public class Ability {
         this.name = name;
     }
 
+    public String getImageRoute() {
+        return imageRoute;
+    }
 
+    public void setImageRoute(String imageRoute) {
+        this.imageRoute = imageRoute;
+    }
 }

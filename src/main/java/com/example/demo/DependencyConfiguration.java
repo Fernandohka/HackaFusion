@@ -2,13 +2,13 @@ package com.example.demo;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.demo.dto.Token;
+import com.example.demo.services.ImageStorageService;
 import com.example.demo.services.JWTService;
 import com.example.demo.services.impl.BcryptImpl;
-import com.example.demo.services.impl.DefaultJWTService;
+import com.example.demo.services.impl.ImageStorageImplementation;
+import com.example.demo.services.impl.JwtImplementation;
 
 @Configuration
 public class DependencyConfiguration {
@@ -18,13 +18,18 @@ public class DependencyConfiguration {
     // }
 
     @Bean
-    public BcryptImpl bcryptImpl(){
-        return new BcryptImpl();
+    public ImageStorageService imageStorageService(){
+        return new ImageStorageImplementation();
     }
 
-    @Bean 
+    @Bean
     public JWTService<Token> jwtService(){
-        return new DefaultJWTService();
+        return new JwtImplementation();
+    }
+
+    @Bean
+    public BcryptImpl bcryptImpl(){
+        return new BcryptImpl();
     }
 
 }
