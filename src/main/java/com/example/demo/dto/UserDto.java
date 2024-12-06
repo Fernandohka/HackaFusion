@@ -6,5 +6,5 @@ public record UserDto(
     String edv,
     String email,
     String Telefone,
-    Long image
+    String image
 ) {}

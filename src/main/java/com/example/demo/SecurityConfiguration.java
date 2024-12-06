@@ -12,14 +12,14 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.example.demo.dto.Token;
 import com.example.demo.filters.JWTAuthenticationFilter;
-import com.example.demo.services.JwtService;
+import com.example.demo.services.JWTService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
     
     @Autowired
-    JwtService<Token> jwtService;
+    JWTService<Token> jwtService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

@@ -2,8 +2,6 @@ package com.example.demo.model;
 
 import java.util.Set;
 
-import com.example.demo.dto.Image;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

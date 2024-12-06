@@ -56,8 +56,14 @@ public class ImageStorageImplementation implements ImageStorageService {
     }
 
     @Override
-    public byte[] getImageBybId(Long idImage) {
-        
+    public Image getImageBybId(Long idImage) {
+        if(idImage == null)
+            return null;
+        Optional<Image> opt_image = repository.findById(idImage);
+        if(!opt_image.isPresent())
+            return null;
+
+        return opt_image.get(); 
     }
 
     

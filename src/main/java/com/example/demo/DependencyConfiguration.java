@@ -3,8 +3,9 @@ package com.example.demo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.example.demo.dto.Token;
 import com.example.demo.services.ImageStorageService;
-import com.example.demo.services.JwtService;
+import com.example.demo.services.JWTService;
 import com.example.demo.services.impl.BcryptImpl;
 import com.example.demo.services.impl.ImageStorageImplementation;
 import com.example.demo.services.impl.JwtImplementation;
@@ -22,7 +23,7 @@ public class DependencyConfiguration {
     }
 
     @Bean
-    public JwtService jwtService(){
+    public JWTService<Token> jwtService(){
         return new JwtImplementation();
     }
 

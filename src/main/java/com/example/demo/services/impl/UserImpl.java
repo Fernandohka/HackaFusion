@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.UserDto;
+import com.example.demo.model.Image;
 import com.example.demo.model.User;
 import com.example.demo.repositories.UserRepo;
 import com.example.demo.services.ImageStorageService;
@@ -68,7 +69,7 @@ public class UserImpl implements UserService{
 
         for(int i=start;i<end;i++){
             var user = listUser.get(i);
-            newList.add(new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(),user.getNumber(),user.getImage()));
+            newList.add(new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(),user.getNumber(),imageServ.toUrl(user.getImage())));
         }
 
         return newList;
@@ -80,7 +81,7 @@ public class UserImpl implements UserService{
         if(!opUser.isPresent())
             return null;
         var user = opUser.get();
-        return new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), user.getImage());
+        return new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage()));
     }
 
     @Override
