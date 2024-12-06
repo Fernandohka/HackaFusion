@@ -17,9 +17,6 @@ public class Ability {
     private Long id;
 
     @Column
-    private String image;
-
-    @Column
     private String name;
 
     @OneToMany
@@ -40,14 +37,6 @@ public class Ability {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getName() {

@@ -1,12 +1,14 @@
 package com.example.demo.services;
 
-import java.util.List;
 
+import com.example.demo.dto.AbilityDto;
+import com.example.demo.dto.ListPageDto;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.model.Ability;
 
 public interface AbilityService {
-    public Ability create(String image, String name);
-    public List<Ability> getAll(Integer page, Integer size);
+    public Ability create(String name);
+    public ListPageDto<AbilityDto> getAll(Integer page, Integer size);
+    public ListPageDto<AbilityDto> getAllByUser(Long idUser,Integer page, Integer size);
     public ResponseDto delete(Long idAbility);
 }
