@@ -1,11 +1,11 @@
 package com.example.demo.services.impl;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.dto.ListPageDto;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.UserDto;
 import com.example.demo.model.User;
@@ -47,18 +47,19 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getAll(Integer page, Integer size) {
+    public ListPageDto<UserDto> getAll(Integer page, Integer size) {
         var listUser = repo.findAll();
 
         Integer start = 0;
         Integer end = listUser.size();
+        Integer pages = (int)Math.floor(listUser.size()/size);
 
         var newList = new ArrayList<UserDto>();
 
         if (size > 0 || page > 0) {
             start = (size - 1) * page;
             if (start >= listUser.size())
-                return newList;
+                return new ListPageDto<UserDto>(pages, newList);
             end = start + size < listUser.size() ? start + size : listUser.size();
         }
 
@@ -67,7 +68,7 @@ public class UserImpl implements UserService {
             newList.add(new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(),user.getNumber(),imageServ.toUrl(user.getImage())));
         }
 
-        return newList;
+        return new ListPageDto<UserDto>(pages, newList);
     }
 
     @Override

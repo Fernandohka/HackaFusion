@@ -17,10 +17,6 @@ public class Ability {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Lob
-    @Column
-    private String imageRoute;
-
     @Column
     private String name;
 
