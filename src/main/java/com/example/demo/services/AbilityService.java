@@ -11,4 +11,6 @@ public interface AbilityService {
     public ListPageDto<AbilityDto> getAll(Integer page, Integer size);
     public ListPageDto<AbilityDto> getAllByUser(Long idUser,Integer page, Integer size);
     public ResponseDto delete(Long idAbility);
+    public ResponseDto addAbility(Long idUser, Long idAbility);
+    public ResponseDto deleteAbility(Long idUser, Long idAbility);
 }

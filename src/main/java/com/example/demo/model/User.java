@@ -48,7 +48,7 @@ public class User {
     @Column
     private String description;
     
-    @OneToMany()
+    @ManyToMany
     private Set<Ability> abilitys;
     
     @OneToMany()

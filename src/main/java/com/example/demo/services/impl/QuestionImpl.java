@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.dto.AnswerDto;
 import com.example.demo.dto.ForumDto;
+import com.example.demo.dto.ListPageDto;
 import com.example.demo.dto.QuestionDto;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.UserDto;
@@ -66,12 +67,13 @@ public class QuestionImpl implements QuestionService {
     }
 
     @Override
-    public List<QuestionDto> getAll(Integer page, Integer size) {
+    public ListPageDto<QuestionDto> getAll(Integer page, Integer size) {
         if(page == null || size == null || page < 1 || size < 1)
             return null;
 
         var listQuestion = questionRepo.findAll();
         var newList = new ArrayList<QuestionDto>();
+        Integer pages = (int)Math.floor(listQuestion.size()/size);
 
         Integer start = 0;
         Integer end = listQuestion.size();
@@ -79,7 +81,7 @@ public class QuestionImpl implements QuestionService {
         if(size > 0 || page > 0){
             start = (size-1)*page;
             if(start >= listQuestion.size())
-                return newList;
+                return new ListPageDto<>(pages, newList);
             end = start+size<listQuestion.size()?start+size:listQuestion.size();
         }
 
@@ -91,7 +93,8 @@ public class QuestionImpl implements QuestionService {
                 listQuestion.get(i).getTitle(), 
                 listQuestion.get(i).getDescription(),
                 null));
-        return newList;
+        return new ListPageDto<>(pages, newList);
+
     }
 
     @Override

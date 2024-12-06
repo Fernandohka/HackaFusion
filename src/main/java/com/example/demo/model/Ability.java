@@ -7,9 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Ability {
@@ -20,8 +18,7 @@ public class Ability {
     @Column
     private String name;
 
-    @OneToMany
-    @JoinColumn(name="userId")
+    @ManyToMany
     private Set<User> users;
     
     public Set<User> getUsers() {
@@ -48,11 +45,4 @@ public class Ability {
         this.name = name;
     }
 
-    public String getImageRoute() {
-        return imageRoute;
-    }
-
-    public void setImageRoute(String imageRoute) {
-        this.imageRoute = imageRoute;
-    }
 }

@@ -96,4 +96,47 @@ public class AbilityImpl  implements AbilityService{
 
     }
 
+    @Override
+    public ResponseDto addAbility(Long idUser, Long idAbility) {
+        var userOp = userRepo.findById(idUser);
+        var abilityOp = repo.findById(idUser);
+
+        if(userOp.isEmpty())
+            return new ResponseDto(false, "Usuario não encontrado!!");
+
+        if(userOp.isEmpty())
+            return new ResponseDto(false, "Habilidade não encontrado!!");
+
+        var currUser =  userOp.get();
+        var currAbility = abilityOp.get();
+
+        currUser.getAbilitys().add(currAbility);
+
+        userRepo.save(currUser);
+
+        return new ResponseDto(true,"Adicionado com sucesso!");
+    }
+
+    @Override
+    public ResponseDto deleteAbility(Long idUser, Long idAbility) {
+        var userOp = userRepo.findById(idUser);
+        var abilityOp = repo.findById(idUser);
+
+        if(userOp.isEmpty())
+            return new ResponseDto(false, "Usuario não encontrado!!");
+
+        if(userOp.isEmpty())
+            return new ResponseDto(false, "Habilidade não encontrado!!");
+
+        var currUser =  userOp.get();
+        var currAbility = abilityOp.get();
+
+        if(!currUser.getAbilitys().remove(currAbility))
+            return new ResponseDto(false, "Erro em deletar habilidade!");
+
+        userRepo.save(currUser);
+
+        return new ResponseDto(true,"Adicionado com sucesso!");
+    }
+
 }
