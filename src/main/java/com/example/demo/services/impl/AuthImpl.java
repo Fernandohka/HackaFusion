@@ -6,7 +6,7 @@ import com.example.demo.model.User;
 import com.example.demo.repositories.UserRepo;
 import com.example.demo.services.AuthService;
 
-public class Auth implements AuthService {
+public class AuthImpl implements AuthService {
 
     @Autowired
     UserRepo repo;
@@ -60,14 +60,10 @@ public class Auth implements AuthService {
 
     @Override
     public Boolean validateEmail(String email) {
-        var list = repo.findByEmail(email);
-        if (list.isEmpty())
-            return false;
-        var emailUser = list.get(0).getEmail();
-
         try {
-            return !emailUser.split("@")[1].split(".")[1].endsWith(".");
+            return email.split("@")[1].contains(".");
         } catch (Exception e) {
+            System.out.println(e);
             return false;
         }
 

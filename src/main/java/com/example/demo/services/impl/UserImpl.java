@@ -25,8 +25,7 @@ public class UserImpl implements UserService {
     ImageStorageService imageServ;
 
     @Override
-    public User create(String nome, String edv, String email, String password, String numero, MultipartFile image,
-            String description) {
+    public User create(String nome, String edv, String email, String password, String numero) {
         try {
             var newUser = new User();
             newUser.setName(nome);
@@ -36,10 +35,8 @@ public class UserImpl implements UserService {
             newUser.setNumber(numero);
             newUser.setAdmin(false);
             newUser.setEts(false);
-
-            Long imageId = imageServ.UploadImage(image);
-            newUser.setImage(imageId); 
-            newUser.setDescription(description);
+            newUser.setImage(Long.valueOf(1)); 
+            newUser.setDescription("");
             return repo.save(newUser);
         } catch (Exception e) {
             return null;
@@ -56,7 +53,7 @@ public class UserImpl implements UserService {
 
         var newList = new ArrayList<UserDto>();
 
-        if (size > 0 || page > 0) {
+        if (size > 0 || page > 0) { 
             start = (size - 1) * page;
             if (start >= listUser.size())
                 return new ListPageDto<UserDto>(pages, newList);
@@ -100,17 +97,19 @@ public class UserImpl implements UserService {
 
         var user = opUser.get();
 
-            user.setName(nome);
-            user.setEdv(edv);
-            user.setEmail(email);
-            user.setPassword(crypt.encode(password));
-            user.setNumber(numero);
+            user.setName(nome!=null?nome:user.getName());
+            user.setEdv(edv!=null?edv:user.getEdv());
+            user.setEmail(email!=null?email:user.getEmail());
+            user.setPassword(password!=null?crypt.encode(password):user.getPassword());
+            user.setNumber(numero!=null?numero:user.getNumber());
             user.setAdmin(false);
             user.setEts(false);
-            user.setDescription(description);
-            var res = imageServ.UpdateImage(user.getImage(), image);
-            if (!res.success()) {
-                return res;
+            user.setDescription(description!=null?description:user.getDescription());
+            if(image!=null){
+                var res = imageServ.UpdateImage(user.getImage(), image);
+                if (!res.success()) {
+                    return res;
+                }
             }
             repo.save(user);
 

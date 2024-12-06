@@ -23,6 +23,7 @@ public class JwtImplementation implements JWTService<Token> {
         var claims = new HashMap<String, Object>();
         
         claims.put("id", token.getId());
+        claims.put("admin", token.isAdmin());
 
         return get(claims);
     }
@@ -35,6 +36,7 @@ public class JwtImplementation implements JWTService<Token> {
 
             Token token = new Token();
             token.setId(Long.parseLong(map.get("id").toString()));
+            token.setAdmin((boolean)map.get("admin"));
 
             return token;
         }
