@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -29,13 +29,10 @@ public class Project {
     private boolean status;
 
     @Column
-    private Date startDate;
+    private LocalDateTime startDate;
 
     @Column
-    private Date endDate;
-
-    @Column
-    private boolean priv;
+    private LocalDateTime endDate;
 
     @ManyToOne
     @JoinColumn(name="categoryId") 
@@ -85,28 +82,20 @@ public class Project {
         this.status = status;
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
-    }
-
-    public boolean isPriv() {
-        return priv;
-    }
-
-    public void setPriv(boolean priv) {
-        this.priv = priv;
     }
 
     public Category getCategory() {

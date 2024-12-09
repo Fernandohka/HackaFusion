@@ -1,7 +1,6 @@
 package com.example.demo.services.impl;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,10 +10,12 @@ import com.example.demo.dto.ListPageDto;
 import com.example.demo.dto.QuestionDto;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.UserDto;
+import com.example.demo.dto.VoteDto;
 import com.example.demo.model.Answer;
 import com.example.demo.model.Forum;
 import com.example.demo.model.Question;
 import com.example.demo.model.User;
+import com.example.demo.model.Vote;
 import com.example.demo.repositories.ForumRepository;
 import com.example.demo.repositories.QuestionRepository;
 import com.example.demo.repositories.UserRepo;
@@ -59,8 +60,19 @@ public class QuestionImpl implements QuestionService {
 
         return new QuestionDto(
             question.getId(), 
-            new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage())), 
-            new ForumDto(forum.getId(), forum.getName(), forum.getDescription()), 
+            new UserDto(
+                user.getId(), 
+                user.getName(), 
+                user.getEdv(), 
+                user.getEmail(), 
+                user.getNumber(), 
+                imageServ.toUrl(user.getImage())
+                ), 
+            new ForumDto(
+                forum.getId(), 
+                forum.getName(), 
+                forum.getDescription()
+                ), 
             question.getTitle(), 
             question.getDescription(), 
             null);
@@ -73,10 +85,10 @@ public class QuestionImpl implements QuestionService {
 
         var listQuestion = questionRepo.findAll();
         var newList = new ArrayList<QuestionDto>();
-        Integer pages = (int)Math.floor(listQuestion.size()/size);
 
         Integer start = 0;
         Integer end = listQuestion.size();
+        Integer pages = (int)Math.floor(listQuestion.size()/size);
         
         if(size > 0 || page > 0){
             start = (size-1)*page;
@@ -85,16 +97,33 @@ public class QuestionImpl implements QuestionService {
             end = start+size<listQuestion.size()?start+size:listQuestion.size();
         }
 
-        for(int i=start;i<end;i++)
+        Question question;
+        User user;
+        Forum forum;
+        for(int i=start;i<end;i++){
+            question = listQuestion.get(i);
+            user = question.getUser();
+            forum = question.getForum();
             newList.add(new QuestionDto(
-                listQuestion.get(i).getId(), 
-                new UserDto(listQuestion.get(i).getUser().getId(), listQuestion.get(i).getUser().getName(), listQuestion.get(i).getUser().getEdv(), listQuestion.get(i).getUser().getEmail(), listQuestion.get(i).getUser().getNumber(), imageServ.toUrl(listQuestion.get(i).getUser().getImage())), 
-                new ForumDto(listQuestion.get(i).getForum().getId(), listQuestion.get(i).getForum().getName(), listQuestion.get(i).getForum().getDescription()), 
-                listQuestion.get(i).getTitle(), 
-                listQuestion.get(i).getDescription(),
+                question.getId(), 
+                new UserDto(
+                    user.getId(), 
+                    user.getName(), 
+                    user.getEdv(), 
+                    user.getEmail(), 
+                    user.getNumber(), 
+                    imageServ.toUrl(user.getImage())
+                    ), 
+                new ForumDto(
+                    forum.getId(), 
+                    forum.getName(), 
+                    forum.getDescription()
+                    ), 
+                question.getTitle(), 
+                question.getDescription(),
                 null));
+        }
         return new ListPageDto<>(pages, newList);
-
     }
 
     @Override
@@ -103,17 +132,67 @@ public class QuestionImpl implements QuestionService {
             var question = questionRepo.findById(idQuestion).get();
             var answers = new AnswerDto[question.getAnswers().size()];
             var iterator = question.getAnswers().iterator();
+            User user;
+            Forum forum;
             for(int i = 0; i < question.getAnswers().size(); i++){
                 if(iterator.hasNext()){
                     Answer answer = iterator.next();
-                    answers[i] = new AnswerDto(answer.getId(), answer.getDescription());
+
+                    var votes = new VoteDto[answer.getVotes().size()];
+                    var iteratorVotes = answer.getVotes().iterator();
+                    for(int j = 0; j < answer.getVotes().size(); j++){
+                        if(iteratorVotes.hasNext()){
+                            Vote vote = iteratorVotes.next();
+                            user = vote.getUser();
+                            votes[j] = new VoteDto(
+                                        vote.getId(), 
+                                        vote.isUp(), 
+                                        new UserDto(
+                                            user.getId(), 
+                                            user.getName(), 
+                                            user.getEdv(), 
+                                            user.getEmail(), 
+                                            user.getNumber(), 
+                                            imageServ.toUrl(user.getImage())
+                                            )
+                                        );
+                        }
+                    }
+
+                    user = answer.getUser();
+                    answers[i] = new AnswerDto(
+                                    answer.getId(), 
+                                    answer.getDescription(), 
+                                    new UserDto(
+                                        user.getId(), 
+                                        user.getName(), 
+                                        user.getEdv(), 
+                                        user.getEmail(), 
+                                        user.getNumber(), 
+                                        imageServ.toUrl(user.getImage())
+                                        ), 
+                                    votes
+                                    );
                 }
             }
 
+            user = question.getUser();
+            forum = question.getForum();
             return new QuestionDto(
                 question.getId(), 
-                new UserDto(question.getUser().getId(), question.getUser().getName(), question.getUser().getEdv(), question.getUser().getEmail(), question.getUser().getNumber(), imageServ.toUrl(question.getUser().getImage())), 
-                new ForumDto(question.getForum().getId(), question.getForum().getName(), question.getForum().getDescription()), 
+                new UserDto(
+                    user.getId(), 
+                    user.getName(), 
+                    user.getEdv(), 
+                    user.getEmail(), 
+                    user.getNumber(), 
+                    imageServ.toUrl(user.getImage())
+                    ), 
+                new ForumDto(
+                    forum.getId(), 
+                    forum.getName(), 
+                    forum.getDescription()
+                    ), 
                 question.getTitle(), 
                 question.getDescription(), 
                 answers);
@@ -126,9 +205,9 @@ public class QuestionImpl implements QuestionService {
     public ResponseDto delete(Long idQuestion) {
         try {
             questionRepo.deleteById(idQuestion);
-            return new ResponseDto(true, "Question deletion success");
+            return new ResponseDto(true, "Questão deletada com sucesso");
         } catch (Exception e) {
-            return new ResponseDto(false, "Question deletion failed");
+            return new ResponseDto(false, "Erro ao deletar questão");
         }
     }
 }

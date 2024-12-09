@@ -1,10 +1,10 @@
 package com.example.demo.dto;
 
-public record AnswerDto(
+public record FeedBackProjectDto(
     Long id,
     String description,
-    UserDto user,
-    VoteDto[] votes
+    Boolean isPrivate,
+    UserDto user
 ) {
     
 }

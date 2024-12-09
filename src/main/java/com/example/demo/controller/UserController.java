@@ -57,9 +57,9 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public  ResponseEntity<ListPageDto<UserDto>> getAllUser(@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size){
+    public  ResponseEntity<ListPageDto<UserDto>> getAllUser(@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size,@RequestParam(defaultValue = "") String query){
         try {
-            return new ResponseEntity<>(service.getAll(page, size),HttpStatus.OK);
+            return new ResponseEntity<>(service.getAll(page, size,query),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

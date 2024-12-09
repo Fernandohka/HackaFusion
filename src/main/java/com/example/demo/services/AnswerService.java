@@ -1,11 +1,11 @@
 package com.example.demo.services;
 
+import com.example.demo.dto.AnswerDto;
 import com.example.demo.dto.ResponseDto;
-import com.example.demo.model.Answer;
-import com.example.demo.model.Vote;
+import com.example.demo.dto.VoteDto;
 
 public interface AnswerService {
-    public Answer create(Long idUser, Long isQuestion, String description);
+    public AnswerDto create(Long idUser, Long idQuestion, String description);
     public ResponseDto delete(Long idAnswer);
-    public Vote addVote(Boolean up, Long idUser, Long isAnswer);
+    public VoteDto addVote(Boolean up, Long idUser, Long idAnswer);
 }
