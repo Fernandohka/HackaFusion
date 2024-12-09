@@ -105,9 +105,9 @@ public class ProjectController {
     public ResponseEntity<MessageDto> createFeedback(@RequestAttribute("token") Token token, @RequestBody CreateProjectFeedbackDto data){
         var res = projectFeedbackService.createFeedback(data.idProject(), token.getId(), data.description(), data.isPrivate());
         if(res == null)
-            return new ResponseEntity<>(new MessageDto("Erro ao criar projeto"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new MessageDto("Erro ao criar feedback"), HttpStatus.BAD_REQUEST);
         
-        return new ResponseEntity<>(new MessageDto("Projeto criado com sucesso"), HttpStatus.OK);
+        return new ResponseEntity<>(new MessageDto("Feedback criado com sucesso"), HttpStatus.OK);
     }
 
     @GetMapping("/{idProject}/feedback/{idUser}")
