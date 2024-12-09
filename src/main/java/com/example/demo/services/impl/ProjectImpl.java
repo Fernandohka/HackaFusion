@@ -114,7 +114,7 @@ public class ProjectImpl implements ProjectService {
         Integer end = listProject.size();
         Integer pages = (int)Math.floor(listProject.size()/size);
         
-        if(size > 0 || page > 0){
+        if(size > 0 && page > 0){
             start = (page-1)*size;
             if(start >= listProject.size())
                 return new ListPageDto<>(pages, newList);
