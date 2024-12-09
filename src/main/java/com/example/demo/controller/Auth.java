@@ -34,6 +34,6 @@ public class Auth {
         token.setAdmin(curUser.isAdmin());
         token.setId(curUser.getId());
         
-        return new ResponseEntity<>(new ReturnLoginDto(jwt.get(token),"Usuario cadastrado com sucesso!",curUser.isAdmin()),HttpStatus.OK);
+        return new ResponseEntity<>(new ReturnLoginDto(jwt.get(token),"Usuario Logado com sucesso!",curUser.isAdmin()),HttpStatus.OK);
     }
 }

@@ -79,7 +79,7 @@ public class AbilityImpl  implements AbilityService{
         Integer pages = (int)Math.floor(listAbility.size()/size);
 
 
-        if (size > 0 || page > 0) {
+        if (size > 0 && page > 0) {
             start = (size - 1) * page;
             if (start >= listAbility.size())
                 return new ListPageDto<>(pages, listDto);

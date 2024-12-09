@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import com.example.demo.dto.ListPageDto;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.UserDto;
@@ -12,6 +17,7 @@ import com.example.demo.model.User;
 import com.example.demo.repositories.UserRepo;
 import com.example.demo.services.ImageStorageService;
 import com.example.demo.services.UserService;
+import com.example.demo.util.ImageUtils;
 
 public class UserImpl implements UserService {
 
@@ -35,10 +41,11 @@ public class UserImpl implements UserService {
             newUser.setNumber(numero);
             newUser.setAdmin(false);
             newUser.setEts(false);
-            newUser.setImage(Long.valueOf(1)); 
+            newUser.setImage(imageServ.UploadImage(ImageUtils.compressImage(Files.readAllBytes(Paths.get("C:\\Users\\disrct\\Desktop\\HACKAFUSION\\HackaFusion\\src\\main\\java\\com\\example\\demo\\images\\user.png"))))); 
             newUser.setDescription("");
             return repo.save(newUser);
         } catch (Exception e) {
+            System.err.println(e);
             return null;
         }
     }
@@ -49,12 +56,12 @@ public class UserImpl implements UserService {
 
         Integer start = 0;
         Integer end = listUser.size();
-        Integer pages = (int)Math.floor(listUser.size()/size);
+        Integer pages = size>0?(int)Math.floor(listUser.size()/size):0;
 
         var newList = new ArrayList<UserDto>();
 
         if (size > 0 || page > 0) { 
-            start = (size - 1) * page;
+            start = (page - 1) * size;
             if (start >= listUser.size())
                 return new ListPageDto<UserDto>(pages, newList);
             end = start + size < listUser.size() ? start + size : listUser.size();

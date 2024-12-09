@@ -10,6 +10,7 @@ import com.example.demo.model.Image;
 
 public interface ImageStorageService {
     public Long UploadImage(MultipartFile file) throws IOException;
+    public Long UploadImage(byte[] file) throws IOException;
     public ResponseDto UpdateImage(Long idImage,MultipartFile file) throws IOException;
     public byte[] descompressImage(byte[] file);
     public String toUrl(Long idImage);

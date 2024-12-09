@@ -22,8 +22,13 @@ public class ImageStorageImplementation implements ImageStorageService {
 
     @Override
     public Long UploadImage(MultipartFile file) throws IOException {
+        if(file == null){
+            System.out.println("Image vazia!");
+            return null;
+        }
         Image image = new Image();
-        image.setImage(ImageUtils.compressImage(file.getBytes()));
+        image.setData(ImageUtils.compressImage(file.getBytes()));
+        
         repository.save(image);
 
         return image.getId();
@@ -39,7 +44,7 @@ public class ImageStorageImplementation implements ImageStorageService {
             return new ResponseDto(false, "Id inválido!");
         
         Image image = image_opt.get();
-        image.setImage(ImageUtils.compressImage(file.getBytes()));
+        image.setData(ImageUtils.compressImage(file.getBytes()));
         repository.save(image);
 
         return new ResponseDto(true, "Imagem atualizada com sucesso!");
@@ -52,7 +57,7 @@ public class ImageStorageImplementation implements ImageStorageService {
 
     @Override
     public String toUrl(Long idImage) {
-        return "https://localhost:8080/image/" + idImage;
+        return "http://localhost:8080/file/image/" + idImage;
     }
 
     @Override
@@ -64,6 +69,20 @@ public class ImageStorageImplementation implements ImageStorageService {
             return null;
 
         return opt_image.get(); 
+    }
+
+    @Override
+    public Long UploadImage(byte[] file) throws IOException {
+        if(file == null){
+            System.out.println("Image vazia!");
+            return null;
+        }
+        Image image = new Image();
+        image.setData(file);
+        
+        repository.save(image);
+
+        return image.getId();
     }
 
     
