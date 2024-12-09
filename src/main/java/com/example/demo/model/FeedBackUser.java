@@ -20,7 +20,7 @@ public class FeedBackUser {
 
     @ManyToOne
     @JoinColumn()
-    private User userReceived;
+    private User userReceiver;
  
     @Column
     private String description;
@@ -44,12 +44,12 @@ public class FeedBackUser {
         this.userSender = userSender;
     }
 
-    public User getUserReceived() {
-        return userReceived;
+    public User getUserReceiver() {
+        return userReceiver;
     }
 
-    public void setUserReceived(User userReceived) {
-        this.userReceived = userReceived;
+    public void setUserReceiver(User userReceiver) {
+        this.userReceiver = userReceiver;
     }
 
     public String getDescription() {

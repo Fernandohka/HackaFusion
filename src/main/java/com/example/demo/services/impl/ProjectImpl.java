@@ -2,6 +2,7 @@ package com.example.demo.services.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -103,11 +104,15 @@ public class ProjectImpl implements ProjectService {
     }
 
     @Override
-    public ListPageDto<ProjectDto> getAll(Integer page, Integer size) {
+    public ListPageDto<ProjectDto> getAll(Integer page, Integer size, String query) {
         if(page == null || size == null || page < 1 || size < 1)
             return null;
 
-        var listProject = projectRepo.findAll();
+        List<Project> listProject;
+        if(query == null || query.equals(""))
+            listProject = projectRepo.findAll();
+        else
+            listProject = projectRepo.findByCategoryName(query);
         var newList = new ArrayList<ProjectDto>();
 
         Integer start = 0;

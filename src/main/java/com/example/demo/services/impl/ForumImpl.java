@@ -1,6 +1,7 @@
 package com.example.demo.services.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,19 +34,23 @@ public class ForumImpl implements ForumService {
     }
 
     @Override
-    public ListPageDto<ForumDto> getAll(Integer page, Integer size) {
+    public ListPageDto<ForumDto> getAll(Integer page, Integer size, String query) {
         if(page == null || size == null || page < 1 || size < 1)
             return null;
 
-        var listForum = forumRepo.findAll();
+        List<Forum> listForum;
+        if(query == null || query.equals(""))
+            listForum = forumRepo.findAll();
+        else
+            listForum = forumRepo.findByName(query);
         var newList = new ArrayList<ForumDto>();
 
         Integer start = 0;
         Integer end = listForum.size();
         Integer pages = (int)Math.floor(listForum.size()/size);
         
-        if(size > 0 || page > 0){
-            start = (size-1)*page;
+        if(size > 0 && page > 0){
+            start = (page-1)*size;
             if(start >= listForum.size())
                 return new ListPageDto<>(pages, newList);
             end = start+size<listForum.size()?start+size:listForum.size();

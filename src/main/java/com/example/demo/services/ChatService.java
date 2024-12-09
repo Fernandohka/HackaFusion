@@ -6,5 +6,5 @@ import com.example.demo.model.Chat;
 
 public interface ChatService {
     public Chat create(Long idUserA, Long idUserB);
-    public List<Chat> getAllByUser(Long iduser);
+    public List<Chat> getAllByUser(Long iduser, String query);
 }
