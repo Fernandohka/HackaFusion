@@ -1,11 +1,10 @@
 package com.example.demo.services;
 
-import java.util.List;
-
-import com.example.demo.model.FeedBackProject;
+import com.example.demo.dto.FeedBackProjectDto;
+import com.example.demo.dto.ListPageDto;
 
 public interface ProjectFeedbackService {
-    public FeedBackProject createFeedback(Long idProject, Long idUser, String description, Boolean isPrivate);
-    public List<FeedBackProject> getFeedbackByUser(Long idProject, Long idUser);
-    public List<FeedBackProject> getAllFeedback(Long idProject, Integer page, Integer size);
+    public FeedBackProjectDto createFeedback(Long idProject, Long idUser, String description, Boolean isPrivate);
+    public ListPageDto<FeedBackProjectDto> getFeedbackByUser(Long idProject, Long idUser, Integer page, Integer size);
+    public ListPageDto<FeedBackProjectDto> getAllFeedback(Long idProject, Integer page, Integer size);
 }
