@@ -16,16 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.ListPageDto;
 import com.example.demo.dto.Token;
 import com.example.demo.dto.Web.AbilityDto;
+import com.example.demo.dto.Web.CarrerDto;
 import com.example.demo.dto.Web.MessageDto;
-import com.example.demo.services.AbilityService;
+import com.example.demo.services.CareerService;
 
 @RestController
-public class AbilityController {
+public class CareerController {
     @Autowired
-    AbilityService service;
+    CareerService service;
 
-    @GetMapping("/ability")
-    public ResponseEntity<ListPageDto<AbilityDto>> getAbilitys(@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size,@RequestParam(defaultValue = "") String query){
+    @GetMapping("/career")
+    public ResponseEntity<ListPageDto<CarrerDto>> getAbilitys(@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size,@RequestParam(defaultValue = "") String query){
         try {
             return new ResponseEntity<>(service.getAll(page, size, query),HttpStatus.OK);
         } catch (Exception e) {
@@ -34,23 +35,23 @@ public class AbilityController {
         }
     }
 
-    @GetMapping("/ability/user/{id}")
-    public ResponseEntity<ListPageDto<AbilityDto>> getAbilitys(@PathVariable Long id ,@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size,@RequestParam(defaultValue = "") String query){
+    @GetMapping("/career/user/{id}")
+    public ResponseEntity<ListPageDto<CarrerDto>> getAbilitys(@PathVariable Long id ,@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size,@RequestParam(defaultValue = "") String query){
         try {
 
-            var abi = service.getAllByUser(id,page, size);
+            var career = service.getAllByUser(id,page, size);
 
-            if(abi==null)
+            if(career==null)
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-            return new ResponseEntity<>(abi,HttpStatus.OK);
+            return new ResponseEntity<>(career,HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PostMapping("/admin/ability")
+    @PostMapping("/admin/career")
     public ResponseEntity<MessageDto> createAbility(@RequestAttribute("token") Token token,@RequestBody AbilityDto data){
 
         if(!token.isAdmin()){
@@ -65,7 +66,7 @@ public class AbilityController {
         return new ResponseEntity<>(new MessageDto("Criado com sucesso!!"),HttpStatus.OK);
     }
 
-    @DeleteMapping("/admin/ability/{id}")
+    @DeleteMapping("/admin/career/{id}")
     public ResponseEntity<MessageDto> deleteAbility(@RequestAttribute("token") Token token,@PathVariable Long id){
 
         if(!token.isAdmin()){
@@ -80,26 +81,26 @@ public class AbilityController {
         return new ResponseEntity<>(new MessageDto("Deletado com sucesso!!"),HttpStatus.OK);
     }
 
-    @PostMapping("/ability/user/{id}")
+    @PostMapping("/career/user/{id}")
     public ResponseEntity<MessageDto> addUserAbility(@RequestAttribute("token") Token token,@PathVariable Long id){
 
-        var res = service.addAbility(token.getId(), id);
+        var res = service.addCareer(token.getId(), id);
 
         if(!res.success())
             return new ResponseEntity<>(new MessageDto(res.response()),HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity<>(new MessageDto("Habilidade adicionado com  sucesso!!"),HttpStatus.OK);
+        return new ResponseEntity<>(new MessageDto("Carreira adicionado com  sucesso!!"),HttpStatus.OK);
     }
 
-    @DeleteMapping("/ability/user/{id}")
+    @DeleteMapping("/career/user/{id}")
     public ResponseEntity<MessageDto> removeUserAbility(@RequestAttribute("token") Token token,@PathVariable Long id){
 
-        var res = service.deleteAbility(token.getId(), id);
+        var res = service.deleteCareer(token.getId(), id);
 
         if(!res.success())
             return new ResponseEntity<>(new MessageDto(res.response()),HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity<>(new MessageDto("Habilidade removida com  sucesso!!"),HttpStatus.OK);
+        return new ResponseEntity<>(new MessageDto("Carreira removida com  sucesso!!"),HttpStatus.OK);
     }
 
 

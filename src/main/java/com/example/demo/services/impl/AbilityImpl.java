@@ -111,7 +111,7 @@ public class AbilityImpl  implements AbilityService{
         if(userOp.isEmpty())
             return new ResponseDto(false, "Usuario não encontrado!!");
 
-        if(userOp.isEmpty())
+        if(abilityOp.isEmpty())
             return new ResponseDto(false, "Habilidade não encontrado!!");
 
         var currUser =  userOp.get();
@@ -132,7 +132,7 @@ public class AbilityImpl  implements AbilityService{
         if(userOp.isEmpty())
             return new ResponseDto(false, "Usuario não encontrado!!");
 
-        if(userOp.isEmpty())
+        if(abilityOp.isEmpty())
             return new ResponseDto(false, "Habilidade não encontrado!!");
 
         var currUser =  userOp.get();
