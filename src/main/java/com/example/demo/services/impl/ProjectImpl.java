@@ -29,8 +29,8 @@ public class ProjectImpl implements ProjectService {
     UserRepo userRepo;
 
     @Override
-    public ProjectDto create(String name, String description, Boolean status, LocalDateTime startDate, LocalDateTime endDate, Long idCategory, Long idUser) {
-        if(name == null || name.equals("") || description == null || description.equals("") || status == null || startDate == null || endDate == null || idCategory == null)
+    public ProjectDto create(String name, String description, LocalDateTime startDate, LocalDateTime endDate, Long idCategory, Long idUser) {
+        if(name == null || name.equals("") || description == null || description.equals("") || startDate == null || endDate == null || idCategory == null)
             return null;
 
         Category category;
@@ -47,7 +47,7 @@ public class ProjectImpl implements ProjectService {
         project.setEndDate(endDate);
         project.setName(name);
         project.setStartDate(startDate);
-        project.setStatus(status);
+        project.setStatus(true);
         projectRepo.save(project);
         addUser(project.getId(), idUser);
 
@@ -76,6 +76,12 @@ public class ProjectImpl implements ProjectService {
             return new ResponseDto(false, "Erro ao adicionar usuario");
         }
 
+        if(!project.getUsers().contains(user))
+            return null;
+        
+        if(!project.isStatus())
+            return null;
+
         var users = project.getUsers();
         users.add(user);
 
@@ -96,6 +102,12 @@ public class ProjectImpl implements ProjectService {
         } catch (Exception e) {
             return new ResponseDto(false, "Erro ao deletar usuario");
         }
+
+        if(!project.getUsers().contains(user))
+            return null;
+        
+        if(!project.isStatus())
+            return null;
 
         var users = project.getUsers();
         users.remove(user);

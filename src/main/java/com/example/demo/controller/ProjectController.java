@@ -41,7 +41,7 @@ public class ProjectController {
     
     @PostMapping
     public ResponseEntity<MessageDto> create(@RequestAttribute("token") Token token, @RequestBody CreateProjectDto data){
-        var res = projectService.create(data.name(), data.description(), data.status(), data.startDate(), data.endDate(), data.idCategory(), token.getId());
+        var res = projectService.create(data.name(), data.description(), data.startDate(), data.endDate(), data.idCategory(), token.getId());
         if(res == null)
             return new ResponseEntity<>(new MessageDto("Erro ao criar projeto"), HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(new MessageDto("Projeto criado com sucesso"), HttpStatus.OK);
@@ -93,8 +93,8 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}/message")
-    public ResponseEntity<ListPageDto<MessageProjectDto>> getAllMessage(@PathVariable Long id, @RequestBody PageableDto data){
-        var res = projectMessageService.getAllMessage(id, data.page(), data.size());
+    public ResponseEntity<ListPageDto<MessageProjectDto>> getAllMessage(@PathVariable Long id, @RequestAttribute("token") Token token, @RequestBody PageableDto data){
+        var res = projectMessageService.getAllMessage(id, token.getId(), data.page(), data.size());
         if(res == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(res, HttpStatus.OK);
