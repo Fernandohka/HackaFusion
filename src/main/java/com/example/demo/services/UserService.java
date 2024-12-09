@@ -14,4 +14,5 @@ public interface UserService {
     public UserDto getById(Long idUser);
     public ResponseDto delete(Long idUser);
     public ResponseDto update(Long idUser,String nome, String edv, String email, String password, String numero, Boolean admin, Boolean ets, MultipartFile image, String description);
+    public ResponseDto updatePass(Long id,String password,String newPassword);
 }

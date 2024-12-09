@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.example.demo.dto.Web.UpdateUserDto;
 import com.example.demo.model.Image;
 import com.example.demo.services.ImageStorageService;
@@ -31,7 +28,7 @@ public class FileController {
     @GetMapping("image/{id}")
     public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
         if(id == null)
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         Image image = imageService.getImageBybId(id);
 

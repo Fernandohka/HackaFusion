@@ -19,6 +19,7 @@ import com.example.demo.dto.Token;
 import com.example.demo.dto.UserDto;
 import com.example.demo.dto.Web.CreateUserDto;
 import com.example.demo.dto.Web.MessageDto;
+import com.example.demo.dto.Web.UpdatePassDto;
 import com.example.demo.dto.Web.UpdateUserDto;
 import com.example.demo.services.AuthService;
 import com.example.demo.services.UserService;
@@ -56,6 +57,7 @@ public class UserController {
         return new ResponseEntity<>(new MessageDto("Usuario criado com sucesso!"),HttpStatus.OK); 
     }
 
+
     @GetMapping("/user")
     public  ResponseEntity<ListPageDto<UserDto>> getAllUser(@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size,@RequestParam(defaultValue = "") String query){
         try {
@@ -77,6 +79,16 @@ public class UserController {
     @PutMapping("/user")
     public ResponseEntity<MessageDto> updateUser(@RequestAttribute("token") Token token,@ModelAttribute UpdateUserDto data){
         var res = service.update(token.getId(), data.name(), data.EDV(), data.email(),  null, data.phone(), false, data.student(), data.image(), null);
+        
+        if(!res.success())
+            return new ResponseEntity<>(new MessageDto(res.response()),HttpStatus.BAD_REQUEST);
+        
+        return new ResponseEntity<>(new MessageDto("Usuario atualizado com sucesso!"),HttpStatus.OK);
+    }
+
+    @PutMapping("/user/password")
+    public ResponseEntity<MessageDto> updateUser(@RequestAttribute("token") Token token,@ModelAttribute UpdatePassDto data){
+        var res = service.updatePass(token.getId(),data.password(),data.newPassword());
         
         if(!res.success())
             return new ResponseEntity<>(new MessageDto(res.response()),HttpStatus.BAD_REQUEST);

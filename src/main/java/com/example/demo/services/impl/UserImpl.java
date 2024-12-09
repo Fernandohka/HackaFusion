@@ -131,4 +131,24 @@ public class UserImpl implements UserService {
 
     }
 
+    @Override
+    public ResponseDto updatePass(Long id, String password, String newPassword) {
+
+        var userOp = repo.findById(id);
+
+        if(!userOp.isPresent())
+            return new ResponseDto(false,"Usuario não encontrado");
+        var user = userOp.get();
+
+        if(!crypt.checkEncode(password,user.getPassword())){
+            return new ResponseDto(false,"Senha Incorreta");
+        }
+
+        user.setPassword(crypt.encode(newPassword));
+
+        repo.save(user);
+
+        return new ResponseDto(true, "senha atualizado com sucesso!");
+    }
+
 }
