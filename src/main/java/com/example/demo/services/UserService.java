@@ -10,7 +10,7 @@ import com.example.demo.model.User;
 
 public interface UserService {
     public User create(String nome, String edv, String email, String password, String numero, MultipartFile image, String description);
-    public ListPageDto<UserDto> getAll(Integer page, Integer size);
+    public ListPageDto<UserDto> getAll(Integer page, Integer size, String query);
     public UserDto getById(Long idUser);
     public ResponseDto delete(Long idUser);
     public ResponseDto update(Long idUser,String nome, String edv, String email, String password, String numero, Boolean admin, Boolean ets, MultipartFile image, String description);
