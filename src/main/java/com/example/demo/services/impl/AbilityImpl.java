@@ -1,12 +1,13 @@
 package com.example.demo.services.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.example.demo.dto.AbilityDto;
 import com.example.demo.dto.ListPageDto;
 import com.example.demo.dto.ResponseDto;
+import com.example.demo.dto.Web.AbilityDto;
 import com.example.demo.model.Ability;
 import com.example.demo.repositories.AbilityRepo;
 import com.example.demo.repositories.UserRepo;
@@ -30,13 +31,20 @@ public class AbilityImpl  implements AbilityService{
     }
 
     @Override
-    public ListPageDto<AbilityDto> getAll(Integer page, Integer size) {
-        var listAbility = repo.findAll();
+    public ListPageDto<AbilityDto> getAll(Integer page, Integer size,String query) {
+        List<Ability> listAbility;
+
+        if(query==""|| query==null){
+            listAbility = repo.findAll();
+        }else{
+            listAbility = repo.findByNameContains(query);
+        }
+
         var listDto = new ArrayList<AbilityDto>();
 
         Integer start = 0;
         Integer end = listAbility.size();
-        Integer pages = (int)Math.floor(listAbility.size()/size);
+        Integer pages = size>0?(int)Math.floor(listAbility.size()/size):0;
 
 
         if (size > 0 || page > 0) {
@@ -48,7 +56,7 @@ public class AbilityImpl  implements AbilityService{
 
         for (int i = start; i < end; i++) {
             var ability = listAbility.get(i);
-            listDto.add(new AbilityDto(ability.getName()));
+            listDto.add(new AbilityDto(ability.getName(),ability.getId()));
         }
 
         return new ListPageDto<>(pages, listDto);
@@ -68,7 +76,7 @@ public class AbilityImpl  implements AbilityService{
         var userOp = userRepo.findById(idUser);
 
         if(userOp.isEmpty())
-            return null;
+        return null;
         
         var listAbility = new ArrayList<>(userOp.get().getAbilitys());
         var listDto = new ArrayList<AbilityDto>();
@@ -76,7 +84,7 @@ public class AbilityImpl  implements AbilityService{
 
         Integer start = 0;
         Integer end = listAbility.size();
-        Integer pages = (int)Math.floor(listAbility.size()/size);
+        Integer pages = size>0?(int)Math.floor(listAbility.size()/size):0;
 
 
         if (size > 0 && page > 0) {
@@ -88,7 +96,7 @@ public class AbilityImpl  implements AbilityService{
 
         for (int i = start; i < end; i++) {
             var ability = listAbility.get(i);
-            listDto.add(new AbilityDto(ability.getName()));
+            listDto.add(new AbilityDto(ability.getName(),ability.getId()));
         }
 
         return new ListPageDto<>(pages, listDto);
@@ -98,7 +106,7 @@ public class AbilityImpl  implements AbilityService{
     @Override
     public ResponseDto addAbility(Long idUser, Long idAbility) {
         var userOp = userRepo.findById(idUser);
-        var abilityOp = repo.findById(idUser);
+        var abilityOp = repo.findById(idAbility);
 
         if(userOp.isEmpty())
             return new ResponseDto(false, "Usuario não encontrado!!");
@@ -119,7 +127,7 @@ public class AbilityImpl  implements AbilityService{
     @Override
     public ResponseDto deleteAbility(Long idUser, Long idAbility) {
         var userOp = userRepo.findById(idUser);
-        var abilityOp = repo.findById(idUser);
+        var abilityOp = repo.findById(idAbility);
 
         if(userOp.isEmpty())
             return new ResponseDto(false, "Usuario não encontrado!!");

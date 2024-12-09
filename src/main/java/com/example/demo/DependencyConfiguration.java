@@ -4,10 +4,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.example.demo.dto.Token;
+import com.example.demo.services.AbilityService;
 import com.example.demo.services.AuthService;
 import com.example.demo.services.ImageStorageService;
 import com.example.demo.services.JWTService;
 import com.example.demo.services.UserService;
+import com.example.demo.services.impl.AbilityImpl;
 import com.example.demo.services.impl.AuthImpl;
 import com.example.demo.services.impl.BcryptImpl;
 import com.example.demo.services.impl.ImageStorageImplementation;
@@ -44,6 +46,11 @@ public class DependencyConfiguration {
     @Bean
     public BcryptImpl bcryptImpl(){
         return new BcryptImpl();
+    }
+
+    @Bean
+    public AbilityService abilityService(){
+        return new AbilityImpl();
     }
 
 }

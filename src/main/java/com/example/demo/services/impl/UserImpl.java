@@ -6,9 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import com.example.demo.dto.ListPageDto;
@@ -57,7 +55,7 @@ public class UserImpl implements UserService {
         if(query == null || query.equals(""))
             listUser = repo.findAll();
         else
-            listUser = repo.findByNameOrEmailOrEdv(query, query, query);
+            listUser = repo.findByNameOrEmailOrEdvContains(query, query, query);
 
         Integer start = 0;
         Integer end = listUser.size();
