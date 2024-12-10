@@ -2,7 +2,6 @@
 
 ## **AUTH:**
 
-###
 ###    POST/auth
         {	
             "login"		: string,
@@ -18,7 +17,6 @@
 
 ## **USER:**
 
-###
 ###    POST/user
         {
             "name"		: string,
@@ -32,7 +30,7 @@
                 "mesage"	: string
             }
     
-###
+---
 ### GET/user?page=''&size=''&query=''
 #### return
         {
@@ -49,7 +47,7 @@
             ]
         }
     
-###
+---
 ###     GET/user/{id}
 ####        return
         {
@@ -61,7 +59,7 @@
             "student"	: boolean
         }
     
-###
+---
 ###    PUT/user/password
         {
             "password"		: string,
@@ -72,7 +70,7 @@
                 "mesage"	: string
             }
         
-###
+---
 ###    PUT/user
         {
             "name"		: string,
@@ -87,7 +85,7 @@
                 "message"	: string
             }
 
-###
+---
 ###    DELETE/user/{id}
 #### return
         {
@@ -96,7 +94,6 @@
 			
 		
 ## **FORUM:**
-###
 ###    GET/forum/{id}
 #### return
             {
@@ -105,7 +102,7 @@
                 "description"	: string
             }
 
-###
+---
 ###    GET/forum?page=''&size=''
 #### return
             {
@@ -122,7 +119,7 @@
             }
     
 
-###
+---
 ###    POST/admin/forum
         {
             "name"			: string,
@@ -133,7 +130,7 @@
                 "message"	: string
             }
 
-###
+---
 ###    DELETE/admin/forum/{id}
 #### return
         {
@@ -142,7 +139,6 @@
 
 
 ## **CHAT:**
-###
 ###    POST/chat
         {
             "idReceiver"	: int
@@ -152,7 +148,7 @@
                 "message"	: string
             }
 
-###
+---
 ###    GET/chat?query=''
 #### return
         {
@@ -170,7 +166,7 @@
             ]
         }
 
-###
+---
 ###    GET/chat/{id}
 #### return
         {
@@ -197,7 +193,7 @@
             ]
         }
 
-###
+---
 ###    POST/chat/message
         {
             "description"	: string,
@@ -208,7 +204,7 @@
             "message"       : string
         }
 
-###
+---
 ###    DELETE/chat/message/{id}
 #### return
         {
@@ -216,7 +212,6 @@
         }
 
 ## **PROJECTS:**
-###
 ###    POST/project
         {
             "name"			: string,
@@ -231,7 +226,7 @@
                 "message"	: string
             }
 
-###
+---
 ###    GET/project?page=''&size=''&query
 #### return
         {
@@ -247,7 +242,7 @@
             ]
         }
     
-###
+---
 ###    POST/project/feedback
         {
             "idUser"		: int
@@ -257,7 +252,7 @@
 #### return
 
     
-###
+---
 ###    POST/project/user
         {
             "idProject"	: int
@@ -268,7 +263,7 @@
             "message"       : string
         }
     
-###
+---
 ###    DELETE/project/user
         {
             "idProject"	: int
