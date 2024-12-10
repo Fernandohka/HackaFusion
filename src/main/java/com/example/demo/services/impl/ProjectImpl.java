@@ -104,10 +104,10 @@ public class ProjectImpl implements ProjectService {
         }
 
         if(!project.getUsers().contains(user))
-            return null;
+            return new ResponseDto(false, "Permissão insuficiente");;
         
         if(!project.isStatus())
-            return null;
+            return new ResponseDto(false, "Projeto já finalizado");;
 
         var users = project.getUsers();
         users.remove(user);
