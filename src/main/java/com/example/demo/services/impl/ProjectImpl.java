@@ -98,16 +98,16 @@ public class ProjectImpl implements ProjectService {
 
         try {
             user = userRepo.findById(idUser).get();
-            project = projectRepo.findById(idUser).get();
+            project = projectRepo.findById(idProject).get();
         } catch (Exception e) {
             return new ResponseDto(false, "Erro ao deletar usuario");
         }
 
         if(!project.getUsers().contains(user))
-            return new ResponseDto(false, "Permissão insuficiente");;
+            return new ResponseDto(false, "Permissão insuficiente");
         
         if(!project.isStatus())
-            return new ResponseDto(false, "Projeto já finalizado");;
+            return new ResponseDto(false, "Projeto já finalizado");
 
         var users = project.getUsers();
         users.remove(user);

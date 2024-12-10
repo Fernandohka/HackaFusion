@@ -26,14 +26,14 @@ public class ForumController {
     ForumService forumService;
 
     @PostMapping
-    public ResponseEntity<ForumDto> create(@RequestAttribute("token") Token token, @RequestBody CreateForumDto data){
+    public ResponseEntity<MessageDto> create(@RequestAttribute("token") Token token, @RequestBody CreateForumDto data){
         if(!token.isAdmin())
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
         var res = forumService.create(data.name(), data.description());
         if(res == null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(res, HttpStatus.OK);
+            return new ResponseEntity<>(new MessageDto("Erro ao criar forum"), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new MessageDto("Forum criado com sucesso"), HttpStatus.OK);
     }
 
     @GetMapping
