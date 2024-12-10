@@ -49,7 +49,7 @@
     
 ------
 ###     GET/user/{id}
-####        return
+####    return
         {
             "id"		: int,
             "name"		: string,
@@ -155,9 +155,12 @@
                 "id"	: int,	
                 "user"	:
                 {
-                    "id"	: int,
-                    "name"	: string,
-                    "image"	: string
+                    "id"        : string,
+                    "name"      : string,
+                    "edv"       : string,
+                    "email"     : string,
+                    "telefone"  : string,
+                    "image"     : string
                 },
                 {}
             ]
@@ -175,8 +178,12 @@
                     "timestamp"		: date,
                     "user"			:
                     {
-                        "name"	: string,	
-                        "image"	: string
+                        "id"        : string,
+                        "name"      : string,
+                        "edv"       : string,
+                        "email"     : string,
+                        "telefone"  : string,
+                        "image"     : string
                     }
                 },
                 {}
@@ -235,12 +242,12 @@
 #### return
         {
             "id"            : int,
-            "name"          : string
-            "description"   :
-            "status"        :
-            "startDate"     :
-            "endDate"       :
-            category"       :
+            "name"          : string,
+            "description"   : string,
+            "status"        : booelan,
+            "startDate"     : date,
+            "endDate"       : date,
+            "category"      : string
         }
     
 ------
@@ -251,7 +258,58 @@
             "description	: string
         }
 #### return
+        {
+            "message"   : string
+        }
+------
+###     GET/project/{idProject}/feedback/{îdUser}
+####    return
+        {
+            "numPage"       : int,
+            "listObject"    :
+            [
+                {
+                    "id",
+                    "description",
+                    "isPrivate",
+                    "user" :
+                    {
+                        "id"        : string,
+                        "name"      : string,
+                        "edv"       : string,
+                        "email"     : string,
+                        "telefone"  : string,
+                        "image"     : string
+                    }
+                },
+                {}
+            ]
+        }
 
+------
+###     GET/project/{idProject}/feedback?page=''&size=''&query=''
+####    return
+        {
+            "numPage"       : int,
+            "listObject"    :
+            [
+                {
+                    "id",
+                    "description",
+                    "isPrivate",
+                    "user" :
+                    {
+                        "id"        : string,
+                        "name"      : string,
+                        "edv"       : string,
+                        "email"     : string,
+                        "telefone"  : string,
+                        "image"     : string
+                    }
+                },
+                {}
+            ]
+        }
     
 ------
 ###    POST/project/user
@@ -274,6 +332,53 @@
             {
                 "message"	: string 
             }
+------
+###     GET/project/user/{id}
+####    return
+        {
+            "id"            : int,
+            "name"          : string,
+            "description"   : string,
+            "status"        : booelan,
+            "startDate"     : date,
+            "endDate"       : date,
+            category"       : string
+        }
+------
+###     POST/project/message
+        {
+            "idProject"     : int,
+            "description"   : string,
+            "timestamp"     : date
+        }
+#### return
+    {
+        "message"   : string
+    }
+------
+###     GET/project/{id}/message?page=''&size=''
+####    return
+        {
+            "numPage"       : int
+            "listObject"    :
+            [
+                {
+                    "id"            : int,
+                    "description"   : description,
+                    "timestamp"     : date,
+                    "user"          :
+                    {
+                        "id"        : string
+                        "name"      : string
+                        "edv"       : string
+                        "email"     : string
+                        "telefone"  : string
+                        "image"     : string
+                    }
+                }
+            ]
+        }
+
         
 
 

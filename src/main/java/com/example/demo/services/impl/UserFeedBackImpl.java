@@ -56,7 +56,8 @@ public class UserFeedBackImpl implements FeedbackUserService {
                 receiver.getEdv(), 
                 receiver.getEmail(), 
                 receiver.getNumber(), 
-                imageServ.toUrl(receiver.getImage())
+                imageServ.toUrl(receiver.getImage()),
+                receiver.getEts()
                 ), 
             new UserDto(
                 sender.getId(), 
@@ -64,7 +65,8 @@ public class UserFeedBackImpl implements FeedbackUserService {
                 sender.getEdv(), 
                 sender.getEmail(), 
                 sender.getNumber(), 
-                imageServ.toUrl(sender.getImage())
+                imageServ.toUrl(sender.getImage()),
+                sender.getEts()
                 ), 
             feedback.getDescription(),
             feedback.isPriv()
@@ -106,7 +108,8 @@ public class UserFeedBackImpl implements FeedbackUserService {
                     receiver.getEdv(), 
                     receiver.getEmail(), 
                     receiver.getNumber(), 
-                    imageServ.toUrl(receiver.getImage())
+                    imageServ.toUrl(receiver.getImage()),
+                    receiver.getEts()
                     ), 
                 new UserDto(
                     sender.getId(), 
@@ -114,7 +117,8 @@ public class UserFeedBackImpl implements FeedbackUserService {
                     sender.getEdv(), 
                     sender.getEmail(), 
                     sender.getNumber(), 
-                    imageServ.toUrl(sender.getImage())
+                    imageServ.toUrl(sender.getImage()),
+                    sender.getEts()
                     ), 
                 feedback.getDescription(),
                 feedback.isPriv()
