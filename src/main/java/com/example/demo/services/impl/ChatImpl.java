@@ -84,7 +84,7 @@ public class ChatImpl implements ChatService{
             var currUser = message.getUser();
             newList.add(
                 new MessageDtoPriv(
-                    new UserDto(currUser.getId(), currUser.getName(), currUser.getEdv(), currUser.getEmail(), currUser.getNumber(), imageServ.toUrl(currUser.getImage())),
+                    new UserDto(currUser.getId(), currUser.getName(), currUser.getEdv(), currUser.getEmail(), currUser.getNumber(), imageServ.toUrl(currUser.getImage()), currUser.getEts()),
                     message.getDescription(), 
                     message.getTimestamp()
                 )
@@ -120,7 +120,7 @@ public class ChatImpl implements ChatService{
         
             newList.add(
                 new ChatDto(
-                    new UserDto(receiver.getId(), receiver.getName(), receiver.getEdv(), receiver.getEmail(), receiver.getNumber(), imageServ.toUrl(receiver.getImage())), 
+                    new UserDto(receiver.getId(), receiver.getName(), receiver.getEdv(), receiver.getEmail(), receiver.getNumber(), imageServ.toUrl(receiver.getImage()), receiver.getEts()), 
                     chatPriv.getId()
                 )
             );
