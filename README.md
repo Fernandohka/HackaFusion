@@ -1,13 +1,14 @@
-#FRONT-BACK
+# FRONT-BACK
 
-##AUTH:
+## AUTH:
 
-    POST/auth
+###
+###    POST/auth
         {	
             "login"		: string,
             "password"	: string
         } 
-        return
+#### return
             {
                 "admin"		: boolean,
                 "token"		: string,
@@ -15,9 +16,10 @@
             }
 
 
-##USER:
+## USER:
 
-    POST/user
+###
+###    POST/user
         {
             "name"		: string,
             "email"		: string,
@@ -25,13 +27,14 @@
             "phone"		: string,
             "password"	: string
         }
-        return
+#### return
             {
                 "mesage"	: string
             }
     
-    GET/user?page=''&size=''&query=''
-        return
+###
+### GET/user?page=''&size=''&query=''
+#### return
         {
             "numPage"		: int,
             "listObject"	:
@@ -46,8 +49,9 @@
             ]
         }
     
-    GET/user/{id}
-        return
+###
+###     GET/user/{id}
+####        return
         {
             "id"		: int,
             "name"		: string,
@@ -57,17 +61,19 @@
             "student"	: boolean
         }
     
-    PUT/user/password
+###
+###    PUT/user/password
         {
             "password"		: string,
             "newPassword"	: string
         }
-        return
+#### return
             {
                 "mesage"	: string
             }
         
-    PUT/user
+###
+###    PUT/user
         {
             "name"		: string,
             "image"		: string,
@@ -76,29 +82,32 @@
             "phone"		: string,
             "student"	: boolean
         }
-        return
+#### return
             {
                 "message"	: string
             }
 
-    DELETE/user/{id}
-        return
+###
+###    DELETE/user/{id}
+#### return
         {
             "message"	: string
         }
 			
 		
-##FORUM:
-    GET/forum/{id}
-        return
+## FORUM:
+###
+###    GET/forum/{id}
+#### return
             {
                 "id"			: int,
                 "name"			: string,
                 "description"	: string
             }
 
-    GET/forum?page=''&size=''
-        return
+###
+###    GET/forum?page=''&size=''
+#### return
             {
                 "numPage"		: int,
                 "listObject"	:
@@ -113,35 +122,39 @@
             }
     
 
-    POST/admin/forum
+###
+###    POST/admin/forum
         {
             "name"			: string,
             "description"	: string
         }
-        return
+#### return
             {
                 "message"	: string
             }
 
-    DELETE/admin/forum/{id}
-        return
+###
+###    DELETE/admin/forum/{id}
+#### return
         {
             "message"	: string
         }
 
 
-##CHAT:
-    POST/chat
+## CHAT:
+###
+###    POST/chat
         {
             "idReceiver"	: int
         }
-        return
+#### return
             {
                 "message"	: string
             }
 
-    GET/chat?query=''
-        return	
+###
+###    GET/chat?query=''
+#### return
         {
             "numPage"		: int,
             "listObject"	:
@@ -157,8 +170,9 @@
             ]
         }
 
-    GET/chat/{id}
-        return
+###
+###    GET/chat/{id}
+#### return
         {
             "id"	: int,
             "user" 	:
@@ -183,35 +197,27 @@
             ]
         }
 
-    POST/chat/message
+###
+###    POST/chat/message
         {
             "description"	: string,
             "timestamp"		: string
         }
+#### return
+        {
+            "message"       : string
+        }
 
-    DELETE/chat/message/{id}
-        return
+###
+###    DELETE/chat/message/{id}
+#### return
         {
             "message"	: string
         }
-    
-    --------------
-    GET/chat/message/{id}
-        return
-        {
-            "id"			: int,
-            "description"	: string,
-            "timestamp"		: date,
-            "user" 			:
-            {
-                "name"	: string,
-                "image"	: string
-            }
-        }
-    --------------
 
-##PROJECTS:
-    POST/project
+## PROJECTS:
+###
+###    POST/project
         {
             "name"			: string,
             "description"	: string,
@@ -220,13 +226,14 @@
             "endDate"		: date,
             "idCategory"	: int
         }
-        return
+#### return
             {
                 "message"	: string
             }
 
-    GET/project?page=''&size=''&query
-        return
+###
+###    GET/project?page=''&size=''&query
+#### return
         {
             "numPage",
             "listObject" :
@@ -240,26 +247,34 @@
             ]
         }
     
-    POST/project/feedback
+###
+###    POST/project/feedback
         {
             "idUser"		: int
             "idProject"		: int
             "description	: string
         }
+#### return
 
     
-    POST/project/user
+###
+###    POST/project/user
         {
             "idProject"	: int
             "idUser"	: int
+        }
+#### return
+        {
+            "message"       : string
         }
     
-    DELETE/project/user
+###
+###    DELETE/project/user
         {
             "idProject"	: int
             "idUser"	: int
         }
-        return
+#### return
             {
                 "message"	: string 
             }
