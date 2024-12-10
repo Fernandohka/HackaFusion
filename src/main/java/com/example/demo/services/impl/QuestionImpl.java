@@ -202,7 +202,20 @@ public class QuestionImpl implements QuestionService {
     }
 
     @Override
-    public ResponseDto delete(Long idQuestion) {
+    public ResponseDto delete(Long idUser, Long idQuestion) {
+        User user;
+        Question question;
+
+        try {
+            user = userRepo.findById(idUser).get();
+            question = questionRepo.findById(idQuestion).get();
+        } catch (Exception e) {
+            return new ResponseDto(false, "Erro ao deletar questão");
+        }
+
+        if(!question.getUser().equals(user) && !user.isAdmin())
+            return new ResponseDto(false, "Usuario sem permissão de deletar questão");
+
         try {
             questionRepo.deleteById(idQuestion);
             return new ResponseDto(true, "Questão deletada com sucesso");

@@ -9,5 +9,5 @@ public interface QuestionService {
     public QuestionDto create(Long idUser, Long idForum, String title, String description);
     public ListPageDto<QuestionDto> getAll(Integer page, Integer size);
     public QuestionDto getById(Long idQuestion, Integer answerPage, Integer answerSize);
-    public ResponseDto delete(Long idQuestion);
+    public ResponseDto delete(Long idUser, Long idQuestion);
 }

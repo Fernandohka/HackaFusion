@@ -48,7 +48,7 @@ public class CarrerImpl implements CareerService{
 
         List<Carrer> listCarrer;
 
-        if(query==""|| query==null){
+        if(query.equals("")|| query==null){
             listCarrer = repo.findAll();
         }else{
             listCarrer = repo.findByNameContains(query);
