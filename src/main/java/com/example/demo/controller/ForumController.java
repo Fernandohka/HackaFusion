@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.ForumDto;
@@ -16,7 +17,6 @@ import com.example.demo.dto.ListPageDto;
 import com.example.demo.dto.Token;
 import com.example.demo.dto.Web.CreateForumDto;
 import com.example.demo.dto.Web.MessageDto;
-import com.example.demo.dto.Web.PageableQueryDto;
 import com.example.demo.services.ForumService;
 
 @RestController("/forum")
@@ -37,8 +37,8 @@ public class ForumController {
     }
 
     @GetMapping
-    public ResponseEntity<ListPageDto<ForumDto>> getAll(@RequestAttribute("token") Token token, @RequestBody PageableQueryDto data){
-        var res = forumService.getAll(data.page(), data.size(), data.query());
+    public ResponseEntity<ListPageDto<ForumDto>> getAll(@RequestAttribute("token") Token token, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size, @RequestParam(defaultValue = "") String query){
+        var res = forumService.getAll(page, size, query);
         if(res == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(res, HttpStatus.OK);
