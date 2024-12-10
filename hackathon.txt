@@ -48,7 +48,7 @@ End Points:
 - Delete: /project/user (Tirar um usuário do projeto)(Json)
 - Get: /project (get all public projects)
 - Get: /project/{id} (Vem o grupo inteiro, só as informações do projeto)
-- Get: /project/{iduser} (pega todos os projetos em que o id do usuario inserido faz parte);
+- Get: /project/user/{iduser} (pega todos os projetos em que o id do usuario inserido faz parte);
 
 - Post: /project/message (Mandar uma msg no projeto)
 - Get: /project/{id}/message (Pegar todas as msg daquele projeto)
@@ -60,6 +60,7 @@ End Points:
 *FEEDBACK*
 - Post: feedback (Mandar um feedback pra um participante, tem q ter o id da pessoa que ta enviando, o id da pessoa que ta recebendo, o feedback em si e se é privado ou público)
 - Get: /feedback/{idUser} (Pega todos os feedbacks que um usuário)
+- Update
 
 *TOPIC*
 - Post: /topic

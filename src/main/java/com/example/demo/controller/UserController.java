@@ -19,6 +19,7 @@ import com.example.demo.dto.Token;
 import com.example.demo.dto.UserDto;
 import com.example.demo.dto.Web.CreateUserDto;
 import com.example.demo.dto.Web.MessageDto;
+import com.example.demo.dto.Web.ReturnProfiledto;
 import com.example.demo.dto.Web.UpdatePassDto;
 import com.example.demo.dto.Web.UpdateUserDto;
 import com.example.demo.services.AuthService;
@@ -68,12 +69,15 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public  ResponseEntity<UserDto> getUser(@PathVariable Long id){
-        var user = service.getById(id);
-        if(user == null)
-            return new ResponseEntity<>(user,HttpStatus.BAD_REQUEST);
+    public  ResponseEntity<ReturnProfiledto> getUser(@RequestAttribute("token") Token token,@PathVariable Long id){
+        
+        var user = id!=0?service.getById(id):service.getById(token.getId());
+        var isCurrentUser = id==token.getId()?true:false;
 
-        return new ResponseEntity<>(user,HttpStatus.OK);
+        if(user == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(new ReturnProfiledto(isCurrentUser,user),HttpStatus.OK);
     }
 
     @PutMapping("/user")

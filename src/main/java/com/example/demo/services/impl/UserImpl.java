@@ -72,7 +72,7 @@ public class UserImpl implements UserService {
 
         for (int i = start; i < end; i++) {
             var user = listUser.get(i);
-            newList.add(new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(),user.getNumber(),imageServ.toUrl(user.getImage())));
+            newList.add(new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(),user.getNumber(),imageServ.toUrl(user.getImage()), user.getEts()));
         }
 
         return new ListPageDto<>(pages, newList);
@@ -84,7 +84,7 @@ public class UserImpl implements UserService {
         if (!opUser.isPresent())
             return null;
         var user = opUser.get();
-        return new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage()));
+        return new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage()), user.getEts());
     }
 
     @Override

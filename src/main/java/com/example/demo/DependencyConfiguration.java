@@ -4,16 +4,27 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.example.demo.dto.Token;
+import com.example.demo.model.Project;
 import com.example.demo.services.AbilityService;
 import com.example.demo.services.AuthService;
+import com.example.demo.services.CareerService;
+import com.example.demo.services.ChatService;
 import com.example.demo.services.ImageStorageService;
 import com.example.demo.services.JWTService;
+import com.example.demo.services.ProjectFeedbackService;
+import com.example.demo.services.ProjectMessageService;
+import com.example.demo.services.ProjectService;
 import com.example.demo.services.UserService;
 import com.example.demo.services.impl.AbilityImpl;
 import com.example.demo.services.impl.AuthImpl;
 import com.example.demo.services.impl.BcryptImpl;
+import com.example.demo.services.impl.CarrerImpl;
+import com.example.demo.services.impl.ChatImpl;
 import com.example.demo.services.impl.ImageStorageImplementation;
 import com.example.demo.services.impl.JwtImplementation;
+import com.example.demo.services.impl.ProjectFeedbackImpl;
+import com.example.demo.services.impl.ProjectImpl;
+import com.example.demo.services.impl.ProjectMessageImpl;
 import com.example.demo.services.impl.UserImpl;
 
 @Configuration
@@ -51,6 +62,31 @@ public class DependencyConfiguration {
     @Bean
     public AbilityService abilityService(){
         return new AbilityImpl();
+    }
+
+    @Bean
+    public CareerService careerService(){
+        return new CarrerImpl();
+    }
+
+    @Bean
+    public ChatService chatService(){
+        return new ChatImpl();
+    }
+
+    @Bean
+    public ProjectService projectService(){
+        return new ProjectImpl();
+    }
+
+    @Bean 
+    public ProjectMessageService projectMessageService(){
+        return new ProjectMessageImpl();
+    }
+
+    @Bean 
+    public ProjectFeedbackService projectFeedbackService(){
+        return new ProjectFeedbackImpl();
     }
 
 }

@@ -46,6 +46,12 @@ public class ProjectMessageImpl implements ProjectMessageService {
             return null;
         }
 
+        if(!project.getUsers().contains(user))
+            return null;
+        
+        if(!project.isStatus())
+            return null;
+
         MessageProject messageProject = new MessageProject();
         messageProject.setDescription(description);
         messageProject.setProject(project);
@@ -63,17 +69,28 @@ public class ProjectMessageImpl implements ProjectMessageService {
                 user.getEdv(), 
                 user.getEmail(), 
                 user.getNumber(), 
-                imageServ.toUrl(user.getImage())
+                imageServ.toUrl(user.getImage()),
+                user.getEts()
                 )
             );
     }
 
     @Override
-    public ListPageDto<MessageProjectDto> getAllMessage(Long idProject, Integer page, Integer size) {
+    public ListPageDto<MessageProjectDto> getAllMessage(Long idProject, Long idUser, Integer page, Integer size) {
         if(page == null || size == null || page < 1 || size < 1 || idProject == null)
             return null;
 
-        var listMessage = messageProjectRepo.findAll();
+        try {
+            Project project = projectRepo.findById(idProject).get();
+            User user = userRepo.findById(idUser).get();
+
+            if(!project.getUsers().contains(user))
+                return null;
+        } catch (Exception e) {
+            return null;
+        }
+        
+        var listMessage = messageProjectRepo.findByProjectId(idProject);
         var newList = new ArrayList<MessageProjectDto>();
 
         Integer start = 0;
@@ -100,7 +117,8 @@ public class ProjectMessageImpl implements ProjectMessageService {
                     user.getEdv(), 
                     user.getEmail(), 
                     user.getNumber(), 
-                    imageServ.toUrl(user.getImage())
+                    imageServ.toUrl(user.getImage()),
+                    user.getEts()
                     )
                 ));
         }
