@@ -1,5 +1,5 @@
 # FRONT-BACK
-
+---
 ## **AUTH:**
 
 ###    POST/auth
@@ -14,7 +14,7 @@
                 "message"	: string
             }
 
-
+---
 ## **USER:**
 
 ###    POST/user
@@ -92,7 +92,7 @@
             "message"	: string
         }
 			
-		
+---		
 ## **FORUM:**
 ###    GET/forum/{id}
 #### return
@@ -137,7 +137,7 @@
             "message"	: string
         }
 
-
+---
 ## **CHAT:**
 ###    POST/chat
         {
@@ -210,7 +210,7 @@
         {
             "message"	: string
         }
-
+---
 ## **PROJECTS:**
 ###    POST/project
         {
