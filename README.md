@@ -170,13 +170,6 @@
 ###    GET/chat/{id}
 #### return
         {
-            "id"	: int,
-            "user" 	:
-            {
-                "id"	: int,
-                "name"	: string,
-                "image	: string"
-            }
             "messages" :
             [
                 {
