@@ -217,11 +217,9 @@
             }
 
 ------
-###    GET/project?page=''&size=''&query
+###    GET/project?page=''&size=''&query=''
 #### return
         {
-            "numPage",
-            "listObject" :
             [
                 {
                     "id"			: int,
@@ -231,12 +229,25 @@
                 {}
             ]
         }
+
+------
+###     GET/project/{id}
+#### return
+        {
+            "id"            : int,
+            "name"          : string
+            "description"   :
+            "status"        :
+            "startDate"     :
+            "endDate"       :
+            category"       :
+        }
     
 ------
 ###    POST/project/feedback
         {
-            "idUser"		: int
-            "idProject"		: int
+            "isPrivate"     : boolean,
+            "idProject"		: int,
             "description	: string
         }
 #### return
