@@ -48,13 +48,13 @@ public class ProjectController {
 
     @PostMapping("/user")
     public ResponseEntity<MessageDto> addUser(@RequestAttribute("token") Token token, @RequestBody UserProjectDto data){
-        var res = projectService.addUser(data.idProject(), data.idUser());
+        var res = projectService.addUser(token.getId(), data.idProject(), data.idUser());
         return new ResponseEntity<>(new MessageDto(res.response()), res.success() ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("/user")
     public ResponseEntity<MessageDto> deleteUser(@RequestAttribute("token") Token token, @RequestBody UserProjectDto data){
-        var res = projectService.deleteUser(data.idProject(), data.idUser());
+        var res = projectService.deleteUser(token.getId(), data.idProject(), data.idUser());
         return new ResponseEntity<>(new MessageDto(res.response()), res.success() ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 

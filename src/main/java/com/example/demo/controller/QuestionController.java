@@ -34,7 +34,7 @@ public class QuestionController {
     }
 
     @GetMapping
-    public ResponseEntity<ListPageDto<QuestionDto>> getAll(@RequestAttribute("token") Token token, @RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size){
+    public ResponseEntity<ListPageDto<QuestionDto>> getAll(@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size){
         var res = questionService.getAll(page, size);
         if(res == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

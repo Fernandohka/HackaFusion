@@ -2,7 +2,9 @@ package com.example.demo.services.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,9 +36,12 @@ public class ProjectImpl implements ProjectService {
             return null;
 
         Category category;
+        Set<User> users;
         
         try {
             category = categoryRepo.findById(idCategory).get();
+            users = new HashSet<>();
+            users.add(userRepo.findById(idUser).get());
         } catch (Exception e) {
             return null;
         }
@@ -48,8 +53,8 @@ public class ProjectImpl implements ProjectService {
         project.setName(name);
         project.setStartDate(startDate);
         project.setStatus(true);
+        project.setUsers(users);
         projectRepo.save(project);
-        addUser(project.getId(), idUser);
 
         return new ProjectDto(
             project.getId(), 
@@ -62,16 +67,18 @@ public class ProjectImpl implements ProjectService {
     }
 
     @Override
-    public ResponseDto addUser(Long idProject, Long idUser) {
-        if(idProject == null || idUser == null)
+    public ResponseDto addUser(Long idUser, Long idProject, Long idAddUser) {
+        if(idProject == null || idUser == null || idAddUser == null)
             return new ResponseDto(false, "Erro ao adicionar usuario");
         
         User user;
         Project project;
+        User addUser;
 
         try {
             user = userRepo.findById(idUser).get();
             project = projectRepo.findById(idUser).get();
+            addUser = userRepo.findById(idAddUser).get();
         } catch (Exception e) {
             return new ResponseDto(false, "Erro ao adicionar usuario");
         }
@@ -83,22 +90,25 @@ public class ProjectImpl implements ProjectService {
             return null;
 
         var users = project.getUsers();
-        users.add(user);
+        users.add(addUser);
+        projectRepo.save(project);
 
         return new ResponseDto(true, "Usuario adicionado com sucesso");
     }
 
     @Override
-    public ResponseDto deleteUser(Long idProject, Long idUser) {
+    public ResponseDto deleteUser(Long idUser, Long idProject, Long idDeleteUser) {
         if(idProject == null || idUser == null)
             return new ResponseDto(false, "Erro ao deletar usuario");
         
         User user;
         Project project;
+        User deleteUser;
 
         try {
             user = userRepo.findById(idUser).get();
             project = projectRepo.findById(idProject).get();
+            deleteUser = userRepo.findById(idDeleteUser).get();
         } catch (Exception e) {
             return new ResponseDto(false, "Erro ao deletar usuario");
         }
@@ -110,7 +120,8 @@ public class ProjectImpl implements ProjectService {
             return new ResponseDto(false, "Projeto já finalizado");
 
         var users = project.getUsers();
-        users.remove(user);
+        users.remove(deleteUser);
+        projectRepo.save(project);
 
         return new ResponseDto(true, "Usuario deletado com sucesso");
     }
