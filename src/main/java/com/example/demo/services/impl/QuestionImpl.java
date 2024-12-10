@@ -66,7 +66,8 @@ public class QuestionImpl implements QuestionService {
                 user.getEdv(), 
                 user.getEmail(), 
                 user.getNumber(), 
-                imageServ.toUrl(user.getImage())
+                imageServ.toUrl(user.getImage()),
+                user.getEts()
                 ), 
             new ForumDto(
                 forum.getId(), 
@@ -112,7 +113,8 @@ public class QuestionImpl implements QuestionService {
                     user.getEdv(), 
                     user.getEmail(), 
                     user.getNumber(), 
-                    imageServ.toUrl(user.getImage())
+                    imageServ.toUrl(user.getImage()),
+                    user.getEts()
                     ), 
                 new ForumDto(
                     forum.getId(), 
@@ -153,7 +155,8 @@ public class QuestionImpl implements QuestionService {
                                             user.getEdv(), 
                                             user.getEmail(), 
                                             user.getNumber(), 
-                                            imageServ.toUrl(user.getImage())
+                                            imageServ.toUrl(user.getImage()),
+                                            user.getEts()
                                             )
                                         );
                         }
@@ -169,7 +172,8 @@ public class QuestionImpl implements QuestionService {
                                         user.getEdv(), 
                                         user.getEmail(), 
                                         user.getNumber(), 
-                                        imageServ.toUrl(user.getImage())
+                                        imageServ.toUrl(user.getImage()),
+                                        user.getEts()
                                         ), 
                                     votes
                                     );
@@ -186,7 +190,8 @@ public class QuestionImpl implements QuestionService {
                     user.getEdv(), 
                     user.getEmail(), 
                     user.getNumber(), 
-                    imageServ.toUrl(user.getImage())
+                    imageServ.toUrl(user.getImage()),
+                    user.getEts()
                     ), 
                 new ForumDto(
                     forum.getId(), 

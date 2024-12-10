@@ -69,7 +69,8 @@ public class ProjectMessageImpl implements ProjectMessageService {
                 user.getEdv(), 
                 user.getEmail(), 
                 user.getNumber(), 
-                imageServ.toUrl(user.getImage())
+                imageServ.toUrl(user.getImage()),
+                user.getEts()
                 )
             );
     }
@@ -116,7 +117,8 @@ public class ProjectMessageImpl implements ProjectMessageService {
                     user.getEdv(), 
                     user.getEmail(), 
                     user.getNumber(), 
-                    imageServ.toUrl(user.getImage())
+                    imageServ.toUrl(user.getImage()),
+                    user.getEts()
                     )
                 ));
         }
