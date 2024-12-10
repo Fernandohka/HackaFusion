@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.dto.ListPageDto;
 import com.example.demo.dto.ResponseDto;
-import com.example.demo.dto.Web.AbilityDto;
 import com.example.demo.dto.Web.CarrerDto;
 import com.example.demo.model.Carrer;
 import com.example.demo.repositories.CarrerRepo;
