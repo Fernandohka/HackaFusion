@@ -8,8 +8,8 @@ import com.example.demo.dto.ResponseDto;
 
 public interface ProjectService {
     public ProjectDto create(String name, String description, LocalDateTime startDate, LocalDateTime endDate, Long idCategory, Long idUser);
-    public ResponseDto addUser(Long idProject, Long idUser);
-    public ResponseDto deleteUser(Long idProject, Long idUser);
+    public ResponseDto addUser(Long idUser, Long idProject, Long idAddUser);
+    public ResponseDto deleteUser(Long idUser, Long idProject, Long idDeleteUser);
     public ListPageDto<ProjectDto> getAll(Integer page, Integer size, String query);
     public ProjectDto getById(Long idProject);
     public ListPageDto<ProjectDto> getByUser(Long idUser, Integer page, Integer size);

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.Token;
@@ -15,7 +16,8 @@ import com.example.demo.dto.Web.CreateAnswerDto;
 import com.example.demo.dto.Web.MessageDto;
 import com.example.demo.services.AnswerService;
 
-@RestController("/answer")
+@RestController
+@RequestMapping("/answer")
 public class AnswerController {
     
     @Autowired
@@ -29,7 +31,7 @@ public class AnswerController {
         return new ResponseEntity<>(new MessageDto("Resposta criada com sucesso"), HttpStatus.OK);
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<MessageDto> delete(@RequestAttribute("token") Token token, @PathVariable Long id){
         var res = answerService.delete(token.getId(), id);
         return new ResponseEntity<>(new MessageDto(res.response()), res.success() ? HttpStatus.OK : HttpStatus.BAD_REQUEST);

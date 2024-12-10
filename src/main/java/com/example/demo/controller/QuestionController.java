@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +20,8 @@ import com.example.demo.dto.Web.CreateQuestionDto;
 import com.example.demo.dto.Web.MessageDto;
 import com.example.demo.services.QuestionService;
 
-@RestController("/question")
+@RestController
+@RequestMapping("/question")
 public class QuestionController {
     
     @Autowired
@@ -34,7 +36,7 @@ public class QuestionController {
     }
 
     @GetMapping
-    public ResponseEntity<ListPageDto<QuestionDto>> getAll(@RequestAttribute("token") Token token, @RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size){
+    public ResponseEntity<ListPageDto<QuestionDto>> getAll(@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size){
         var res = questionService.getAll(page, size);
         if(res == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

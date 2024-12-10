@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +27,8 @@ import com.example.demo.services.ProjectFeedbackService;
 import com.example.demo.services.ProjectMessageService;
 import com.example.demo.services.ProjectService;
 
-@RestController("/project")
+@RestController
+@RequestMapping("/project")
 public class ProjectController {
 
     @Autowired
@@ -48,13 +50,13 @@ public class ProjectController {
 
     @PostMapping("/user")
     public ResponseEntity<MessageDto> addUser(@RequestAttribute("token") Token token, @RequestBody UserProjectDto data){
-        var res = projectService.addUser(data.idProject(), data.idUser());
+        var res = projectService.addUser(token.getId(), data.idProject(), data.idUser());
         return new ResponseEntity<>(new MessageDto(res.response()), res.success() ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("/user")
     public ResponseEntity<MessageDto> deleteUser(@RequestAttribute("token") Token token, @RequestBody UserProjectDto data){
-        var res = projectService.deleteUser(data.idProject(), data.idUser());
+        var res = projectService.deleteUser(token.getId(), data.idProject(), data.idUser());
         return new ResponseEntity<>(new MessageDto(res.response()), res.success() ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 

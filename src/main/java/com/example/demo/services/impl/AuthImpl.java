@@ -71,23 +71,29 @@ public class AuthImpl implements AuthService {
 
     @Override
     public Boolean ValidatePassword(String password) {
-        if (password.length() < 8)
+        try {
+            if (password.length() < 8)
             return false;
 
-        Boolean letterUp = false;
-        Boolean number = false;
-        Boolean letter = false;
+            Boolean letterUp = false;
+            Boolean number = false;
+            Boolean letter = false;
 
-        for (char c : password.toCharArray()) {
-            if (Character.isDigit(c))
-                number = true;
-            if (Character.isLowerCase(c))
-                letter = true;
-            if (Character.isUpperCase(c))
-                letterUp = true;
+            for (char c : password.toCharArray()) {
+                if (Character.isDigit(c))
+                    number = true;
+                if (Character.isLowerCase(c))
+                    letter = true;
+                if (Character.isUpperCase(c))
+                    letterUp = true;
+            }
+
+            return number && letter && letterUp;
+
+        } catch (Exception e) {
+            return false;
         }
-
-        return number && letter && letterUp;
+        
     }
 
 }
