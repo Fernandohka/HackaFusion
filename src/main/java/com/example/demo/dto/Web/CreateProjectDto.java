@@ -4,8 +4,7 @@ import java.time.LocalDateTime;
 
 public record CreateProjectDto(
     String name, 
-    String description, 
-    Boolean status, 
+    String description,
     LocalDateTime startDate, 
     LocalDateTime endDate, 
     Long idCategory

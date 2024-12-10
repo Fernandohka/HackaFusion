@@ -6,12 +6,14 @@ import org.springframework.context.annotation.Configuration;
 import com.example.demo.dto.Token;
 import com.example.demo.services.AbilityService;
 import com.example.demo.services.AuthService;
+import com.example.demo.services.CareerService;
 import com.example.demo.services.ImageStorageService;
 import com.example.demo.services.JWTService;
 import com.example.demo.services.UserService;
 import com.example.demo.services.impl.AbilityImpl;
 import com.example.demo.services.impl.AuthImpl;
 import com.example.demo.services.impl.BcryptImpl;
+import com.example.demo.services.impl.CarrerImpl;
 import com.example.demo.services.impl.ImageStorageImplementation;
 import com.example.demo.services.impl.JwtImplementation;
 import com.example.demo.services.impl.UserImpl;
@@ -51,6 +53,11 @@ public class DependencyConfiguration {
     @Bean
     public AbilityService abilityService(){
         return new AbilityImpl();
+    }
+
+    @Bean
+    public CareerService careerService(){
+        return new CarrerImpl();
     }
 
 }

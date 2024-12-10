@@ -60,6 +60,7 @@ End Points:
 *FEEDBACK*
 - Post: feedback (Mandar um feedback pra um participante, tem q ter o id da pessoa que ta enviando, o id da pessoa que ta recebendo, o feedback em si e se é privado ou público)
 - Get: /feedback/{idUser} (Pega todos os feedbacks que um usuário)
+- Update
 
 *TOPIC*
 - Post: /topic
