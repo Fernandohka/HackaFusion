@@ -1,6 +1,6 @@
 # FRONT-BACK
 
-## AUTH:
+## **AUTH:**
 
 ###
 ###    POST/auth
@@ -16,7 +16,7 @@
             }
 
 
-## USER:
+## **USER:**
 
 ###
 ###    POST/user
@@ -95,7 +95,7 @@
         }
 			
 		
-## FORUM:
+## **FORUM:**
 ###
 ###    GET/forum/{id}
 #### return
@@ -141,7 +141,7 @@
         }
 
 
-## CHAT:
+## **CHAT:**
 ###
 ###    POST/chat
         {
@@ -215,7 +215,7 @@
             "message"	: string
         }
 
-## PROJECTS:
+## **PROJECTS:**
 ###
 ###    POST/project
         {
@@ -239,9 +239,9 @@
             "listObject" :
             [
                 {
-                    "id"			: int
-                    "name"			: string
-                    "description"	: 
+                    "id"			: int,
+                    "name"			: string,
+                    "description"	: string
                 },
                 {}
             ]
