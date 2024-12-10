@@ -94,16 +94,17 @@
 			
 ---		
 ## **FORUM:**
+
 ###    GET/forum/{id}
 #### return
-            {
-                "id"			: int,
-                "name"			: string,
-                "description"	: string
-            }
+        {
+            "id"			: int,
+            "name"			: string,
+            "description"	: string
+        }
 
 ------
-###    GET/forum?page=''&size=''
+###    GET/forum?page=''&size=''&query=''
 #### return
             {
                 "numPage"		: int,
@@ -170,7 +171,8 @@
 ###    GET/chat/{id}
 #### return
         {
-            "messages" :
+            "numPage"       : int,
+            "listObject"    :
             [
                 {
                     "id"			: int,
@@ -194,19 +196,13 @@
 ###    POST/chat/message
         {
             "description"	: string,
-            "timestamp"		: string
+            "chatId"		: int
         }
 #### return
         {
             "message"       : string
         }
 
-------
-###    DELETE/chat/message/{id}
-#### return
-        {
-            "message"	: string
-        }
 ---
 ## **PROJECTS:**
 ###    POST/project
