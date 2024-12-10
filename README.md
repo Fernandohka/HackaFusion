@@ -139,10 +139,7 @@
 
 ---
 ## **CHAT:**
-###    POST/chat
-        {
-            "idReceiver"	: int
-        }
+###    POST/chat/user/{id}
 #### return
             {
                 "message"	: string
