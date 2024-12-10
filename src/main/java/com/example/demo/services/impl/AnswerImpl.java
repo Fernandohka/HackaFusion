@@ -59,12 +59,25 @@ public class AnswerImpl implements AnswerService {
     }
 
     @Override
-    public ResponseDto delete(Long idAnswer) {
+    public ResponseDto delete(Long idUser, Long idAnswer) {
+        User user;
+        Answer answer;
+
+        try {
+            user = userRepo.findById(idUser).get();
+            answer = answerRepo.findById(idAnswer).get();
+        } catch (Exception e) {
+            return new ResponseDto(false, "Erro ao deletar resposta");
+        }
+
+        if(!answer.getUser().equals(user) && !user.isAdmin())
+            return new ResponseDto(false, "Usuario sem permissão de deletar resposta");
+
         try {
             answerRepo.deleteById(idAnswer);
-            return new ResponseDto(true, "Answer deletion success");
+            return new ResponseDto(true, "Resposta deletada com sucesso");
         } catch (Exception e) {
-            return new ResponseDto(false, "Answer deletion failed");
+            return new ResponseDto(false, "Erro ao deletar resposta");
         }
     }
 
