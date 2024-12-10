@@ -98,7 +98,7 @@ public class ProjectImpl implements ProjectService {
 
         try {
             user = userRepo.findById(idUser).get();
-            project = projectRepo.findById(idUser).get();
+            project = projectRepo.findById(idProject).get();
         } catch (Exception e) {
             return new ResponseDto(false, "Erro ao deletar usuario");
         }
