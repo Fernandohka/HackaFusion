@@ -9,9 +9,16 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import com.example.demo.dto.AnswerDto;
+import com.example.demo.dto.ForumDto;
 import com.example.demo.dto.ListPageDto;
 import com.example.demo.dto.ResponseDto;
+import com.example.demo.dto.TopicDto;
 import com.example.demo.dto.UserDto;
+import com.example.demo.dto.VoteDto;
+import com.example.demo.dto.Web.AnwserProfileDto;
+import com.example.demo.dto.Web.QuestProfileDto;
+import com.example.demo.model.Topic;
 import com.example.demo.model.User;
 import com.example.demo.repositories.UserRepo;
 import com.example.demo.services.ImageStorageService;
@@ -149,6 +156,138 @@ public class UserImpl implements UserService {
         repo.save(user);
 
         return new ResponseDto(true, "senha atualizado com sucesso!");
+    }
+
+    @Override
+    public ListPageDto<QuestProfileDto> interactionQuest(Long id, Integer page, Integer size) {
+        var userOp = repo.findById(id);
+
+        if(!userOp.isPresent())
+            return null;
+        var user = userOp.get();
+
+        var listQuestions = new ArrayList<>(user.getQuestions());
+        var newList = new ArrayList<QuestProfileDto>();
+
+        Integer start = 0;
+        Integer end = listQuestions.size();
+        Integer pages = size>0?(int)Math.floor(listQuestions.size()/size):0;
+
+
+        if (size > 0 && page > 0) {
+            start = (page - 1) * size;
+            if (start >= listQuestions.size())
+                return new ListPageDto<>(pages, newList);
+            end = start + size < listQuestions.size() ? start + size : listQuestions.size();
+        }
+
+        var currUser = new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(),user.getNumber(),imageServ.toUrl(user.getImage()), user.getEts());
+
+        for (int i = start; i < end; i++) {
+            var question = listQuestions.get(i);
+            var forum = question.getForum();
+            newList.add(new QuestProfileDto(currUser,question.getId(),question.getTitle(),question.getTitle(),new ForumDto(forum.getId(), forum.getName(), forum.getDescription())));
+        }
+
+
+        return new ListPageDto<>(pages, newList);
+    }
+
+    @Override
+    public ListPageDto<AnwserProfileDto> interactionAnwser(Long id, Integer page, Integer size) {
+        var userOp = repo.findById(id);
+
+        if(!userOp.isPresent())
+            return null;
+        var user = userOp.get();
+
+        var listAnswers = new ArrayList<>(user.getAnswers());
+        var newList = new ArrayList<AnwserProfileDto>();
+
+        Integer start = 0;
+        Integer end = listAnswers.size();
+        Integer pages = size>0?(int)Math.floor(listAnswers.size()/size):0;
+
+
+        if (size > 0 && page > 0) {
+            start = (page - 1) * size;
+            if (start >= listAnswers.size())
+                return new ListPageDto<>(pages, newList);
+            end = start + size < listAnswers.size() ? start + size : listAnswers.size();
+        }
+
+        var currUser = new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(),user.getNumber(),imageServ.toUrl(user.getImage()), user.getEts());
+
+        for (int i = start; i < end; i++) {
+            var answer = listAnswers.get(i);
+            var question = answer.getQuestion();
+            var userQuestion = question.getUser();
+            var forum = question.getForum();
+            var answerVotes = new ArrayList<>(answer.getVotes());
+            var votes = new VoteDto[answerVotes.size()];
+
+            int j=0;
+            for (var currVote : answerVotes) {
+                var thisUser = currVote.getUser();
+                votes[j] = new VoteDto(
+                    currVote.getId(),
+                    currVote.isUp(),
+                    new UserDto(thisUser.getId(), thisUser.getName(), thisUser.getEdv(), thisUser.getEmail(), thisUser.getNumber(), imageServ.toUrl(thisUser.getImage()), thisUser.getEts())
+                );
+            }
+
+
+            newList.add(new AnwserProfileDto(
+                    new UserDto(userQuestion.getId(), userQuestion.getName(), userQuestion.getEdv(), userQuestion.getEmail(), userQuestion.getNumber(), imageServ.toUrl(userQuestion.getImage()), userQuestion.getEts()), 
+                    question.getId(), 
+                    question.getTitle(), 
+                    question.getDescription(), 
+                    new ForumDto(forum.getId(), forum.getName(), forum.getDescription()),
+                    new AnswerDto(answer.getId(), answer.getDescription(), currUser, 
+                    votes)
+                )
+            );
+        }
+
+
+        return new ListPageDto<>(pages, newList);
+    }
+
+    @Override
+    public ListPageDto<TopicDto> interactionTopic(Long id, Integer page, Integer size) {
+        var userOp = repo.findById(id);
+
+        if(!userOp.isPresent())
+            return null;
+        var user = userOp.get();
+
+        var userMessageTopics = new ArrayList<>(user.getMessagesTopic());
+        var topicsUser = new ArrayList<Topic>();
+
+        for (var messageTopic : userMessageTopics) {
+            if(!topicsUser.contains(messageTopic.getTopic()))
+                topicsUser.add(messageTopic.getTopic());
+        }
+
+        var newList = new ArrayList<TopicDto>();
+
+        Integer start = 0;
+        Integer end = topicsUser.size();
+        Integer pages = size>0?(int)Math.floor(topicsUser.size()/size):0;
+
+        if (size > 0 && page > 0) {
+            start = (page - 1) * size;
+            if (start >= topicsUser.size())
+                return new ListPageDto<>(pages, newList);
+            end = start + size < topicsUser.size() ? start + size : topicsUser.size();
+        }
+
+        for (int i = start; i < end; i++) {
+            var topic = topicsUser.get(i);
+            newList.add(new TopicDto(topic.getId(), topic.getName(), topic.getDescription()));
+        }
+
+        return new ListPageDto<>(pages, newList);
     }
 
 }
