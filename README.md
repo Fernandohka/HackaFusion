@@ -238,9 +238,10 @@
             }
             "others" :
             {
+                
+                "numPage"       : int
+                "listObject"    :
                 [
-                    "numPage"       : int
-                    "listObject"    :
                     {
                         "id"			: int,
                         "name"			: string,
@@ -248,6 +249,7 @@
                     },
                     {}
                 ]
+                
             }
         }
 
