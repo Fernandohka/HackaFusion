@@ -223,14 +223,32 @@
 ###    GET/project?page=''&size=''&query=''
 #### return
         {
-            [
-                {
-                    "id"			: int,
-                    "name"			: string,
-                    "description"	: string
-                },
-                {}
-            ]
+            "yours" :
+            {
+                "numPage"       : int
+                "listObject"    :
+                [
+                    {
+                        "id"			: int,
+                        "name"			: string,
+                        "description"	: string
+                    },
+                    {}
+                ]
+            }
+            "others" :
+            {
+                [
+                    "numPage"       : int
+                    "listObject"    :
+                    {
+                        "id"			: int,
+                        "name"			: string,
+                        "description"	: string
+                    },
+                    {}
+                ]
+            }
         }
 
 ------
