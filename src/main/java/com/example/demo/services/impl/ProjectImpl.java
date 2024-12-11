@@ -128,7 +128,7 @@ public class ProjectImpl implements ProjectService {
 
     @Override
     public ListPageDto<ProjectDto> getAllPublic(Long idUser, Integer page, Integer size, String query) {
-        if(page == null || size == null || page < 1 || size < 1)
+        if(page == null || size == null)
             return null;
 
         List<Project> listProject;
@@ -227,7 +227,7 @@ public class ProjectImpl implements ProjectService {
 
     @Override
     public ListPageDto<ProjectDto> getByUser(Long idUser, Integer page, Integer size) {
-        if(page == null || size == null || page < 1 || size < 1)
+        if(page == null || size == null)
             return null;
 
         var listProject = new ArrayList<>(userRepo.findById(idUser).get().getProjects());

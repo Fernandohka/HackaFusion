@@ -8,10 +8,12 @@ import com.example.demo.services.AbilityService;
 import com.example.demo.services.AnswerService;
 import com.example.demo.services.AuthService;
 import com.example.demo.services.CareerService;
+import com.example.demo.services.CategoryService;
 import com.example.demo.services.ChatService;
 import com.example.demo.services.ForumService;
 import com.example.demo.services.ImageStorageService;
 import com.example.demo.services.JWTService;
+import com.example.demo.services.NotificationService;
 import com.example.demo.services.ProjectFeedbackService;
 import com.example.demo.services.ProjectMessageService;
 import com.example.demo.services.ProjectService;
@@ -24,10 +26,12 @@ import com.example.demo.services.impl.AnswerImpl;
 import com.example.demo.services.impl.AuthImpl;
 import com.example.demo.services.impl.BcryptImpl;
 import com.example.demo.services.impl.CarrerImpl;
+import com.example.demo.services.impl.CategoryImpl;
 import com.example.demo.services.impl.ChatImpl;
 import com.example.demo.services.impl.ForumImpl;
 import com.example.demo.services.impl.ImageStorageImplementation;
 import com.example.demo.services.impl.JwtImplementation;
+import com.example.demo.services.impl.NotificationImpl;
 import com.example.demo.services.impl.ProjectFeedbackImpl;
 import com.example.demo.services.impl.ProjectImpl;
 import com.example.demo.services.impl.ProjectMessageImpl;
@@ -121,6 +125,16 @@ public class DependencyConfiguration {
     @Bean
     public TopicMessageService topicMessageService(){
         return new TopicMessageImpl();
+    }
+
+    @Bean
+    public NotificationService notificationService(){
+        return new NotificationImpl();
+    }
+
+    @Bean
+    public CategoryService categoryService(){
+        return new CategoryImpl();
     }
 
 }
