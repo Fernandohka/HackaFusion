@@ -1,6 +1,6 @@
 # FRONT-BACK
 ---
-## **AUTH:**
+# **AUTH:**
 
 ###    POST/auth
         {	
@@ -213,7 +213,7 @@
     }
 
 ---
-## **FORUM:**
+# **FORUM:**
 
 ###    GET/forum/{id}
 #### return
@@ -259,7 +259,7 @@
         }
 
 ---
-## **CHAT:**
+# **CHAT:**
 ###    POST/chat/user/{id}
 #### return
             {
@@ -328,7 +328,7 @@
         }
 
 ---
-## **PROJECTS:**
+# **PROJECTS:**
 ###    POST/project
         {
             "name"			: string,
@@ -524,7 +524,7 @@
         }
 
 ---
-## **QUESTION:**
+# **QUESTION:**
 ### POST/question
     {
         "idForum"       : int,
@@ -535,7 +535,7 @@
     {
         "message"   : string
     }
-------
+------------------
 ### GET/question?page=''&size=''
     {
         "numPage"       : int,
@@ -565,7 +565,7 @@
             {...}
         ]
     }
-------
+------------------
 ### GET/question/{id}/answerPage=''&answerSize=''
 #### return
     {
@@ -630,16 +630,173 @@
             "description"   : string
         }
     }
-------
+------------------
 ### DELETE/question/{id}
 #### return
     {
         "message"   : string
     }
 
+---
+# **ABILITY:**
+### GET/ability?page=''&size=''&query=''
+#### return
+    {
+        "numPage"       : int,
+        "listObject"    :
+        [
+            {
+                "id"    : int,
+                "name"  : string
+            },
+            {...}
+        ]
+    }
+
+------------------
+### GET/ability/user/{id}
+#### return
+    {
+        "numPage"       : int,
+        "listObject"    :
+        [
+            {
+                "id"    : int,
+                "name"  : string
+            },
+            {...}
+        ]
+    }
+
+------------------
+### POST/admin/ability
+    {
+        "name"  : string
+    }
+#### return
+    {
+        "message"   : string
+    }
+
+------------------
+### DELETE/admin/ability/{id}
+#### return 
+    {
+        "message"   : string
+    }
+
+------------------
+### POST/ability/user/{id}
+#### return
+    {
+        "message"   : string
+    }
+------------------
+### DELETE/ability/user/{id}
+#### return
+    {
+        "message"   : string
+    }
+
+---
+# **ANSWER:**
+### POST/answer
+    {
+        "idQuestion"    : int,
+        "description"   : string
+    }
+#### return
+    {
+        "message"   : string
+    }
+
+------------------
+### DELETE/answer/{id}
+#### return
+    {
+        "message"   : string
+    }
+
+------------------
+### POST/answer/up/{idAnswer}
+#### return
+    {
+        "message"   : string
+    }
+
+------------------
+### POST/answer/down/{idAnswer}
+    {
+        "message"   : string
+    }
 
 
-		
+---
+# **CAREER:**
+
+### POST/admin/career
+    {
+        "id"    : null,
+        "name"  : string
+    }
+
+------------------
+### GET/career?page=''&size=''&query=''
+#### return
+    {
+        "numPage"       : int,
+        "listObject"    :
+        [
+            {
+                "id"    : int,
+                "name"  : string
+            },
+            {...}
+        ]
+    }
+
+------------------
+### DELETE/admin/career/{id}
+#### return
+    {
+        "message"   : string
+    }
+
+------------------
+### POST/career/user/{id}
+#### return 
+    {
+        "message"   : string
+    }
+
+------------------
+### GET/career/user/{id}
+#### return
+    {
+        "numPage"       : int,
+        "listObject"    :
+        [
+            {
+                "id"    : int,
+                "name"  : string
+            },
+            {...}
+        ]
+    }
+------------------
+### DELETE/career/user/{id}
+#### return
+    {
+        "message"   : string
+    }
+
+---
+# **TOPIC:**
+### POST/topic
+    {
+        "name"        : string,
+        "description"   : string
+    }
 
 		
 
