@@ -44,7 +44,7 @@ public class TopicController {
     }
 
     @GetMapping
-    public ResponseEntity<ListPageDto<TopicDto>> getAll(@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size){
+    public ResponseEntity<ListPageDto<TopicDto>> getAll(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer size){
         var res = topicService.getAll(page, size);
         if(res == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

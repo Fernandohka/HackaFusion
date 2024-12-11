@@ -35,7 +35,7 @@ public class TopicImpl implements TopicService {
 
     @Override
     public ListPageDto<TopicDto> getAll(Integer page, Integer size) {
-        if(page == null || size == null || page < 1 || size < 1)
+        if(page == null || size == null)
             return null;
 
         var listTopic = topicRepo.findAll();

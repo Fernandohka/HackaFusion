@@ -35,7 +35,7 @@ public class ForumImpl implements ForumService {
 
     @Override
     public ListPageDto<ForumDto> getAll(Integer page, Integer size, String query) {
-        if(page == null || size == null || page < 1 || size < 1)
+        if(page == null || size == null)
             return null;
 
         List<Forum> listForum;

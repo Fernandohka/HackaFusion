@@ -39,7 +39,7 @@ public class ForumController {
     }
 
     @GetMapping("/forum")
-    public ResponseEntity<ListPageDto<ForumDto>> getAll(@RequestAttribute("token") Token token, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size, @RequestParam(defaultValue = "") String query){
+    public ResponseEntity<ListPageDto<ForumDto>> getAll(@RequestAttribute("token") Token token, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, @RequestParam(defaultValue = "") String query){
         var res = forumService.getAll(page, size, query);
         if(res == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

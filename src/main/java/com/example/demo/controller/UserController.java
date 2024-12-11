@@ -48,7 +48,7 @@ public class UserController {
             return new ResponseEntity<>(new MessageDto("EDV invalido!"),HttpStatus.BAD_REQUEST);
         
         if(!auth.validateEmailIsFree(data.email()))
-            return new ResponseEntity<>(new MessageDto("Email  ja Cadastrado!"),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new MessageDto("Email ja Cadastrado!"),HttpStatus.BAD_REQUEST);
 
         if(!auth.validateEmail(data.email()))
             return new ResponseEntity<>(new MessageDto("Email invalido!"),HttpStatus.BAD_REQUEST); 

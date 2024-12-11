@@ -77,7 +77,7 @@ public class ProjectMessageImpl implements ProjectMessageService {
 
     @Override
     public ListPageDto<MessageProjectDto> getAllMessage(Long idProject, Long idUser, Integer page, Integer size) {
-        if(page == null || size == null || page < 1 || size < 1 || idProject == null)
+        if(page == null || size == null || idProject == null)
             return null;
 
         try {
