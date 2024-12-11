@@ -43,7 +43,7 @@
                     "image"		: string,
                     "admin"		: boolean
                 },
-                {}
+                {...}
             ]
         }
     
@@ -115,7 +115,7 @@
                         "name"			: string,
                         "description"	: string
                     },
-                    {}
+                    {...}
                 ]
             }
     
@@ -163,7 +163,7 @@
                     "telefone"  : string,
                     "image"     : string
                 },
-                {}
+                {...}
             ]
         }
 
@@ -188,7 +188,7 @@
                         "image"     : string
                     }
                 },
-                {}
+                {...}
             ]
         }
 
@@ -233,7 +233,7 @@
                         "name"			: string,
                         "description"	: string
                     },
-                    {}
+                    {...}
                 ]
             }
             "others" :
@@ -247,7 +247,7 @@
                         "name"			: string,
                         "description"	: string
                     },
-                    {}
+                    {...}
                 ]
                 
             }
@@ -298,7 +298,7 @@
                         "image"     : string
                     }
                 },
-                {}
+                {...}
             ]
         }
 
@@ -323,7 +323,7 @@
                         "image"     : string
                     }
                 },
-                {}
+                {...}
             ]
         }
     
@@ -375,7 +375,7 @@
 ###     GET/project/{id}/message?page=''&size=''
 ####    return
         {
-            "numPage"       : int
+            "numPage"       : int,
             "listObject"    :
             [
                 {
@@ -384,19 +384,125 @@
                     "timestamp"     : date,
                     "user"          :
                     {
-                        "id"        : string
-                        "name"      : string
-                        "edv"       : string
-                        "email"     : string
-                        "telefone"  : string
+                        "id"        : string,
+                        "name"      : string,
+                        "edv"       : string,
+                        "email"     : string,
+                        "telefone"  : string,
                         "image"     : string
                     }
-                }
+                },
+                {...}
             ]
         }
 
-        
-## **:**
+---
+## **QUESTION:**
+### POST/question
+    {
+        "idForum"       : int,
+        "title"         : string,
+        "description"   : string
+    }
+#### return
+    {
+        "message"   : string
+    }
+------
+### GET/question?page=''&size=''
+    {
+        "numPage"       : int,
+        "listObject"    :
+        [
+            "id"            : int,
+            "title"         : string,
+            "description"   : string,
+            answers         : null,
+            "user" : 
+            {
+                "id"        : string
+                "name"      : string
+                "edv"       : string
+                "email"     : string
+                "telefone"  : string
+                "image"     : string
+            },
+            "forum" : 
+            {
+                "id"            : int
+                "name"          : string
+                "description"   : string
+            },
+            {...}
+        ]
+    }
+------
+### GET/question/{id}/answerPage=''&answerSize=''
+#### return
+    {
+        "id"            : int,
+        "title"         : string,
+        "description"   : string,
+        answers         : 
+        {
+            "numPage"       : int,
+            "listObject"    :
+            [
+                {
+                    "id",
+                    "description",
+                    "user"          :
+                    {
+                        "id"        : string,
+                        "name"      : string,
+                        "edv"       : string,
+                        "email"     : string,
+                        "telefone"  : string,
+                        "image"     : string
+                    },
+                    votes           :
+                    [
+                        "id"    : int,
+                        "up"    : boolean,
+                        "user"  :   
+                        {
+                            "id"        : string
+                            "name"      : string
+                            "edv"       : string
+                            "email"     : string
+                            "telefone"  : string
+                            "image"     : string
+                        }
+                    ]
+                    
+                },
+                {...}
+            ]
+        },
+        "user" : 
+        {
+            "id"        : string
+            "name"      : string
+            "edv"       : string
+            "email"     : string
+            "telefone"  : string
+            "image"     : string
+        },
+        "forum" : 
+        {
+            "id"            : int
+            "name"          : string
+            "description"   : string
+        }
+    }
+------
+### DELETE/question/{id}
+#### return
+    {
+        "message"   : string
+    }
+
+
 
 		
 

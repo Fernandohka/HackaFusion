@@ -51,7 +51,7 @@ public class QuestionController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<MessageDto> delete(@RequestAttribute("token") Token token, @PathVariable Long id){
         var res = questionService.delete(token.getId(), id);
         return new ResponseEntity<>(new MessageDto(res.response()), res.success() ? HttpStatus.OK : HttpStatus.BAD_REQUEST);

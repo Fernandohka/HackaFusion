@@ -36,12 +36,11 @@ public class FileController {
         return ResponseEntity.status(HttpStatus.OK)
         .contentType(MediaType.valueOf("image/png"))
         .body(ImageUtils.decompressImage(image.getData()));
-        
     }
     
     @PostMapping
     public ResponseEntity<String> defaultImage(@ModelAttribute UpdateUserDto data) throws IOException{
         imageService.UploadImage(data.image());
-        return new ResponseEntity<>("dale", HttpStatus.OK);
+        return new ResponseEntity<>("default uploaded", HttpStatus.OK);
     }
 }
