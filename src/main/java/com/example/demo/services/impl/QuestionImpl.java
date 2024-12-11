@@ -67,7 +67,8 @@ public class QuestionImpl implements QuestionService {
                 user.getEmail(), 
                 user.getNumber(), 
                 imageServ.toUrl(user.getImage()),
-                user.getEts()
+                user.getEts(),
+                user.isAdmin()
                 ), 
             new ForumDto(
                 forum.getId(), 
@@ -114,7 +115,8 @@ public class QuestionImpl implements QuestionService {
                     user.getEmail(), 
                     user.getNumber(), 
                     imageServ.toUrl(user.getImage()),
-                    user.getEts()
+                    user.getEts(),
+                    user.isAdmin()
                     ), 
                 new ForumDto(
                     forum.getId(), 
@@ -156,7 +158,8 @@ public class QuestionImpl implements QuestionService {
                                             user.getEmail(), 
                                             user.getNumber(), 
                                             imageServ.toUrl(user.getImage()),
-                                            user.getEts()
+                                            user.getEts(),
+                                            user.isAdmin()
                                             )
                                         );
                         }
@@ -173,7 +176,8 @@ public class QuestionImpl implements QuestionService {
                                         user.getEmail(), 
                                         user.getNumber(), 
                                         imageServ.toUrl(user.getImage()),
-                                        user.getEts()
+                                        user.getEts(),
+                                        user.isAdmin()
                                         ), 
                                     votes
                                     );
@@ -191,7 +195,8 @@ public class QuestionImpl implements QuestionService {
                     user.getEmail(), 
                     user.getNumber(), 
                     imageServ.toUrl(user.getImage()),
-                    user.getEts()
+                    user.getEts(),
+                    user.isAdmin()
                     ), 
                 new ForumDto(
                     forum.getId(), 

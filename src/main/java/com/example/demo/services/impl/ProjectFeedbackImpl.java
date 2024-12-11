@@ -63,7 +63,8 @@ public class ProjectFeedbackImpl implements ProjectFeedbackService {
                 user.getEmail(), 
                 user.getNumber(), 
                 imageServ.toUrl(user.getImage()),
-                user.getEts()
+                user.getEts(),
+                user.isAdmin()
                 )
             );
     }
@@ -103,7 +104,8 @@ public class ProjectFeedbackImpl implements ProjectFeedbackService {
                     user.getEmail(), 
                     user.getNumber(), 
                     imageServ.toUrl(user.getImage()),
-                    user.getEts()
+                    user.getEts(),
+                    user.isAdmin()
                 )
             ));
         }
@@ -146,7 +148,8 @@ public class ProjectFeedbackImpl implements ProjectFeedbackService {
                     user.getEmail(), 
                     user.getNumber(), 
                     imageServ.toUrl(user.getImage()),
-                    user.getEts()
+                    user.getEts(),
+                    user.isAdmin()
                     )
                 ));
         }

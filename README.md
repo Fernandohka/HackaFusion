@@ -38,10 +38,14 @@
             "listObject"	:
             [
                 {
-                    "id"		: int,
-                    "name"		: string,
-                    "image"		: string,
-                    "admin"		: boolean
+                    "id"        : string,
+                    "name"      : string,
+                    "edv"       : string,
+                    "email"     : string,
+                    "telefone"  : string,
+                    "image"     : string,
+                    "student"   : boolean,
+                    "admin"     : boolean
                 },
                 {...}
             ]
@@ -51,14 +55,34 @@
 ###     GET/user/{id}
 ####    return
         {
-            "id"		: int,
+            "isOwner"   : boolean,
+            "user"      :
+            {
+                "id"        : string,
+                "name"      : string,
+                "edv"       : string,
+                "email"     : string,
+                "telefone"  : string,
+                "image"     : string,
+                "student"   : boolean,
+                "admin"     : boolean
+            }
+        }
+    
+------
+###    PUT/user
+        {
             "name"		: string,
+            "image"		: MultipartFile,
             "email"		: string,
             "EDV"		: string,
             "phone"		: string,
             "student"	: boolean
         }
-    
+#### return
+            {
+                "message"	: string
+            }
 ------
 ###    PUT/user/password
         {
@@ -69,30 +93,117 @@
             {
                 "mesage"	: string
             }
-        
 ------
-###    PUT/user
-        {
-            "name"		: string,
-            "image"		: string,
-            "email"		: string,
-            "EDV"		: string,
-            "phone"		: string,
-            "student"	: boolean
-        }
-#### return
-            {
-                "message"	: string
-            }
-
-------
-###    DELETE/user/{id}
+###    DELETE/admin/user/{id}
 #### return
         {
             "message"	: string
         }
-			
+------ 
+###     GET/user/interactions/question/{id}
+#### return
+    {
+        "numPage"       : int
+        "listObject"    :
+        [
+            {
+                "idQuestion",
+                "title",
+                "description"
+                "user"          :
+                {
+                    "id"        : string,
+                    "name"      : string,
+                    "edv"       : string,
+                    "email"     : string,
+                    "telefone"  : string,
+                    "image"     : string,
+                    "student"   : boolean,
+                    "admin"     : boolean
+                },
+                "forum"         :
+                {
+                    "id"            : int,
+                    "name"          : string,
+                    "description"   : string
+                 },
+            },
+            {...}
+        ]
+    }
+
+---
+###     GET/user/interactions/answer/{id}
+#### return
+    {
+        "numPage"       : int
+        "listObject"    :
+        [
+            {
+                "idQuestion",
+                "title",
+                "description"
+                "user"          :
+                {
+                    "id"        : string,
+                    "name"      : string,
+                    "edv"       : string,
+                    "email"     : string,
+                    "telefone"  : string,
+                    "image"     : string,
+                    "student"   : boolean,
+                    "admin"     : boolean
+                },
+                "forum"         :
+                {
+                    "id"            : int,
+                    "name"          : string,
+                    "description"   : string
+                 },
+                 "answer"       :
+                {
+                    "id"            : int,
+                    "description"   : string,
+                    "user"  :
+                    {
+                        "id"        : string,
+                        "name"      : string,
+                        "edv"       : string,
+                        "email"     : string,
+                        "telefone"  : string,
+                        "image"     : string,
+                        "student"   : boolean,
+                        "admin"     : boolean
+                    },
+                    "votes"         : 
+                    [
+                        "id"    : int,
+                        "up"    : boolean,
+                        "user"  :
+                        {
+                            "id"        : string,
+                            "name"      : string,
+                            "edv"       : string,
+                            "email"     : string,
+                            "telefone"  : string,
+                            "image"     : string,
+                            "student"   : boolean,
+                            "admin"     : boolean
+                        }
+                    ]
+                }
+            },
+            {...}
+        ]
+    }			
 ---		
+###     GET/user/interactions/topic/{id}
+####    return
+    {
+        "id"            : int,
+        "name"          : string,
+        "description"   : string
+    }
 ## **FORUM:**
 
 ###    GET/forum/{id}
@@ -161,7 +272,9 @@
                     "edv"       : string,
                     "email"     : string,
                     "telefone"  : string,
-                    "image"     : string
+                    "image"     : string,
+                    "student"   : boolean,
+                    "admin"     : boolean
                 },
                 {...}
             ]
@@ -185,7 +298,9 @@
                         "edv"       : string,
                         "email"     : string,
                         "telefone"  : string,
-                        "image"     : string
+                        "image"     : string,
+                        "student"   : boolean,
+                        "admin"     : boolean
                     }
                 },
                 {...}
@@ -220,37 +335,34 @@
             }
 
 ------
-###    GET/project?page=''&size=''&query=''
+###    GET/project/me?page=''&size=''&query=''
 #### return
         {
-            "yours" :
-            {
-                "numPage"       : int
-                "listObject"    :
-                [
-                    {
-                        "id"			: int,
-                        "name"			: string,
-                        "description"	: string
-                    },
-                    {...}
-                ]
-            }
-            "others" :
-            {
-                
-                "numPage"       : int
-                "listObject"    :
-                [
-                    {
-                        "id"			: int,
-                        "name"			: string,
-                        "description"	: string
-                    },
-                    {...}
-                ]
-                
-            }
+            "numPage"       : int
+            "listObject"    :
+            [
+                {
+                    "id"			: int,
+                    "name"			: string,
+                    "description"	: string
+                },
+                {...}
+            ]
+        }
+------
+###    GET/project/others?page=''&size=''&query=''
+#### return
+        {
+            "numPage"       : int
+            "listObject"    :
+            [
+                {
+                    "id"			: int,
+                    "name"			: string,
+                    "description"	: string
+                },
+                {...}
+            ]
         }
 
 ------
@@ -295,7 +407,9 @@
                         "edv"       : string,
                         "email"     : string,
                         "telefone"  : string,
-                        "image"     : string
+                        "image"     : string,
+                        "student"   : boolean,
+                        "admin"     : boolean
                     }
                 },
                 {...}
@@ -320,7 +434,9 @@
                         "edv"       : string,
                         "email"     : string,
                         "telefone"  : string,
-                        "image"     : string
+                        "image"     : string,
+                        "student"   : boolean,
+                        "admin"     : boolean
                     }
                 },
                 {...}
@@ -358,7 +474,7 @@
             "status"        : booelan,
             "startDate"     : date,
             "endDate"       : date,
-            category"       : string
+            "category"       : string
         }
 ------
 ###     POST/project/message
@@ -389,7 +505,9 @@
                         "edv"       : string,
                         "email"     : string,
                         "telefone"  : string,
-                        "image"     : string
+                        "image"     : string,
+                        "student"   : boolean,
+                        "admin"     : boolean
                     }
                 },
                 {...}
@@ -420,12 +538,14 @@
             answers         : null,
             "user" : 
             {
-                "id"        : string
-                "name"      : string
-                "edv"       : string
-                "email"     : string
-                "telefone"  : string
-                "image"     : string
+                "id"        : string,
+                "name"      : string,
+                "edv"       : string,
+                "email"     : string,
+                "telefone"  : string,
+                "image"     : string,
+                "student"   : boolean,
+                "admin"     : boolean
             },
             "forum" : 
             {
@@ -458,7 +578,9 @@
                         "edv"       : string,
                         "email"     : string,
                         "telefone"  : string,
-                        "image"     : string
+                        "image"     : string,
+                        "student"   : boolean,
+                        "admin"     : boolean
                     },
                     votes           :
                     [
@@ -466,12 +588,14 @@
                         "up"    : boolean,
                         "user"  :   
                         {
-                            "id"        : string
-                            "name"      : string
-                            "edv"       : string
-                            "email"     : string
-                            "telefone"  : string
-                            "image"     : string
+                            "id"        : string,
+                            "name"      : string,
+                            "edv"       : string,
+                            "email"     : string,
+                            "telefone"  : string,
+                            "image"     : string,
+                            "student"   : boolean,
+                            "admin"     : boolean
                         }
                     ]
                     
@@ -481,12 +605,14 @@
         },
         "user" : 
         {
-            "id"        : string
-            "name"      : string
-            "edv"       : string
-            "email"     : string
-            "telefone"  : string
-            "image"     : string
+            "id"        : string,
+            "name"      : string,
+            "edv"       : string,
+            "email"     : string,
+            "telefone"  : string,
+            "image"     : string,
+            "student"   : boolean,
+            "admin"     : boolean
         },
         "forum" : 
         {

@@ -79,7 +79,7 @@ public class UserImpl implements UserService {
 
         for (int i = start; i < end; i++) {
             var user = listUser.get(i);
-            newList.add(new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(),user.getNumber(),imageServ.toUrl(user.getImage()), user.getEts()));
+            newList.add(new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(),user.getNumber(),imageServ.toUrl(user.getImage()), user.getEts(), user.isAdmin()));
         }
 
         return new ListPageDto<>(pages, newList);
@@ -91,7 +91,7 @@ public class UserImpl implements UserService {
         if (!opUser.isPresent())
             return null;
         var user = opUser.get();
-        return new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage()), user.getEts());
+        return new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage()), user.getEts(), user.isAdmin());
     }
 
     @Override
@@ -181,7 +181,7 @@ public class UserImpl implements UserService {
             end = start + size < listQuestions.size() ? start + size : listQuestions.size();
         }
 
-        var currUser = new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(),user.getNumber(),imageServ.toUrl(user.getImage()), user.getEts());
+        var currUser = new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(),user.getNumber(),imageServ.toUrl(user.getImage()), user.getEts(), user.isAdmin());
 
         for (int i = start; i < end; i++) {
             var question = listQuestions.get(i);
@@ -216,7 +216,7 @@ public class UserImpl implements UserService {
             end = start + size < listAnswers.size() ? start + size : listAnswers.size();
         }
 
-        var currUser = new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(),user.getNumber(),imageServ.toUrl(user.getImage()), user.getEts());
+        var currUser = new UserDto(user.getId(),user.getName(), user.getEdv(), user.getEmail(),user.getNumber(),imageServ.toUrl(user.getImage()), user.getEts(), user.isAdmin());
 
         for (int i = start; i < end; i++) {
             var answer = listAnswers.get(i);
@@ -232,13 +232,13 @@ public class UserImpl implements UserService {
                 votes[j] = new VoteDto(
                     currVote.getId(),
                     currVote.isUp(),
-                    new UserDto(thisUser.getId(), thisUser.getName(), thisUser.getEdv(), thisUser.getEmail(), thisUser.getNumber(), imageServ.toUrl(thisUser.getImage()), thisUser.getEts())
+                    new UserDto(thisUser.getId(), thisUser.getName(), thisUser.getEdv(), thisUser.getEmail(), thisUser.getNumber(), imageServ.toUrl(thisUser.getImage()), thisUser.getEts(), thisUser.isAdmin())
                 );
             }
 
 
             newList.add(new AnwserProfileDto(
-                    new UserDto(userQuestion.getId(), userQuestion.getName(), userQuestion.getEdv(), userQuestion.getEmail(), userQuestion.getNumber(), imageServ.toUrl(userQuestion.getImage()), userQuestion.getEts()), 
+                    new UserDto(userQuestion.getId(), userQuestion.getName(), userQuestion.getEdv(), userQuestion.getEmail(), userQuestion.getNumber(), imageServ.toUrl(userQuestion.getImage()), userQuestion.getEts(), userQuestion.isAdmin()), 
                     question.getId(), 
                     question.getTitle(), 
                     question.getDescription(), 

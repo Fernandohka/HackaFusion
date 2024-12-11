@@ -6,9 +6,9 @@ import com.example.demo.dto.UserDto;
 
 public record AnwserProfileDto(
     UserDto user,
-    Long idQiestion,
+    Long idQuestion,
     String title,
-    String descriptio,
+    String description,
     ForumDto forum,
     AnswerDto answer
 ) {}
