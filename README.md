@@ -1,5 +1,5 @@
 # FRONT-BACK
----
+===
 ## **AUTH:**
 
 ###    POST/auth
@@ -14,7 +14,7 @@
                 "message"	: string
             }
 
----
+===
 ## **USER:**
 
 ###    POST/user
@@ -199,11 +199,20 @@
 ---		
 ###     GET/user/interactions/topic/{id}
 ####    return
-    {
-        "id"            : int,
-        "name"          : string,
-        "description"   : string
+    {   
+        "numPage"       : int,
+        "listObject"    :
+        [
+            {
+                "id"            : int,
+                "name"          : string,
+                "description"   : string
+            },
+            {...}
+        ]
     }
+
+===
 ## **FORUM:**
 
 ###    GET/forum/{id}
@@ -249,7 +258,7 @@
             "message"	: string
         }
 
----
+===
 ## **CHAT:**
 ###    POST/chat/user/{id}
 #### return
@@ -318,7 +327,7 @@
             "message"       : string
         }
 
----
+===
 ## **PROJECTS:**
 ###    POST/project
         {
@@ -514,7 +523,7 @@
             ]
         }
 
----
+===
 ## **QUESTION:**
 ### POST/question
     {
