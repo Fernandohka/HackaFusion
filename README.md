@@ -1,5 +1,5 @@
 # FRONT-BACK
-===
+---
 ## **AUTH:**
 
 ###    POST/auth
@@ -14,7 +14,7 @@
                 "message"	: string
             }
 
-===
+---
 ## **USER:**
 
 ###    POST/user
@@ -30,7 +30,7 @@
                 "mesage"	: string
             }
     
-------
+------------------
 ### GET/user?page=''&size=''&query=''
 #### return
         {
@@ -51,7 +51,7 @@
             ]
         }
     
-------
+------------------
 ###     GET/user/{id}
 ####    return
         {
@@ -69,7 +69,7 @@
             }
         }
     
-------
+------------------
 ###    PUT/user
         {
             "name"		: string,
@@ -83,7 +83,7 @@
             {
                 "message"	: string
             }
-------
+------------------
 ###    PUT/user/password
         {
             "password"		: string,
@@ -93,13 +93,13 @@
             {
                 "mesage"	: string
             }
-------
+------------------
 ###    DELETE/admin/user/{id}
 #### return
         {
             "message"	: string
         }
------- 
+------------------
 ###     GET/user/interactions/question/{id}
 #### return
     {
@@ -132,7 +132,7 @@
         ]
     }
 
----
+---------------
 ###     GET/user/interactions/answer/{id}
 #### return
     {
@@ -196,7 +196,7 @@
             {...}
         ]
     }			
----		
+---------------
 ###     GET/user/interactions/topic/{id}
 ####    return
     {   
@@ -212,7 +212,7 @@
         ]
     }
 
-===
+---
 ## **FORUM:**
 
 ###    GET/forum/{id}
@@ -223,7 +223,7 @@
             "description"	: string
         }
 
-------
+------------------
 ###    GET/forum?page=''&size=''&query=''
 #### return
             {
@@ -240,7 +240,7 @@
             }
     
 
-------
+------------------
 ###    POST/admin/forum
         {
             "name"			: string,
@@ -251,14 +251,14 @@
                 "message"	: string
             }
 
-------
+------------------
 ###    DELETE/admin/forum/{id}
 #### return
         {
             "message"	: string
         }
 
-===
+---
 ## **CHAT:**
 ###    POST/chat/user/{id}
 #### return
@@ -266,7 +266,7 @@
                 "message"	: string
             }
 
-------
+------------------
 ###    GET/chat?query=''
 #### return
         {
@@ -289,7 +289,7 @@
             ]
         }
 
-------
+------------------
 ###    GET/chat/{id}
 #### return
         {
@@ -316,7 +316,7 @@
             ]
         }
 
-------
+------------------
 ###    POST/chat/message
         {
             "description"	: string,
@@ -327,7 +327,7 @@
             "message"       : string
         }
 
-===
+---
 ## **PROJECTS:**
 ###    POST/project
         {
@@ -343,7 +343,7 @@
                 "message"	: string
             }
 
-------
+------------------
 ###    GET/project/me?page=''&size=''&query=''
 #### return
         {
@@ -358,7 +358,7 @@
                 {...}
             ]
         }
-------
+------------------
 ###    GET/project/others?page=''&size=''&query=''
 #### return
         {
@@ -374,7 +374,7 @@
             ]
         }
 
-------
+------------------
 ###     GET/project/{id}
 #### return
         {
@@ -387,7 +387,7 @@
             "category"      : string
         }
     
-------
+------------------
 ###    POST/project/feedback
         {
             "isPrivate"     : boolean,
@@ -398,7 +398,7 @@
         {
             "message"   : string
         }
-------
+------------------
 ###     GET/project/{idProject}/feedback/{îdUser}
 ####    return
         {
@@ -425,7 +425,7 @@
             ]
         }
 
-------
+------------------
 ###     GET/project/{idProject}/feedback?page=''&size=''&query=''
 ####    return
         {
@@ -452,7 +452,7 @@
             ]
         }
     
-------
+------------------
 ###    POST/project/user
         {
             "idProject"	: int
@@ -463,7 +463,7 @@
             "message"       : string
         }
     
-------
+------------------
 ###    DELETE/project/user
         {
             "idProject"	: int
@@ -473,7 +473,7 @@
             {
                 "message"	: string 
             }
-------
+------------------
 ###     GET/project/user/{id}
 ####    return
         {
@@ -485,7 +485,7 @@
             "endDate"       : date,
             "category"       : string
         }
-------
+------------------
 ###     POST/project/message
         {
             "idProject"     : int,
@@ -496,7 +496,7 @@
     {
         "message"   : string
     }
-------
+------------------
 ###     GET/project/{id}/message?page=''&size=''
 ####    return
         {
@@ -523,7 +523,7 @@
             ]
         }
 
-===
+---
 ## **QUESTION:**
 ### POST/question
     {
