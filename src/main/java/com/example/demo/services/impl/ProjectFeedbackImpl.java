@@ -70,7 +70,7 @@ public class ProjectFeedbackImpl implements ProjectFeedbackService {
 
     @Override
     public ListPageDto<FeedBackProjectDto> getFeedbackByUser(Long idProject, Long idUser, Integer page, Integer size) {
-        if(page == null || size == null || page < 1 || size < 1 || idProject == null || idUser == null )
+        if(page == null || size == null || idProject == null || idUser == null )
             return null;
 
         var listFeedback = new ArrayList<>(userRepo.findById(idUser).get().getFeedBackProjects());
@@ -112,7 +112,7 @@ public class ProjectFeedbackImpl implements ProjectFeedbackService {
 
     @Override
     public ListPageDto<FeedBackProjectDto> getAllFeedback(Long idProject, Integer page, Integer size) {
-        if(page == null || size == null || page < 1 || size < 1 || idProject == null)
+        if(page == null || size == null || idProject == null)
             return null;
 
         var listFeedback = feedbackProjectRepo.findAll();

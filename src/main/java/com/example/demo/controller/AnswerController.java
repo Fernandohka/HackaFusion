@@ -41,16 +41,16 @@ public class AnswerController {
     public ResponseEntity<MessageDto> addUpVote(@RequestAttribute("token") Token token, @PathVariable Long idAnswer){
         var res = answerService.addVote(true, token.getId(), idAnswer);
         if(res == null)
-            return new ResponseEntity<>(new MessageDto("Erro ao criar questão"), HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(new MessageDto("Questão criada com sucesso"), HttpStatus.OK);
+            return new ResponseEntity<>(new MessageDto("Erro ao adicionar voto"), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new MessageDto("Voto adicionado com sucesso"), HttpStatus.OK);
     }
 
     @PostMapping("/down/{idAnswer}")
     public ResponseEntity<MessageDto> addDownVote(@RequestAttribute("token") Token token, @PathVariable Long idAnswer){
         var res = answerService.addVote(false, token.getId(), idAnswer);
         if(res == null)
-            return new ResponseEntity<>(new MessageDto("Erro ao criar questão"), HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(new MessageDto("Questão criada com sucesso"), HttpStatus.OK);
+            return new ResponseEntity<>(new MessageDto("Erro ao adicionar voto"), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new MessageDto("Voto adicionado com sucesso"), HttpStatus.OK);
     }
 
 }

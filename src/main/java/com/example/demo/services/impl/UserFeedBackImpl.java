@@ -75,7 +75,7 @@ public class UserFeedBackImpl implements FeedbackUserService {
 
     @Override
     public ListPageDto<FeedBackUserDto> getAll(Long idUser, Integer page, Integer size) {
-        if(page == null || size == null || page < 1 || size < 1 || idUser == null)
+        if(page == null || size == null || idUser == null)
             return null;
 
         List<FeedBackUser> listFeedback = feedbackRepo.findByUserReceiverId(idUser);
