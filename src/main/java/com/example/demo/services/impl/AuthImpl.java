@@ -73,12 +73,12 @@ public class AuthImpl implements AuthService {
     public Boolean ValidatePassword(String password) {
         try {
             if (password.length() < 8)
-            return false;
-
+                return false;
+    
             Boolean letterUp = false;
             Boolean number = false;
             Boolean letter = false;
-
+    
             for (char c : password.toCharArray()) {
                 if (Character.isDigit(c))
                     number = true;
@@ -87,13 +87,12 @@ public class AuthImpl implements AuthService {
                 if (Character.isUpperCase(c))
                     letterUp = true;
             }
-
+    
             return number && letter && letterUp;
-
+            
         } catch (Exception e) {
             return false;
         }
-        
     }
 
 }

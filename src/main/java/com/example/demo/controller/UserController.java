@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.ListPageDto;
 import com.example.demo.dto.Token;
+import com.example.demo.dto.TopicDto;
 import com.example.demo.dto.UserDto;
+import com.example.demo.dto.Web.AnwserProfileDto;
 import com.example.demo.dto.Web.CreateUserDto;
 import com.example.demo.dto.Web.MessageDto;
+import com.example.demo.dto.Web.QuestProfileDto;
 import com.example.demo.dto.Web.ReturnProfiledto;
 import com.example.demo.dto.Web.UpdatePassDto;
 import com.example.demo.dto.Web.UpdateUserDto;
@@ -82,12 +86,16 @@ public class UserController {
 
     @PutMapping("/user")
     public ResponseEntity<MessageDto> updateUser(@RequestAttribute("token") Token token,@ModelAttribute UpdateUserDto data){
-        var res = service.update(token.getId(), data.name(), data.EDV(), data.email(),  null, data.phone(), false, data.student(), data.image(), null);
-        
-        if(!res.success())
-            return new ResponseEntity<>(new MessageDto(res.response()),HttpStatus.BAD_REQUEST);
-        
-        return new ResponseEntity<>(new MessageDto("Usuario atualizado com sucesso!"),HttpStatus.OK);
+        try {
+            var res = service.update(token.getId(), data.name(), data.EDV(), data.email(),  null, data.phone(), false, data.student(), data.image(), null);
+            
+            if(!res.success())
+                return new ResponseEntity<>(new MessageDto(res.response()),HttpStatus.BAD_REQUEST);
+            
+            return new ResponseEntity<>(new MessageDto("Usuario atualizado com sucesso!"),HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new MessageDto("Erro ao criar user"),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/user/password")
@@ -117,5 +125,48 @@ public class UserController {
         
     }
 
+    @GetMapping("/user/interactions/question/{id}")
+    public ResponseEntity<ListPageDto<QuestProfileDto>> getInteractionQuest(@RequestAttribute("token") Token token,@PathVariable Long id,@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size){
+        try {
+            var res = service.interactionQuest(id, page, size);
+    
+            if(res == null)
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            
+            return new ResponseEntity<>(res,HttpStatus.OK);
+            
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
+    @GetMapping("/user/interactions/anwser/{id}")
+    public ResponseEntity<ListPageDto<AnwserProfileDto>> getInteractionAnwser(@RequestAttribute("token") Token token,@PathVariable Long id,@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size){
+        try {
+            var res = service.interactionAnwser(id, page, size);
+    
+            if(res == null)
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            
+            return new ResponseEntity<>(res,HttpStatus.OK);
+            
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/user/interactions/topic/{id}")
+    public ResponseEntity<ListPageDto<TopicDto>> getInteractionTopic(@RequestAttribute("token") Token token,@PathVariable Long id,@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size){
+        try {
+            var res = service.interactionTopic(id, page, size);
+    
+            if(res == null)
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            
+            return new ResponseEntity<>(res,HttpStatus.OK);
+            
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
