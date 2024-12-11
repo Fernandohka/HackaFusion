@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,13 +20,14 @@ import com.example.demo.dto.Web.CreateForumDto;
 import com.example.demo.dto.Web.MessageDto;
 import com.example.demo.services.ForumService;
 
-@RestController("/forum")
+@RestController
+@RequestMapping("/forum")
 public class ForumController {
     
     @Autowired
     ForumService forumService;
 
-    @PostMapping
+    @PostMapping("admin/forum")
     public ResponseEntity<MessageDto> create(@RequestAttribute("token") Token token, @RequestBody CreateForumDto data){
         if(!token.isAdmin())
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -36,7 +38,7 @@ public class ForumController {
         return new ResponseEntity<>(new MessageDto("Forum criado com sucesso"), HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/forum")
     public ResponseEntity<ListPageDto<ForumDto>> getAll(@RequestAttribute("token") Token token, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size, @RequestParam(defaultValue = "") String query){
         var res = forumService.getAll(page, size, query);
         if(res == null)
@@ -44,7 +46,7 @@ public class ForumController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/forum/{id}")
     public ResponseEntity<ForumDto> getById(@PathVariable Long id){
         var res = forumService.getById(id);
         if(res == null)
@@ -52,7 +54,7 @@ public class ForumController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("admin/forum/{id}")
     public ResponseEntity<MessageDto> delete(@RequestAttribute("token") Token token, @PathVariable Long id){
         if(!token.isAdmin())
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
