@@ -46,7 +46,7 @@ public class ChatPriv {
             if(list == null)
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                 
-                return new ResponseEntity<>(list,HttpStatus.OK);
+            return new ResponseEntity<>(list,HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -55,11 +55,11 @@ public class ChatPriv {
     @GetMapping("/chat/{id}")
     public ResponseEntity<ListPageDto<MessageDtoPriv>> getChat(@RequestAttribute("token") Token token,@PathVariable Long id){
         try {
-            var list = service.getMessage(id);
+            var list = service.getMessage(token.getId(), id);
             if(list == null)
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                 
-                return new ResponseEntity<>(list,HttpStatus.OK);
+            return new ResponseEntity<>(list,HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
