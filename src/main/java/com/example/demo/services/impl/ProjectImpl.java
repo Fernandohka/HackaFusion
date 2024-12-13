@@ -127,15 +127,17 @@ public class ProjectImpl implements ProjectService {
     }
 
     @Override
-    public ListPageDto<ProjectDto> getAll(Integer page, Integer size, String query) {
-        if(page == null || size == null || page < 1 || size < 1)
+    public ListPageDto<ProjectDto> getAllPublic(Long idUser, Integer page, Integer size, String query) {
+        if(page == null || size == null)
             return null;
 
         List<Project> listProject;
-        if(query == null || query.equals(""))
-            listProject = projectRepo.findAll();
-        else
-            listProject = projectRepo.findByCategoryName(query);
+        if(query == null || query.equals("")){
+            listProject = projectRepo.findByUsersIdNot(idUser);
+        }
+        else{
+            listProject = projectRepo.findByUsersIdNotAndCategoryNameContaining(idUser, query);
+        }
         var newList = new ArrayList<ProjectDto>();
 
         Integer start = 0;
@@ -152,7 +154,6 @@ public class ProjectImpl implements ProjectService {
         Project project;
         for(int i=start;i<end;i++){
             project = listProject.get(i);
-
             newList.add(new ProjectDto(project.getId(),
                 project.getName(),
                 project.getDescription(),
@@ -160,7 +161,47 @@ public class ProjectImpl implements ProjectService {
                 project.getStartDate(),
                 project.getEndDate(),
                 project.getCategory().getName()
-                ));
+            ));
+        }
+        return new ListPageDto<>(pages, newList);
+    }
+
+    @Override
+    public ListPageDto<ProjectDto> getAllMy(Long idUser, Integer page, Integer size, String query) {
+        if(page == null || size == null)
+            return null;
+
+        List<Project> listProject;
+        if(query == null || query.equals("")){
+            listProject = projectRepo.findByUsersId(idUser);
+        }
+        else{
+            listProject = projectRepo.findByUsersIdAndCategoryNameContaining(idUser, query);
+        }
+        var newList = new ArrayList<ProjectDto>();
+
+        Integer start = 0;
+        Integer end = listProject.size();
+        Integer pages = (int)Math.floor(listProject.size()/size);
+        
+        if(size > 0 && page > 0){
+            start = (page-1)*size;
+            if(start >= listProject.size())
+                return new ListPageDto<>(pages, newList);
+            end = start+size<listProject.size()?start+size:listProject.size();
+        }
+
+        Project project;
+        for(int i=start;i<end;i++){
+            project = listProject.get(i);
+            newList.add(new ProjectDto(project.getId(),
+                project.getName(),
+                project.getDescription(),
+                project.isStatus(),
+                project.getStartDate(),
+                project.getEndDate(),
+                project.getCategory().getName()
+            ));
         }
         return new ListPageDto<>(pages, newList);
     }
@@ -186,7 +227,7 @@ public class ProjectImpl implements ProjectService {
 
     @Override
     public ListPageDto<ProjectDto> getByUser(Long idUser, Integer page, Integer size) {
-        if(page == null || size == null || page < 1 || size < 1)
+        if(page == null || size == null)
             return null;
 
         var listProject = new ArrayList<>(userRepo.findById(idUser).get().getProjects());

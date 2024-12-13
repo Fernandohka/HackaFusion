@@ -55,6 +55,9 @@ public class ChatImpl implements ChatService{
         var user = userOp.get();
         var chat = chatOp.get();
 
+        if(!user.getChats().contains(chat))
+            return new ResponseDto(false, "Usuario Não participa deste chat");
+
         var newMessage = new MessageChat();
         newMessage.setChat(chat);
         newMessage.setDescription(description);
@@ -69,13 +72,18 @@ public class ChatImpl implements ChatService{
     }
 
     @Override
-    public ListPageDto<MessageDtoPriv> getMessage(Long idChat) {
+    public ListPageDto<MessageDtoPriv> getMessage(Long idUser, Long idChat) {
+        var userOp = repoUser.findById(idUser);
         var chatOP = repo.findById(idChat);
 
-        if(!chatOP.isPresent())
+        if(!chatOP.isPresent() || !userOp.isPresent())
             return null;
         
+        var user = userOp.get();
         var chat = chatOP.get();
+
+        if(!user.getChats().contains(chat))
+            return null;
 
         var listMessage = new ArrayList<>(chat.getMessages());
         var newList = new ArrayList<MessageDtoPriv>();

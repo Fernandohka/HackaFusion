@@ -36,7 +36,7 @@ public class QuestionController {
     }
 
     @GetMapping
-    public ResponseEntity<ListPageDto<QuestionDto>> getAll(@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size){
+    public ResponseEntity<ListPageDto<QuestionDto>> getAll(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer size){
         var res = questionService.getAll(page, size);
         if(res == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -44,14 +44,14 @@ public class QuestionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<QuestionDto> getById(@PathVariable Long id, @RequestParam(defaultValue = "0") Integer answerPage,@RequestParam(defaultValue = "0") Integer answerSize){
+    public ResponseEntity<QuestionDto> getById(@PathVariable Long id, @RequestParam(defaultValue = "1") Integer answerPage,@RequestParam(defaultValue = "10") Integer answerSize){
         var res = questionService.getById(id, answerPage, answerSize);
         if(res == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<MessageDto> delete(@RequestAttribute("token") Token token, @PathVariable Long id){
         var res = questionService.delete(token.getId(), id);
         return new ResponseEntity<>(new MessageDto(res.response()), res.success() ? HttpStatus.OK : HttpStatus.BAD_REQUEST);

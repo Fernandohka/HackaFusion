@@ -81,7 +81,7 @@ public class QuestionImpl implements QuestionService {
 
     @Override
     public ListPageDto<QuestionDto> getAll(Integer page, Integer size) {
-        if(page == null || size == null || page < 1 || size < 1)
+        if(page == null || size == null)
             return null;
 
         var listQuestion = questionRepo.findAll();
