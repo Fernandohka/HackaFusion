@@ -169,4 +169,17 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping("/admin/user/{id}")
+    public ResponseEntity<MessageDto> updateAdmin(@RequestAttribute("token") Token token, @PathVariable Long id){
+        if(!token.isAdmin())
+            return new ResponseEntity<>(new MessageDto("Usuario sem autorização"), HttpStatus.UNAUTHORIZED);
+        
+        var res = service.updateAdmin(id);
+    
+        if(!res.success())
+            return new ResponseEntity<>(new MessageDto(res.response()),HttpStatus.BAD_REQUEST);
+        
+        return new ResponseEntity<>(new MessageDto("Usuario atualizado com sucesso!"),HttpStatus.OK);
+    }
 }
