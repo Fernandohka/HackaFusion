@@ -32,8 +32,8 @@ public class ProjectMessageImpl implements ProjectMessageService {
     ImageStorageService imageServ;
 
     @Override
-    public MessageProjectDto createMessage(Long idProject, Long idUser, String description, LocalDateTime timestamp) {
-        if(idProject == null || idUser == null || description.equals("") || timestamp == null)
+    public MessageProjectDto createMessage(Long idProject, Long idUser, String description) {
+        if(idProject == null || idUser == null || description.equals(""))
             return null;
 
         User user;
@@ -55,7 +55,7 @@ public class ProjectMessageImpl implements ProjectMessageService {
         MessageProject messageProject = new MessageProject();
         messageProject.setDescription(description);
         messageProject.setProject(project);
-        messageProject.setTimestamp(timestamp);
+        messageProject.setTimestamp(LocalDateTime.now());
         messageProject.setUser(user);
         messageProjectRepo.save(messageProject);
 
@@ -95,7 +95,7 @@ public class ProjectMessageImpl implements ProjectMessageService {
 
         Integer start = 0;
         Integer end = listMessage.size();
-        Integer pages = (int)Math.floor(listMessage.size()/size);
+        Integer pages = size>0?(int)Math.floor(listMessage.size()/size):0;
         
         if(size > 0 && page > 0){
             start = (page-1)*size;
