@@ -13,5 +13,5 @@ public interface ChatService {
     public Chat create(Long idUserA, Long idUserB);
     public ListPageDto<ChatDto> getAllByUser(Long iduser, String query);
     public ResponseDto createMessage(Long idUser, Long idChat, String description);
-    public ListPageDto<MessageDtoPriv> getMessage(Long idChat);
+    public ListPageDto<MessageDtoPriv> getMessage(Long isUser, Long idChat);
 }
