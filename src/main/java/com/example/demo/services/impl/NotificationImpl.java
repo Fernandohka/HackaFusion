@@ -38,7 +38,7 @@ public class NotificationImpl implements NotificationService {
             return null;
         }
 
-        var listNotification = notificationRepo.findAll();
+        var listNotification = notificationRepo.findByUserId(idUser);
         var newList = new ArrayList<NotificationDto>();
 
         Integer start = 0;
