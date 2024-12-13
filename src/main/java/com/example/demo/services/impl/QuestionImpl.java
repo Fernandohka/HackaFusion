@@ -81,11 +81,13 @@ public class QuestionImpl implements QuestionService {
     }
 
     @Override
-    public ListPageDto<QuestionDto> getAll(Integer page, Integer size) {
+    public ListPageDto<QuestionDto> getAllByForum(Long idForum, Integer page, Integer size) {
         if(page == null || size == null || page < 1 || size < 1)
             return null;
 
-        var listQuestion = questionRepo.findAll();
+        var listQuestion = questionRepo.findByForumId(idForum);
+        System.out.println(listQuestion.size());
+
         var newList = new ArrayList<QuestionDto>();
 
         Integer start = 0;
@@ -98,6 +100,9 @@ public class QuestionImpl implements QuestionService {
                 return new ListPageDto<>(pages, newList);
             end = start+size<listQuestion.size()?start+size:listQuestion.size();
         }
+
+        System.out.println(start);
+        System.out.println(end);
 
         Question question;
         User user;

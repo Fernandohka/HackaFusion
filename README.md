@@ -536,7 +536,7 @@
         "message"   : string
     }
 ------------------
-### GET/question?page=''&size=''
+### GET/question?idForum=''&page=''&size=''
     {
         "numPage"       : int,
         "listObject"    :
