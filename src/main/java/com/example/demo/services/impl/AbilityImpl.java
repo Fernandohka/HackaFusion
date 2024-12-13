@@ -76,7 +76,7 @@ public class AbilityImpl  implements AbilityService{
         var userOp = userRepo.findById(idUser);
 
         if(userOp.isEmpty())
-        return null;
+            return null;
         
         var listAbility = new ArrayList<>(userOp.get().getAbilitys());
         var listDto = new ArrayList<AbilityDto>();

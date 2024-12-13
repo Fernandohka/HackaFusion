@@ -40,7 +40,7 @@ public class CategoryImpl implements CategoryService {
         if(query == null || query.equals(""))
             listCategory = categoryRepo.findAll();
         else
-            listCategory = categoryRepo.findByName(query);
+            listCategory = categoryRepo.findByNameContains(query);
         var newList = new ArrayList<CategoryDto>();
 
         Integer start = 0;

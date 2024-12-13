@@ -42,7 +42,7 @@ public class ForumImpl implements ForumService {
         if(query == null || query.equals(""))
             listForum = forumRepo.findAll();
         else
-            listForum = forumRepo.findByName(query);
+            listForum = forumRepo.findByNameContains(query);
         var newList = new ArrayList<ForumDto>();
 
         Integer start = 0;
