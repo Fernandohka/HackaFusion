@@ -42,7 +42,7 @@ public class ProjectController {
     
     @PostMapping
     public ResponseEntity<MessageDto> create(@RequestAttribute("token") Token token, @RequestBody CreateProjectDto data){
-        var res = projectService.create(data.name(), data.description(), data.startDate(), data.endDate(), data.idCategory(), token.getId());
+        var res = projectService.create(data.name(), data.description(), data.idCategory(), token.getId());
         if(res == null)
             return new ResponseEntity<>(new MessageDto("Erro ao criar projeto"), HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(new MessageDto("Projeto criado com sucesso"), HttpStatus.OK);

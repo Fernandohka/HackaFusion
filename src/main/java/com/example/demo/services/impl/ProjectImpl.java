@@ -31,8 +31,8 @@ public class ProjectImpl implements ProjectService {
     UserRepo userRepo;
 
     @Override
-    public ProjectDto create(String name, String description, LocalDateTime startDate, LocalDateTime endDate, Long idCategory, Long idUser) {
-        if(name == null || name.equals("") || description == null || description.equals("") || startDate == null || endDate == null || idCategory == null)
+    public ProjectDto create(String name, String description, Long idCategory, Long idUser) {
+        if(name == null || name.equals("") || description == null || description.equals("") || idCategory == null)
             return null;
 
         Category category;
@@ -49,9 +49,9 @@ public class ProjectImpl implements ProjectService {
         Project project = new Project();
         project.setCategory(category);
         project.setDescription(description);
-        project.setEndDate(endDate);
+        project.setEndDate(null);
         project.setName(name);
-        project.setStartDate(startDate);
+        project.setStartDate(LocalDateTime.now());
         project.setStatus(true);
         project.setUsers(users);
         projectRepo.save(project);
@@ -142,7 +142,7 @@ public class ProjectImpl implements ProjectService {
 
         Integer start = 0;
         Integer end = listProject.size();
-        Integer pages = (int)Math.floor(listProject.size()/size);
+        Integer pages = size>0?(int)Math.floor(listProject.size()/size):0;
         
         if(size > 0 && page > 0){
             start = (page-1)*size;
