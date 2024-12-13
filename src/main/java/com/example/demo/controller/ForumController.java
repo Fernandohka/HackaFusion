@@ -21,7 +21,6 @@ import com.example.demo.dto.Web.MessageDto;
 import com.example.demo.services.ForumService;
 
 @RestController
-@RequestMapping("/forum")
 public class ForumController {
     
     @Autowired

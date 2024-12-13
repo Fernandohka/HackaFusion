@@ -47,7 +47,7 @@ public class UserImpl implements UserService {
             newUser.setNumber(numero);
             newUser.setAdmin(false);
             newUser.setEts(false);
-            newUser.setImage(imageServ.UploadImage(ImageUtils.compressImage(Files.readAllBytes(Paths.get("C:\\Users\\disrct\\Desktop\\HackaFusion\\src\\main\\java\\com\\example\\demo\\images\\user.png"))))); 
+            newUser.setImage(imageServ.UploadImage(ImageUtils.compressImage(Files.readAllBytes(Paths.get("C:\\Users\\disrct\\Desktop\\HACKAFUSION\\HackaFusion\\src\\main\\java\\com\\example\\demo\\images\\user.png"))))); 
             newUser.setDescription("");
             return repo.save(newUser);
         } catch (Exception e) {
