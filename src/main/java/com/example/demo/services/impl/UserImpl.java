@@ -290,4 +290,18 @@ public class UserImpl implements UserService {
         return new ListPageDto<>(pages, newList);
     }
 
+    @Override
+    public ResponseDto updateAdmin(Long id) {
+        var userOp = repo.findById(id);
+
+        if(!userOp.isPresent())
+            return new ResponseDto(false,"Usuario não encontrado");
+        var user = userOp.get();
+
+        user.setAdmin(true);
+
+        repo.save(user);
+
+        return new ResponseDto(true, "Usuario atualizado para administrador com sucesso!");
+    }
 }

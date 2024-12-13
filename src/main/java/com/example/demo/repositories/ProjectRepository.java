@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.model.Project;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
-    List<Project> findByCategoryName(String query);
+    List<Project> findByCategoryNameContains(String query);
     List<Project> findByUsersId(Long id);
     List<Project> findByUsersIdNot(Long id);
     List<Project> findByUsersIdAndCategoryNameContaining(Long id, String query);
