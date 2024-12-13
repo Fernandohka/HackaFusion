@@ -10,6 +10,7 @@ import com.example.demo.services.AuthService;
 import com.example.demo.services.CareerService;
 import com.example.demo.services.CategoryService;
 import com.example.demo.services.ChatService;
+import com.example.demo.services.FeedbackUserService;
 import com.example.demo.services.ForumService;
 import com.example.demo.services.ImageStorageService;
 import com.example.demo.services.JWTService;
@@ -38,6 +39,7 @@ import com.example.demo.services.impl.ProjectMessageImpl;
 import com.example.demo.services.impl.QuestionImpl;
 import com.example.demo.services.impl.TopicImpl;
 import com.example.demo.services.impl.TopicMessageImpl;
+import com.example.demo.services.impl.UserFeedBackImpl;
 import com.example.demo.services.impl.UserImpl;
 
 @Configuration
@@ -137,4 +139,8 @@ public class DependencyConfiguration {
         return new CategoryImpl();
     }
 
+    @Bean
+    public FeedbackUserService feedbackUserService(){
+        return new UserFeedBackImpl();
+    }
 }

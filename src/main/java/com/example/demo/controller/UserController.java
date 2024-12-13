@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.FeedBackUserDto;
 import com.example.demo.dto.ListPageDto;
 import com.example.demo.dto.Token;
 import com.example.demo.dto.TopicDto;
 import com.example.demo.dto.UserDto;
 import com.example.demo.dto.Web.AnwserProfileDto;
+import com.example.demo.dto.Web.CreateFeedbackUserDto;
 import com.example.demo.dto.Web.CreateUserDto;
 import com.example.demo.dto.Web.MessageDto;
 import com.example.demo.dto.Web.QuestProfileDto;
@@ -27,6 +28,7 @@ import com.example.demo.dto.Web.ReturnProfiledto;
 import com.example.demo.dto.Web.UpdatePassDto;
 import com.example.demo.dto.Web.UpdateUserDto;
 import com.example.demo.services.AuthService;
+import com.example.demo.services.FeedbackUserService;
 import com.example.demo.services.UserService;
 
 @RestController
@@ -37,6 +39,9 @@ public class UserController {
 
     @Autowired
     AuthService auth;
+
+    @Autowired
+    FeedbackUserService feedbackUserService;
 
     @PostMapping("/user")
     public ResponseEntity<MessageDto> createUser(@RequestBody CreateUserDto data){
@@ -181,5 +186,22 @@ public class UserController {
             return new ResponseEntity<>(new MessageDto(res.response()),HttpStatus.BAD_REQUEST);
         
         return new ResponseEntity<>(new MessageDto("Usuario atualizado com sucesso!"),HttpStatus.OK);
+    }
+
+
+    @PostMapping("/user/feedback")
+    public ResponseEntity<MessageDto> createFeedback(@RequestAttribute("token") Token token, @RequestBody CreateFeedbackUserDto data){
+        var res = feedbackUserService.create(token.getId(), data.idUserReceiver(), data.description(), data.isPrivate());
+        if(res == null)
+            return new ResponseEntity<>(new MessageDto("Erro ao criar feedback"), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new MessageDto("Feedback criado com sucesso"), HttpStatus.OK);
+    }
+
+    @GetMapping("/user/feedback")
+    public ResponseEntity<ListPageDto<FeedBackUserDto>> getAll(@RequestAttribute("token") Token token, @RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer size){
+        var res = feedbackUserService.getAll(token.getId(), page, size);
+        if(res == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }
