@@ -83,7 +83,7 @@ public class UserFeedBackImpl implements FeedbackUserService {
 
         Integer start = 0;
         Integer end = listFeedback.size();
-        Integer pages = (int)Math.floor(listFeedback.size()/size);
+        Integer pages = size>0?(int)Math.ceilDiv(listFeedback.size(), size):0;
         
         if(size > 0 && page > 0){
             start = (page-1)*size;

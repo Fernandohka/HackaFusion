@@ -47,7 +47,7 @@ public class ForumImpl implements ForumService {
 
         Integer start = 0;
         Integer end = listForum.size();
-        Integer pages = (int)Math.floor(listForum.size()/size);
+        Integer pages = size>0?(int)Math.ceilDiv(listForum.size(), size):0;
         
         if(size > 0 && page > 0){
             start = (page-1)*size;

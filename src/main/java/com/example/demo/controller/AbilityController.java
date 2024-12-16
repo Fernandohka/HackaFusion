@@ -34,11 +34,11 @@ public class AbilityController {
         }
     }
 
-    @GetMapping("/ability/user/{id}")
-    public ResponseEntity<ListPageDto<AbilityDto>> getAbilitys(@PathVariable Long id ,@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size,@RequestParam(defaultValue = "") String query){
+    @GetMapping("/ability/user")
+    public ResponseEntity<ListPageDto<AbilityDto>> getAbilitys(@RequestAttribute("token") Token token ,@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size,@RequestParam(defaultValue = "") String query){
         try {
 
-            var abi = service.getAllByUser(id,page, size);
+            var abi = service.getAllByUser(token.getId(), page, size);
 
             if(abi==null)
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -81,14 +81,14 @@ public class AbilityController {
     }
 
     @PostMapping("/ability/user/{id}")
-    public ResponseEntity<MessageDto> addUserAbility(@RequestAttribute("token") Token token,@PathVariable Long id){
+    public ResponseEntity<MessageDto> addUserAbility(@RequestAttribute("token") Token token, @PathVariable Long id){
 
         var res = service.addAbility(token.getId(), id);
 
         if(!res.success())
             return new ResponseEntity<>(new MessageDto(res.response()),HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity<>(new MessageDto("Habilidade adicionado com  sucesso!!"),HttpStatus.OK);
+        return new ResponseEntity<>(new MessageDto("Habilidade adicionado com sucesso!!"),HttpStatus.OK);
     }
 
     @DeleteMapping("/ability/user/{id}")

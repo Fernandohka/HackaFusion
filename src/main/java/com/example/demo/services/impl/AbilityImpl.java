@@ -34,7 +34,7 @@ public class AbilityImpl  implements AbilityService{
     public ListPageDto<AbilityDto> getAll(Integer page, Integer size,String query) {
         List<Ability> listAbility;
 
-        if(query==""|| query==null){
+        if(query == null || query.equals("")){
             listAbility = repo.findAll();
         }else{
             listAbility = repo.findByNameContains(query);
@@ -44,14 +44,14 @@ public class AbilityImpl  implements AbilityService{
 
         Integer start = 0;
         Integer end = listAbility.size();
-        Integer pages = size>0?(int)Math.floor(listAbility.size()/size):0;
+        Integer pages = size>0?(int)Math.ceilDiv(listAbility.size(), size):0;
 
 
         if (size > 0 || page > 0) {
-            start = (size - 1) * page;
+            start = (page - 1) * size;
             if (start >= listAbility.size())
                 return new ListPageDto<>(pages, listDto);
-            end = start + size < listDto.size() ? start + size : listDto.size();
+            end = start + size < listAbility.size() ? start + size : listAbility.size();
         }
 
         for (int i = start; i < end; i++) {
@@ -84,7 +84,7 @@ public class AbilityImpl  implements AbilityService{
 
         Integer start = 0;
         Integer end = listAbility.size();
-        Integer pages = size>0?(int)Math.floor(listAbility.size()/size):0;
+        Integer pages = size>0?(int)Math.ceilDiv(listAbility.size(), size):0;
 
 
         if (size > 0 && page > 0) {

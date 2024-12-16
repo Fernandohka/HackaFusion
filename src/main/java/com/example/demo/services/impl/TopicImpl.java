@@ -43,7 +43,7 @@ public class TopicImpl implements TopicService {
 
         Integer start = 0;
         Integer end = listTopic.size();
-        Integer pages = (int)Math.floor(listTopic.size()/size);
+        Integer pages = size>0?(int)Math.ceilDiv(listTopic.size(), size):0;
         
         if(size > 0 && page > 0){
             start = (page-1)*size;
