@@ -66,7 +66,7 @@ public class UserImpl implements UserService {
 
         Integer start = 0;
         Integer end = listUser.size();
-        Integer pages = size>0?(int)Math.floor(listUser.size()/size):0;
+        Integer pages = size>0?(int)Math.ceilDiv(listUser.size(), size):0;
 
         var newList = new ArrayList<UserDto>();
 
@@ -171,7 +171,7 @@ public class UserImpl implements UserService {
 
         Integer start = 0;
         Integer end = listQuestions.size();
-        Integer pages = size>0?(int)Math.floor(listQuestions.size()/size):0;
+        Integer pages = size>0?(int)Math.ceilDiv(listQuestions.size(), size):0;
 
 
         if (size > 0 && page > 0) {
@@ -206,7 +206,7 @@ public class UserImpl implements UserService {
 
         Integer start = 0;
         Integer end = listAnswers.size();
-        Integer pages = size>0?(int)Math.floor(listAnswers.size()/size):0;
+        Integer pages = size>0?(int)Math.ceilDiv(listAnswers.size(), size):0;
 
 
         if (size > 0 && page > 0) {
@@ -273,7 +273,7 @@ public class UserImpl implements UserService {
 
         Integer start = 0;
         Integer end = topicsUser.size();
-        Integer pages = size>0?(int)Math.floor(topicsUser.size()/size):0;
+        Integer pages = size>0?(int)Math.ceilDiv(topicsUser.size(), size):0;
 
         if (size > 0 && page > 0) {
             start = (page - 1) * size;

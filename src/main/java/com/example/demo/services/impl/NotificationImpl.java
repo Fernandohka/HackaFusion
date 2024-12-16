@@ -43,7 +43,7 @@ public class NotificationImpl implements NotificationService {
 
         Integer start = 0;
         Integer end = listNotification.size();
-        Integer pages = (int)Math.floor(listNotification.size()/size);
+        Integer pages = size>0?(int)Math.ceilDiv(listNotification.size(), size):0;
         
         if(size > 0 && page > 0){
             start = (page-1)*size;

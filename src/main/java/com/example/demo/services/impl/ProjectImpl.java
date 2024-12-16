@@ -142,7 +142,7 @@ public class ProjectImpl implements ProjectService {
 
         Integer start = 0;
         Integer end = listProject.size();
-        Integer pages = size>0?(int)Math.floor(listProject.size()/size):0;
+        Integer pages = size>0?(int)Math.ceilDiv(listProject.size(), size):0;
         
         if(size > 0 && page > 0){
             start = (page-1)*size;
@@ -182,7 +182,7 @@ public class ProjectImpl implements ProjectService {
 
         Integer start = 0;
         Integer end = listProject.size();
-        Integer pages = (int)Math.floor(listProject.size()/size);
+        Integer pages = size>0?(int)Math.ceilDiv(listProject.size(), size):0;
         
         if(size > 0 && page > 0){
             start = (page-1)*size;
@@ -235,7 +235,7 @@ public class ProjectImpl implements ProjectService {
 
         Integer start = 0;
         Integer end = listProject.size();
-        Integer pages = (int)Math.floor(listProject.size()/size);
+        Integer pages = size>0?(int)Math.ceilDiv(listProject.size(), size):0;
         
         if(size > 0 && page > 0){
             start = (page-1)*size;

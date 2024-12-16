@@ -58,7 +58,7 @@ public class CarrerImpl implements CareerService{
 
         Integer start = 0;
         Integer end = listCarrer.size();
-        Integer pages = size>0?(int)Math.floor(listCarrer.size()/size):0;
+        Integer pages = size>0?(int)Math.ceilDiv(listCarrer.size(), size):0;
 
 
         if (size > 0 || page > 0) {
@@ -133,7 +133,7 @@ public class CarrerImpl implements CareerService{
 
         Integer start = 0;
         Integer end = listCarrer.size();
-        Integer pages = size>0?(int)Math.floor(listCarrer.size()/size):0;
+        Integer pages = size>0?(int)Math.ceilDiv(listCarrer.size(), size):0;
 
 
         if (size > 0 && page > 0) {
