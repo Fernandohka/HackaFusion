@@ -92,7 +92,7 @@ public class QuestionImpl implements QuestionService {
 
         Integer start = 0;
         Integer end = listQuestion.size();
-        Integer pages = (int)Math.floor(listQuestion.size()/size);
+        Integer pages = size>0?(int)Math.ceilDiv(listQuestion.size(), size):0;
         
         if(size > 0 || page > 0){
             start = (size-1)*page;

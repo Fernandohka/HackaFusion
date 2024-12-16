@@ -1,8 +1,5 @@
 package com.example.demo.services;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import com.example.demo.dto.ListPageDto;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.Web.ChatDto;
@@ -13,5 +10,5 @@ public interface ChatService {
     public Chat create(Long idUserA, Long idUserB);
     public ListPageDto<ChatDto> getAllByUser(Long iduser, String query);
     public ResponseDto createMessage(Long idUser, Long idChat, String description);
-    public ListPageDto<MessageDtoPriv> getMessage(Long idChat);
+    public ListPageDto<MessageDtoPriv> getMessage(Long isUser, Long idChat);
 }

@@ -36,19 +36,19 @@ public class ForumImpl implements ForumService {
 
     @Override
     public ListPageDto<ForumDto> getAll(Integer page, Integer size, String query) {
-        if(page == null || size == null || page < 1 || size < 1)
+        if(page == null || size == null)
             return null;
 
         List<Forum> listForum;
         if(query == null || query.equals(""))
             listForum = forumRepo.findAll();
         else
-            listForum = forumRepo.findByName(query);
+            listForum = forumRepo.findByNameContains(query);
         var newList = new ArrayList<ForumDto>();
 
         Integer start = 0;
         Integer end = listForum.size();
-        Integer pages = (int)Math.floor(listForum.size()/size);
+        Integer pages = size>0?(int)Math.ceilDiv(listForum.size(), size):0;
         
         if(size > 0 && page > 0){
             start = (page-1)*size;

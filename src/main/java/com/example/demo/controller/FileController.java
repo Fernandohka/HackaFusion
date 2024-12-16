@@ -25,7 +25,7 @@ public class FileController {
     @Autowired
     ImageStorageService imageService;
 
-    @GetMapping("image/{id}")
+    @GetMapping("/image/{id}")
     public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
         if(id == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
