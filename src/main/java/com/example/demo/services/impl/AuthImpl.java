@@ -1,7 +1,9 @@
 package com.example.demo.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
+import com.example.demo.dto.ResponseEntityDto;
 import com.example.demo.model.User;
 import com.example.demo.repositories.UserRepo;
 import com.example.demo.services.AuthService;
@@ -15,18 +17,18 @@ public class AuthImpl implements AuthService {
     BcryptImpl crypt;
 
     @Override
-    public User login(String login, String password) {
+    public ResponseEntityDto<User> login(String login, String password) {
         var listLogin = repo.FindByLogin(login);
 
         if (listLogin.isEmpty())
-            return null;
+            return new ResponseEntityDto<User>(null, "Usuário não encontrado");
 
         var user = listLogin.get(0);
 
         if (!crypt.checkEncode(password, user.getPassword()))
-            return null;
+            return new ResponseEntityDto<User>(null, "Senha inválida");
 
-        return user;
+        return new ResponseEntityDto<User>(user, "Usuário logado com sucesso");
 
     }
 

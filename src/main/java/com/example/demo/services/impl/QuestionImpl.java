@@ -92,17 +92,18 @@ public class QuestionImpl implements QuestionService {
 
         Integer start = 0;
         Integer end = listQuestion.size();
-        Integer pages = size>0?(int)Math.ceilDiv(listQuestion.size(), size):0;
+        Integer pages = size>0?(int)Math.ceilDiv(listQuestion.size(), size) : 0;
         
-        if(size > 0 || page > 0){
-            start = (size-1)*page;
-            if(start >= listQuestion.size())
-                return new ListPageDto<>(pages, newList);
-            end = start+size<listQuestion.size()?start+size:listQuestion.size();
-        }
+        
 
-        System.out.println(start);
-        System.out.println(end);
+
+        if(size > 0 || page > 0){
+            start = (page-1)*size;
+            if(start >= listQuestion.size())
+                end = start+size<listQuestion.size()?start+size:listQuestion.size();
+        }
+        System.out.println("AQUI\n\n\n");
+
 
         Question question;
         User user;

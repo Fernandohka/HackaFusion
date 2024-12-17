@@ -66,7 +66,8 @@ public class NotificationImpl implements NotificationService {
                     user.getEmail(), 
                     user.getNumber(), 
                     imageServ.toUrl(user.getImage()),
-                    user.getEts()
+                    user.getEts(),
+                    user.isAdmin()
                 )
                 ));
         }
