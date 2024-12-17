@@ -108,11 +108,11 @@ public class AnswerImpl implements AnswerService {
             var vote = votesArray.get(i);
             if(vote.getUser().equals(user))
                 if(vote.isUp() == up)
-                return new VoteDto(vote.getId(), up, new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage()), user.getEts()));
+                return new VoteDto(vote.getId(), up, new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage()), user.getEts(),user.isAdmin()));
                 else{
                     vote.setUp(!vote.isUp());
                     voteRepo.save(vote);
-                    return new VoteDto(vote.getId(), up, new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage()), user.getEts()));
+                    return new VoteDto(vote.getId(), up, new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage()), user.getEts(),user.isAdmin()));
                 }
         }
 
