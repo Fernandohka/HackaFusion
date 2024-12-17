@@ -101,7 +101,9 @@ public class AnswerImpl implements AnswerService {
             return null;
         }
 
-     
+        
+
+        
 
         Vote vote = new Vote();
         vote.setUp(up);

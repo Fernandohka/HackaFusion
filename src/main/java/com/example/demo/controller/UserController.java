@@ -79,9 +79,12 @@ public class UserController {
 
     @GetMapping("/user/{id}")
     public  ResponseEntity<ReturnProfiledto> getUser(@RequestAttribute("token") Token token,@PathVariable Long id){
-        
-        var user = id!=0?service.getById(id):service.getById(token.getId());
-        var isCurrentUser = id.equals(token.getId());
+        var user = service.getById(id);
+        var isCurrentUser = false;
+        if(id.equals(Long.valueOf(0))){
+            isCurrentUser = true;
+            user=service.getById(token.getId());
+        }
 
         if(user == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
