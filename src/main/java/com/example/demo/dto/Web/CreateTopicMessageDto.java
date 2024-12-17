@@ -4,8 +4,7 @@ import java.time.LocalDateTime;
 
 public record CreateTopicMessageDto(
     Long idTopic,
-    String description,
-    LocalDateTime timestamp
+    String description
 ) {
     
 }

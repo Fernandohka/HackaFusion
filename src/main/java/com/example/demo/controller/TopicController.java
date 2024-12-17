@@ -80,10 +80,8 @@ public class TopicController {
 
     @PostMapping("/message")
     public ResponseEntity<MessageDto> createMessage(@RequestAttribute("token") Token token, @RequestBody CreateTopicMessageDto data){
-        if(!token.isAdmin())
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         
-        var res = topicMessageService.createMessage(data.idTopic(), token.getId(), data.description(), data.timestamp());
+        var res = topicMessageService.createMessage(data.idTopic(), token.getId(), data.description());
         if(res == null)
             return new ResponseEntity<>(new MessageDto("Erro ao criar mensagem"), HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(new MessageDto("Mensagem criada com sucesso"), HttpStatus.OK);
