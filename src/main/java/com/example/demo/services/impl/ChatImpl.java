@@ -96,6 +96,8 @@ public class ChatImpl implements ChatService{
 
         var listMessage = new ArrayList<>(chat.getMessages());
         var newList = new ArrayList<MessageDtoPriv>();
+        // só pra dar commit
+    
 
         for (MessageChat message : listMessage) {
             var currUser = message.getUser();
