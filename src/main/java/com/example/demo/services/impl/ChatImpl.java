@@ -64,8 +64,12 @@ public class ChatImpl implements ChatService{
         newMessage.setUser(user);
         newMessage.setTimestamp(LocalDateTime.now());
 
-        if (!chat.getMessages().add(newMessage))
+        var messages = chat.getMessages();
+
+        if (!messages.add(newMessage))
             return new ResponseDto(false, "Erro ao adicionar nova mensagem");
+
+        chat.setMessages(messages);
 
         repo.save(chat);
         return new ResponseDto(true, "Mensagem adicionada com sucesso");
