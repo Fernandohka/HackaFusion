@@ -65,7 +65,7 @@ public class ChatPriv {
         }
     }
 
-    @PostMapping("chat/message")
+    @PostMapping("/chat/message")
     public ResponseEntity<MessageDto> creteMessage(@RequestAttribute("token") Token token,@RequestBody NewMessageDto data){
 
         var res = service.createMessage(token.getId(), data.chatId(), data.description());
