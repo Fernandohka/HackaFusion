@@ -3,6 +3,7 @@ package com.example.demo.model;
 
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ public class Forum {
     @Column
     private String description;
 
-    @OneToMany(mappedBy = "forum")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "forum")
     private Set<Question> questions;
 
     public Long getId() {

@@ -102,6 +102,11 @@ public class AnswerImpl implements AnswerService {
         vote.setAnswer(answer);
         vote.setUser(user);
 
+        var votes = answer.getVotes();
+        votes.add(vote);
+        answer.setVotes(votes);
+        answerRepo.save(answer);
+
         return new VoteDto(vote.getId(), up, new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage()), user.getEts()));
     }
     

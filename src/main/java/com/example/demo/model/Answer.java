@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +29,7 @@ public class Answer {
     @JoinColumn(name="userId")
     private User user; 
 
-    @OneToMany(mappedBy = "answer")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "answer")
     private Set<Vote> votes;
 
     public Long getId() {

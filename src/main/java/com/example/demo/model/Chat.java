@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,7 +25,7 @@ public class Chat {
     @JoinColumn()
     private User userB; 
 
-    @OneToMany(mappedBy = "chat")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "chat")
     private Set<MessageChat> messages;
 
     public Long getId() {

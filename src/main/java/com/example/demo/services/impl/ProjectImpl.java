@@ -37,11 +37,13 @@ public class ProjectImpl implements ProjectService {
 
         Category category;
         Set<User> users;
+        User user;
         
         try {
             category = categoryRepo.findById(idCategory).get();
+            user = userRepo.findById(idUser).get();
             users = new HashSet<>();
-            users.add(userRepo.findById(idUser).get());
+            users.add(user);
         } catch (Exception e) {
             return null;
         }
@@ -55,6 +57,9 @@ public class ProjectImpl implements ProjectService {
         project.setStatus(true);
         project.setUsers(users);
         projectRepo.save(project);
+
+        user.getProjects().add(project);
+        userRepo.save(user);
 
         return new ProjectDto(
             project.getId(), 
@@ -77,21 +82,28 @@ public class ProjectImpl implements ProjectService {
 
         try {
             user = userRepo.findById(idUser).get();
-            project = projectRepo.findById(idUser).get();
+            project = projectRepo.findById(idProject).get();
             addUser = userRepo.findById(idAddUser).get();
         } catch (Exception e) {
             return new ResponseDto(false, "Erro ao adicionar usuario");
         }
 
-        if(project.getUsers().contains(user))
-            return new ResponseDto(false, "Usuario ja adicionado");
+        if(!project.getUsers().contains(user))
+            return new ResponseDto(false, "Voce não faz parte do projeto");
+
+        if(project.getUsers().contains(addUser))
+            return new ResponseDto(false, "Usuario já faz parte do projeto");
         
         if(!project.isStatus())
-            return new ResponseDto(false, "Projeto Finalizado");
+            return new ResponseDto(false, "Projeto já finalizado");
 
         var users = project.getUsers();
         users.add(addUser);
+        project.setUsers(users);
         projectRepo.save(project);
+
+        addUser.getProjects().add(project);
+        userRepo.save(addUser);
 
         return new ResponseDto(true, "Usuario adicionado com sucesso");
     }
@@ -116,12 +128,18 @@ public class ProjectImpl implements ProjectService {
         if(!project.getUsers().contains(user))
             return new ResponseDto(false, "Permissão insuficiente");
         
+        if(!project.getUsers().contains(deleteUser))
+            return new ResponseDto(false, "Usuario não faz parte do projeto");
+        
         if(!project.isStatus())
             return new ResponseDto(false, "Projeto já finalizado");
 
         var users = project.getUsers();
         users.remove(deleteUser);
         projectRepo.save(project);
+
+        deleteUser.getProjects().remove(project);
+        userRepo.save(deleteUser);
 
         return new ResponseDto(true, "Usuario deletado com sucesso");
     }
