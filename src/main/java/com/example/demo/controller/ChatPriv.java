@@ -65,14 +65,16 @@ public class ChatPriv {
         }
     }
 
-    @PostMapping("chat/message")
+    @PostMapping("/chat/message")
     public ResponseEntity<MessageDto> creteMessage(@RequestAttribute("token") Token token,@RequestBody NewMessageDto data){
 
+        System.out.println("AQUI");
         var res = service.createMessage(token.getId(), data.chatId(), data.description());
-
         if(!res.success())
             return new ResponseEntity<>(new MessageDto(res.response()),HttpStatus.BAD_REQUEST);
         
+        System.out.println("Vai dar boa!");
+
         return new ResponseEntity<>(new MessageDto("Mensagem criada com sucesso"),HttpStatus.OK);
     }
     

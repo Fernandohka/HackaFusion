@@ -56,7 +56,7 @@ public class UserController {
             return new ResponseEntity<>(new MessageDto("Email ja Cadastrado!"),HttpStatus.BAD_REQUEST);
 
         if(!auth.validateEmail(data.email()))
-            return new ResponseEntity<>(new MessageDto("Email invalido!"),HttpStatus.BAD_REQUEST); 
+            return new ResponseEntity<>(new MessageDto("Email invalido!"),HttpStatus.BAD_REQUEST);
         
         if(!auth.ValidatePassword(data.password()))
             return new ResponseEntity<>(new MessageDto("Senha invalida!Deve conter Numero,Letra maiscula e miniscula"),HttpStatus.BAD_REQUEST);
@@ -64,7 +64,7 @@ public class UserController {
         if(service.create(data.name(), data.EDV(), data.email(), data.password(),data.phone())==null)
             return new ResponseEntity<>(new MessageDto("Errou ao criar usuario"),HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity<>(new MessageDto("Usuario criado com sucesso!"),HttpStatus.OK); 
+        return new ResponseEntity<>(new MessageDto("Usuario criado com sucesso!"),HttpStatus.OK);
     }
 
 
