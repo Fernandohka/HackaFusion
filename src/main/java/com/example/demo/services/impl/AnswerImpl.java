@@ -1,5 +1,7 @@
 package com.example.demo.services.impl;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.dto.AnswerDto;
@@ -101,9 +103,18 @@ public class AnswerImpl implements AnswerService {
             return null;
         }
 
-        
-
-        
+        var votesArray = new ArrayList<>(answer.getVotes());
+        for(int i = 0; i < votesArray.size(); i++){
+            var vote = votesArray.get(i);
+            if(vote.getUser().equals(user))
+                if(vote.isUp() == up)
+                return new VoteDto(vote.getId(), up, new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage()), user.getEts()));
+                else{
+                    vote.setUp(!vote.isUp());
+                    voteRepo.save(vote);
+                    return new VoteDto(vote.getId(), up, new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage()), user.getEts()));
+                }
+        }
 
         Vote vote = new Vote();
         vote.setUp(up);
