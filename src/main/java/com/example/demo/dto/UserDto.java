@@ -7,5 +7,6 @@ public record UserDto(
     String email,
     String telefone,
     String image,
-    Boolean student
+    Boolean student,
+    Boolean admin
 ) {}

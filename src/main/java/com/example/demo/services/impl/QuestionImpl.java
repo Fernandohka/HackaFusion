@@ -67,7 +67,8 @@ public class QuestionImpl implements QuestionService {
                 user.getEmail(), 
                 user.getNumber(), 
                 imageServ.toUrl(user.getImage()),
-                user.getEts()
+                user.getEts(),
+                user.isAdmin()
                 ), 
             new ForumDto(
                 forum.getId(), 
@@ -80,23 +81,29 @@ public class QuestionImpl implements QuestionService {
     }
 
     @Override
-    public ListPageDto<QuestionDto> getAll(Integer page, Integer size) {
-        if(page == null || size == null)
+    public ListPageDto<QuestionDto> getAllByForum(Long idForum, Integer page, Integer size) {
+        if(page == null || size == null || page < 1 || size < 1)
             return null;
 
-        var listQuestion = questionRepo.findAll();
+        var listQuestion = questionRepo.findByForumId(idForum);
+        System.out.println(listQuestion.size());
+
         var newList = new ArrayList<QuestionDto>();
 
         Integer start = 0;
         Integer end = listQuestion.size();
-        Integer pages = size>0?(int)Math.ceilDiv(listQuestion.size(), size):0;
+        Integer pages = size>0?(int)Math.ceilDiv(listQuestion.size(), size) : 0;
         
+        
+
+
         if(size > 0 || page > 0){
             start = (page-1)*size;
             if(start >= listQuestion.size())
-                return new ListPageDto<>(pages, newList);
-            end = start+size<listQuestion.size()?start+size:listQuestion.size();
+                end = start+size<listQuestion.size()?start+size:listQuestion.size();
         }
+        System.out.println("AQUI\n\n\n");
+
 
         Question question;
         User user;
@@ -114,7 +121,8 @@ public class QuestionImpl implements QuestionService {
                     user.getEmail(), 
                     user.getNumber(), 
                     imageServ.toUrl(user.getImage()),
-                    user.getEts()
+                    user.getEts(),
+                    user.isAdmin()
                     ), 
                 new ForumDto(
                     forum.getId(), 
@@ -156,7 +164,8 @@ public class QuestionImpl implements QuestionService {
                                             user.getEmail(), 
                                             user.getNumber(), 
                                             imageServ.toUrl(user.getImage()),
-                                            user.getEts()
+                                            user.getEts(),
+                                            user.isAdmin()
                                             )
                                         );
                         }
@@ -173,7 +182,8 @@ public class QuestionImpl implements QuestionService {
                                         user.getEmail(), 
                                         user.getNumber(), 
                                         imageServ.toUrl(user.getImage()),
-                                        user.getEts()
+                                        user.getEts(),
+                                        user.isAdmin()
                                         ), 
                                     votes
                                     );
@@ -191,7 +201,8 @@ public class QuestionImpl implements QuestionService {
                     user.getEmail(), 
                     user.getNumber(), 
                     imageServ.toUrl(user.getImage()),
-                    user.getEts()
+                    user.getEts(),
+                    user.isAdmin()
                     ), 
                 new ForumDto(
                     forum.getId(), 

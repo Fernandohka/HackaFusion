@@ -5,8 +5,8 @@ import com.example.demo.dto.UserDto;
 
 public record QuestProfileDto(
     UserDto user,
-    Long idQiestion,
+    Long idQuestion,
     String title,
-    String descriptio,
+    String description,
     ForumDto forum
 ) {}

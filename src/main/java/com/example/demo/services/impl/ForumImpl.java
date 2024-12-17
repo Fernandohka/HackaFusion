@@ -16,6 +16,7 @@ public class ForumImpl implements ForumService {
 
     @Autowired
     ForumRepository forumRepo;
+    
 
     @Override
     public ForumDto create(String name, String description) {

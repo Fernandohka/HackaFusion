@@ -26,14 +26,15 @@ public class Auth {
 
     @PostMapping()
     public  ResponseEntity<ReturnLoginDto> login(@RequestBody LoginDto data){
-        var curUser = service.login(data.login(), data.password());
+        var login = service.login(data.login(), data.password());
+        var curUser = login.entity();
         if(curUser==null)
-            return new ResponseEntity<>(new ReturnLoginDto(null,"Usuario não encontrado",false),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ReturnLoginDto(null, login.message(),false),HttpStatus.BAD_REQUEST);
 
         var token = new Token();
         token.setAdmin(curUser.isAdmin());
         token.setId(curUser.getId());
         
-        return new ResponseEntity<>(new ReturnLoginDto(jwt.get(token),"Usuario Logado com sucesso!",curUser.isAdmin()),HttpStatus.OK);
+        return new ResponseEntity<>(new ReturnLoginDto(jwt.get(token),login.message(),curUser.isAdmin()),HttpStatus.OK);
     }
 }
