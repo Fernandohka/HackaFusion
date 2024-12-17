@@ -41,7 +41,7 @@ public class ProjectMessageImpl implements ProjectMessageService {
 
         try {
             user = userRepo.findById(idUser).get();
-            project = projectRepo.findById(idUser).get();
+            project = projectRepo.findById(idProject).get();
         } catch (Exception e) {
             return null;
         }

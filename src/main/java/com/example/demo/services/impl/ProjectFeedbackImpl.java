@@ -52,6 +52,9 @@ public class ProjectFeedbackImpl implements ProjectFeedbackService {
         feedback.setUser(user);
         feedbackProjectRepo.save(feedback);
 
+        user.getFeedBackProjects().add(feedback);
+        userRepo.save(user);
+
         return new FeedBackProjectDto(
             feedback.getId(), 
             feedback.getDescription(),

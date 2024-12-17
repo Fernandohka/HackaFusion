@@ -67,6 +67,14 @@ public class AbilityImpl  implements AbilityService{
         var opAbility = repo.findById(idAbility);
         if(opAbility.isEmpty())
             return new ResponseDto(false, "habilidade não encontrada");
+        
+        var userOp = userRepo.findByAbilitysId(idAbility);
+        if(!userOp.isEmpty()){
+            for(int i = 0; i < userOp.size(); i++){
+                deleteAbility(userOp.get(i).getId(), idAbility);
+            }
+        }
+        
         repo.delete(opAbility.get());
         return new ResponseDto(true, "Deletado com sucesso!");
     }

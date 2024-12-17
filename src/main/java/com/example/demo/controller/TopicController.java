@@ -19,6 +19,7 @@ import com.example.demo.dto.TopicDto;
 import com.example.demo.dto.Web.CreateTopicDto;
 import com.example.demo.dto.Web.CreateTopicMessageDto;
 import com.example.demo.dto.Web.MessageDto;
+import com.example.demo.dto.Web.MessageDtoPriv;
 import com.example.demo.services.TopicMessageService;
 import com.example.demo.services.TopicService;
 
@@ -44,7 +45,7 @@ public class TopicController {
     }
 
     @GetMapping
-    public ResponseEntity<ListPageDto<TopicDto>> getAll(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer size){
+    public ResponseEntity<ListPageDto<TopicDto>> getAll(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer size,@RequestParam(defaultValue = "") Integer query){
         var res = topicService.getAll(page, size);
         if(res == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -54,6 +55,14 @@ public class TopicController {
     @GetMapping("/{id}")
     public ResponseEntity<TopicDto> getById(@PathVariable Long id){
         var res = topicService.getById(id);
+        if(res == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/message")
+    public ResponseEntity<ListPageDto<MessageDtoPriv>> getMessageById(@PathVariable Long id){
+        var res = topicService.getMessageById(id);
         if(res == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(res, HttpStatus.OK);
@@ -71,10 +80,8 @@ public class TopicController {
 
     @PostMapping("/message")
     public ResponseEntity<MessageDto> createMessage(@RequestAttribute("token") Token token, @RequestBody CreateTopicMessageDto data){
-        if(!token.isAdmin())
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         
-        var res = topicMessageService.createMessage(data.idTopic(), token.getId(), data.description(), data.timestamp());
+        var res = topicMessageService.createMessage(data.idTopic(), token.getId(), data.description());
         if(res == null)
             return new ResponseEntity<>(new MessageDto("Erro ao criar mensagem"), HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(new MessageDto("Mensagem criada com sucesso"), HttpStatus.OK);

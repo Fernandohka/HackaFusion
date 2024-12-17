@@ -32,8 +32,8 @@ public class TopicMessageImpl implements TopicMessageService {
     ImageStorageService imageServ;
 
     @Override
-    public MessageTopicDto createMessage(Long idTopic, Long idUser, String description, LocalDateTime timestamp) {
-        if(description == null || description.equals("") || idTopic == null || idUser == null || timestamp == null)
+    public MessageTopicDto createMessage(Long idTopic, Long idUser, String description) {
+        if(description == null || description.equals("") || idTopic == null || idUser == null)
             return null;
 
         Topic topic;
@@ -50,7 +50,7 @@ public class TopicMessageImpl implements TopicMessageService {
         messageTopic.setTopic(topic);
         messageTopic.setUser(user);
         messageTopic.setDescription(description);
-        messageTopic.setTimestamp(timestamp);
+        messageTopic.setTimestamp(LocalDateTime.now());
         messageTopicRepo.save(messageTopic);
 
         return new MessageTopicDto(

@@ -36,7 +36,9 @@ public class CareerController {
     }
 
     @GetMapping("/career/user/{id}")
-    public ResponseEntity<ListPageDto<CarrerDto>> getAbilitys(@PathVariable Long id ,@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size,@RequestParam(defaultValue = "") String query){
+    public ResponseEntity<ListPageDto<CarrerDto>> getAbilitys(@RequestAttribute("token") Token token, @PathVariable Long id ,@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size,@RequestParam(defaultValue = "") String query){
+        if(id.equals(Long.valueOf(0)))
+            id = token.getId();
         try {
 
             var career = service.getAllByUser(id,page, size);

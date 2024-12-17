@@ -13,6 +13,7 @@ import com.example.demo.dto.Web.MessageDtoPriv;
 import com.example.demo.model.Chat;
 import com.example.demo.model.MessageChat;
 import com.example.demo.repositories.ChatRepo;
+import com.example.demo.repositories.MessageChatRepository;
 import com.example.demo.repositories.UserRepo;
 import com.example.demo.services.ChatService;
 import com.example.demo.services.ImageStorageService;
@@ -27,6 +28,9 @@ public class ChatImpl implements ChatService{
 
     @Autowired
     ImageStorageService imageServ;
+
+    @Autowired
+    MessageChatRepository messageChatRepo;
 
     @Override
     public Chat create(Long idUserA, Long idUserB) {
@@ -63,9 +67,14 @@ public class ChatImpl implements ChatService{
         newMessage.setDescription(description);
         newMessage.setUser(user);
         newMessage.setTimestamp(LocalDateTime.now());
+        messageChatRepo.save(newMessage);
 
-        if (!chat.getMessages().add(newMessage))
+        var messages = chat.getMessages();
+
+        if (!messages.add(newMessage))
             return new ResponseDto(false, "Erro ao adicionar nova mensagem");
+
+        chat.setMessages(messages);
 
         repo.save(chat);
         return new ResponseDto(true, "Mensagem adicionada com sucesso");
