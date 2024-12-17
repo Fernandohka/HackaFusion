@@ -7,14 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.example.demo.dto.ListPageDto;
 import com.example.demo.dto.ResponseDto;
 import com.example.demo.dto.TopicDto;
+import com.example.demo.dto.UserDto;
+import com.example.demo.dto.Web.MessageDtoPriv;
 import com.example.demo.model.Topic;
 import com.example.demo.repositories.TopicRepository;
+import com.example.demo.services.ImageStorageService;
 import com.example.demo.services.TopicService;
 
 public class TopicImpl implements TopicService {
 
     @Autowired
     TopicRepository topicRepo;
+
+    @Autowired
+    ImageStorageService imageServ;
 
     @Override
     public TopicDto create(String name, String description) {
@@ -88,6 +94,27 @@ public class TopicImpl implements TopicService {
         } catch (Exception e) {
             return new ResponseDto(false, "Erro ao deletar tópico");
         }
+    }
+
+    @Override
+    public ListPageDto<MessageDtoPriv> getMessageById(Long idTopic) {
+        var topicOp = topicRepo.findById(idTopic);
+        if(!topicOp.isPresent())
+            return null;
+        var topic = topicOp.get();
+        var messages = new ArrayList<>(topic.getMessages());
+        var list = new ArrayList<MessageDtoPriv>();
+        for (var messageTopic : messages) {
+            var user = messageTopic.getUser();
+
+            list.add(new MessageDtoPriv(
+                new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(),imageServ.toUrl(user.getImage()), user.getEts()),
+                messageTopic.getDescription(),
+                messageTopic.getTimestamp())
+            );
+        }
+
+        return new ListPageDto<>(0, list);
     }
     
 }

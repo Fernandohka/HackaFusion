@@ -83,11 +83,11 @@ public class ProjectImpl implements ProjectService {
             return new ResponseDto(false, "Erro ao adicionar usuario");
         }
 
-        if(!project.getUsers().contains(user))
-            return null;
+        if(project.getUsers().contains(user))
+            return new ResponseDto(false, "Usuario ja adicionado");
         
         if(!project.isStatus())
-            return null;
+            return new ResponseDto(false, "Projeto Finalizado");
 
         var users = project.getUsers();
         users.add(addUser);

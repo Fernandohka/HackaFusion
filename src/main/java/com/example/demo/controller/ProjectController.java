@@ -45,7 +45,7 @@ public class ProjectController {
         var res = projectService.create(data.name(), data.description(), data.idCategory(), token.getId());
         if(res == null)
             return new ResponseEntity<>(new MessageDto("Erro ao criar projeto"), HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(new MessageDto("Projeto criado com sucesso"), HttpStatus.OK);
+        return new ResponseEntity<>(new MessageDto(res.id().toString()), HttpStatus.OK);
     }
 
     @PostMapping("/user")

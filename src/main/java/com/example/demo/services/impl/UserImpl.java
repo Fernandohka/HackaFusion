@@ -62,7 +62,7 @@ public class UserImpl implements UserService {
         if(query == null || query.equals(""))
             listUser = repo.findAll();
         else
-            listUser = repo.findByNameOrEmailOrEdvContains(query, query, query);
+            listUser = repo.findByNameContainsOrEmailContainsOrEdvContains(query, query, query);
 
         Integer start = 0;
         Integer end = listUser.size();
