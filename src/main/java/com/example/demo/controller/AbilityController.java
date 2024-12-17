@@ -34,8 +34,12 @@ public class AbilityController {
         }
     }
 
-    @GetMapping("/ability/user")
-    public ResponseEntity<ListPageDto<AbilityDto>> getAbilitys(@RequestAttribute("token") Token token ,@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size,@RequestParam(defaultValue = "") String query){
+    @GetMapping("/ability/user/{id}")
+    public ResponseEntity<ListPageDto<AbilityDto>> getAbilitys(@RequestAttribute("token") Token token, @PathVariable Long id ,@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size,@RequestParam(defaultValue = "") String query){
+
+        if(id.equals(Long.valueOf(0)))
+            id = token.getId();
+
         try {
 
             var abi = service.getAllByUser(token.getId(), page, size);
