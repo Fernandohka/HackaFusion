@@ -52,7 +52,7 @@ public class Chat {
         this.userB = userB;
     }
 
-    public Set<MessageChat> getMessages() {
+    public Set<MessageChat> getMessages(){
         return messages;
     }
 

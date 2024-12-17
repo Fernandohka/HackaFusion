@@ -2,6 +2,7 @@ package com.example.demo.services.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -95,9 +96,11 @@ public class ChatImpl implements ChatService{
             return null;
 
         var listMessage = new ArrayList<>(chat.getMessages());
+        var list = listMessage.stream().sorted().collect(Collectors.toList());
+
         var newList = new ArrayList<MessageDtoPriv>();
 
-        for (MessageChat message : listMessage) {
+        for (MessageChat message : list) {
             var currUser = message.getUser();
             newList.add(
                 new MessageDtoPriv(
