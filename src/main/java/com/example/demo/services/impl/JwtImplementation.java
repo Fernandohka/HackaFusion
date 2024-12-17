@@ -14,15 +14,16 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
-public class DefaultJWTService implements JWTService<Token> {
+public class JwtImplementation implements JWTService<Token> {
     private final String SECRET_KEY = "ouqebfdouiebfouqewfnuoqewnhfouewnfouewnh";
-    private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hora
+    private final long EXPIRATION_TIME = 1000 * 60 * 90; // 1 hora
 
     @Override
     public String get(Token token) {
         var claims = new HashMap<String, Object>();
         
         claims.put("id", token.getId());
+        claims.put("admin", token.isAdmin());
 
         return get(claims);
     }
@@ -35,6 +36,7 @@ public class DefaultJWTService implements JWTService<Token> {
 
             Token token = new Token();
             token.setId(Long.parseLong(map.get("id").toString()));
+            token.setAdmin((boolean)map.get("admin"));
 
             return token;
         }
