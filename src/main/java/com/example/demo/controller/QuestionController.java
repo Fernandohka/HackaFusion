@@ -36,8 +36,9 @@ public class QuestionController {
     }
 
     @GetMapping
-    public ResponseEntity<ListPageDto<QuestionDto>> getAll(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer size){
-        var res = questionService.getAll(page, size);
+    public ResponseEntity<ListPageDto<QuestionDto>> getAllByForum(@RequestParam Long idForum, @RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size){
+        var res = questionService.getAllByForum(idForum, page, size);
+        System.out.println(res);
         if(res == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(res, HttpStatus.OK);
