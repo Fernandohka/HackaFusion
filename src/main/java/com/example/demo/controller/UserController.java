@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -85,14 +84,20 @@ public class UserController {
     }
 
     @PutMapping("/user")
-    public ResponseEntity<MessageDto> updateUser(@RequestAttribute("token") Token token,@ModelAttribute UpdateUserDto data){
+    public ResponseEntity<MessageDto> updateUser(
+            @RequestAttribute("token") Token token,
+            @RequestBody UpdateUserDto data
+            // @RequestParam(value="file", required = false) MultipartFile image
+            ){
+
         try {
-            var res = service.update(token.getId(), data.name(), data.EDV(), data.email(),  null, data.phone(), false, data.student(), data.image(), null);
+            var res = service.update(token.getId(), data.name(), data.EDV(), data.email(),  null, data.phone(), false, data.student(), null, null);
             
-            if(!res.success())
+            if(!res.success()){
                 return new ResponseEntity<>(new MessageDto(res.response()),HttpStatus.BAD_REQUEST);
+            }
             
-            return new ResponseEntity<>(new MessageDto("Usuario atualizado com sucesso!"),HttpStatus.OK);
+            return new ResponseEntity<>(new MessageDto("Usuario atualizado com sucesso!"), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new MessageDto("Erro ao criar user"),HttpStatus.INTERNAL_SERVER_ERROR);
         }
