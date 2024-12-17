@@ -42,10 +42,10 @@ public class ProjectController {
     
     @PostMapping
     public ResponseEntity<MessageDto> create(@RequestAttribute("token") Token token, @RequestBody CreateProjectDto data){
-        var res = projectService.create(data.name(), data.description(), data.startDate(), data.endDate(), data.idCategory(), token.getId());
+        var res = projectService.create(data.name(), data.description(), data.idCategory(), token.getId());
         if(res == null)
             return new ResponseEntity<>(new MessageDto("Erro ao criar projeto"), HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(new MessageDto("Projeto criado com sucesso"), HttpStatus.OK);
+        return new ResponseEntity<>(new MessageDto(res.id().toString()), HttpStatus.OK);
     }
 
     @PostMapping("/user")
@@ -60,9 +60,17 @@ public class ProjectController {
         return new ResponseEntity<>(new MessageDto(res.response()), res.success() ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping
-    public ResponseEntity<ListPageDto<ProjectDto>> getAll(@RequestAttribute("token") Token token, @RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size,@RequestParam(defaultValue = "") String query){
-        var res = projectService.getAll(page, size, query);
+    @GetMapping("/others")
+    public ResponseEntity<ListPageDto<ProjectDto>> getAll(@RequestAttribute("token") Token token, @RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer size,@RequestParam(defaultValue = "") String query){
+        var res = projectService.getAllPublic(token.getId(), page, size, query);
+        if(res == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<ListPageDto<ProjectDto>> getAllMy(@RequestAttribute("token") Token token, @RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer size,@RequestParam(defaultValue = "") String query){
+        var res = projectService.getAllMy(token.getId(), page, size, query);
         if(res == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(res, HttpStatus.OK);
@@ -77,7 +85,7 @@ public class ProjectController {
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<ListPageDto<ProjectDto>> getByUser(@PathVariable Long id, @RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size){
+    public ResponseEntity<ListPageDto<ProjectDto>> getByUser(@PathVariable Long id, @RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer size){
         var res = projectService.getByUser(id, page, size);
         if(res == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -87,14 +95,14 @@ public class ProjectController {
 
     @PostMapping("/message")
     public ResponseEntity<MessageDto> createMessage(@RequestAttribute("token") Token token, @RequestBody CreateProjectMessageDto data){
-        var res = projectMessageService.createMessage(data.idProject(), token.getId(), data.description(), data.timestamp());
+        var res = projectMessageService.createMessage(data.idProject(), token.getId(), data.description());
         if(res == null)
             return new ResponseEntity<>(new MessageDto("Erro ao criar mensagem"), HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(new MessageDto("Mensagem criada com sucesso"), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/message")
-    public ResponseEntity<ListPageDto<MessageProjectDto>> getAllMessage(@PathVariable Long id, @RequestAttribute("token") Token token, @RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size){
+    public ResponseEntity<ListPageDto<MessageProjectDto>> getAllMessage(@PathVariable Long id, @RequestAttribute("token") Token token, @RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer size){
         var res = projectMessageService.getAllMessage(id, token.getId(), page, size);
         if(res == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -112,7 +120,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{idProject}/feedback/{idUser}")
-    public ResponseEntity<ListPageDto<FeedBackProjectDto>> getFeedbackByUser(@PathVariable Long idProject, @PathVariable Long idUser, @RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size){
+    public ResponseEntity<ListPageDto<FeedBackProjectDto>> getFeedbackByUser(@PathVariable Long idProject, @PathVariable Long idUser, @RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer size){
         var res = projectFeedbackService.getFeedbackByUser(idProject, idUser, page, size);
         if(res == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -120,7 +128,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{idProject}/feedback")
-    public ResponseEntity<ListPageDto<FeedBackProjectDto>> getAllFeedback(@PathVariable Long idProject, @RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size){
+    public ResponseEntity<ListPageDto<FeedBackProjectDto>> getAllFeedback(@PathVariable Long idProject, @RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer size){
         var res = projectFeedbackService.getAllFeedback(idProject, page, size);
         if(res == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

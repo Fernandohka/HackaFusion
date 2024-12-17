@@ -42,7 +42,7 @@ public class AbilityController {
 
         try {
 
-            var abi = service.getAllByUser(id,page, size);
+            var abi = service.getAllByUser(token.getId(), page, size);
 
             if(abi==null)
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -85,14 +85,14 @@ public class AbilityController {
     }
 
     @PostMapping("/ability/user/{id}")
-    public ResponseEntity<MessageDto> addUserAbility(@RequestAttribute("token") Token token,@PathVariable Long id){
+    public ResponseEntity<MessageDto> addUserAbility(@RequestAttribute("token") Token token, @PathVariable Long id){
 
         var res = service.addAbility(token.getId(), id);
 
         if(!res.success())
             return new ResponseEntity<>(new MessageDto(res.response()),HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity<>(new MessageDto("Habilidade adicionado com  sucesso!!"),HttpStatus.OK);
+        return new ResponseEntity<>(new MessageDto("Habilidade adicionado com sucesso!!"),HttpStatus.OK);
     }
 
     @DeleteMapping("/ability/user/{id}")

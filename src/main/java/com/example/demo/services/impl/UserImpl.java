@@ -62,11 +62,11 @@ public class UserImpl implements UserService {
         if(query == null || query.equals(""))
             listUser = repo.findAll();
         else
-            listUser = repo.findByNameOrEmailOrEdvContains(query, query, query);
+            listUser = repo.findByNameContainsOrEmailContainsOrEdvContains(query, query, query);
 
         Integer start = 0;
         Integer end = listUser.size();
-        Integer pages = size>0?(int)Math.floor(listUser.size()/size):0;
+        Integer pages = size>0?(int)Math.ceilDiv(listUser.size(), size):0;
 
         var newList = new ArrayList<UserDto>();
 
@@ -172,7 +172,7 @@ public class UserImpl implements UserService {
 
         Integer start = 0;
         Integer end = listQuestions.size();
-        Integer pages = size>0?(int)Math.floor(listQuestions.size()/size):0;
+        Integer pages = size>0?(int)Math.ceilDiv(listQuestions.size(), size):0;
 
 
         if (size > 0 && page > 0) {
@@ -207,7 +207,7 @@ public class UserImpl implements UserService {
 
         Integer start = 0;
         Integer end = listAnswers.size();
-        Integer pages = size>0?(int)Math.floor(listAnswers.size()/size):0;
+        Integer pages = size>0?(int)Math.ceilDiv(listAnswers.size(), size):0;
 
 
         if (size > 0 && page > 0) {
@@ -274,7 +274,7 @@ public class UserImpl implements UserService {
 
         Integer start = 0;
         Integer end = topicsUser.size();
-        Integer pages = size>0?(int)Math.floor(topicsUser.size()/size):0;
+        Integer pages = size>0?(int)Math.ceilDiv(topicsUser.size(), size):0;
 
         if (size > 0 && page > 0) {
             start = (page - 1) * size;
@@ -291,4 +291,18 @@ public class UserImpl implements UserService {
         return new ListPageDto<>(pages, newList);
     }
 
+    @Override
+    public ResponseDto updateAdmin(Long id) {
+        var userOp = repo.findById(id);
+
+        if(!userOp.isPresent())
+            return new ResponseDto(false,"Usuario não encontrado");
+        var user = userOp.get();
+
+        user.setAdmin(true);
+
+        repo.save(user);
+
+        return new ResponseDto(true, "Usuario atualizado para administrador com sucesso!");
+    }
 }

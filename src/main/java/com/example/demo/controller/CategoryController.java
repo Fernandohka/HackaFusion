@@ -9,55 +9,49 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.ForumDto;
+import com.example.demo.dto.CategoryDto;
 import com.example.demo.dto.ListPageDto;
 import com.example.demo.dto.Token;
-import com.example.demo.dto.Web.CreateForumDto;
+import com.example.demo.dto.Web.CreateCategoryDto;
 import com.example.demo.dto.Web.MessageDto;
-import com.example.demo.services.ForumService;
+import com.example.demo.services.CategoryService;
 
 @RestController
-public class ForumController {
+@RequestMapping("/category")
+public class CategoryController {
     
     @Autowired
-    ForumService forumService;
+    CategoryService categoryService;
 
-    @PostMapping("/admin/forum")
-    public ResponseEntity<MessageDto> create(@RequestAttribute("token") Token token, @RequestBody CreateForumDto data){
+    @PostMapping
+    public ResponseEntity<MessageDto> create(@RequestAttribute("token") Token token, @RequestBody CreateCategoryDto data){
         if(!token.isAdmin())
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
-        var res = forumService.create(data.name(), data.description());
+        var res = categoryService.create(data.name());
         if(res == null)
-            return new ResponseEntity<>(new MessageDto("Erro ao criar forum"), HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(new MessageDto("Forum criado com sucesso"), HttpStatus.OK);
+            return new ResponseEntity<>(new MessageDto("Erro ao criar categoria"), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new MessageDto("Categoria criada com sucesso"), HttpStatus.OK);
     }
 
-    @GetMapping("/forum")
-    public ResponseEntity<ListPageDto<ForumDto>> getAll(@RequestAttribute("token") Token token, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size, @RequestParam(defaultValue = "") String query){
-        var res = forumService.getAll(page, size, query);
-        if(res == null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(res, HttpStatus.OK);
-    }
-
-    @GetMapping("/forum/{id}")
-    public ResponseEntity<ForumDto> getById(@PathVariable Long id){
-        var res = forumService.getById(id);
+    @GetMapping
+    public ResponseEntity<ListPageDto<CategoryDto>> getAll(@RequestAttribute("token") Token token, @RequestParam(defaultValue = "") String query){
+        var res = categoryService.getAll(query);
         if(res == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    @DeleteMapping("/admin/forum/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<MessageDto> delete(@RequestAttribute("token") Token token, @PathVariable Long id){
         if(!token.isAdmin())
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         
-        var res = forumService.delete(id);
+        var res = categoryService.delete(id);
         return new ResponseEntity<>(new MessageDto(res.response()), res.success() ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 }

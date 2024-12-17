@@ -3,6 +3,7 @@ package com.example.demo.model;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,13 +42,13 @@ public class Project {
     @ManyToMany
     private Set<User> users; 
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "project")
     private Set<ArchivesProject> archives;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "project")
     private Set<MessageProject> messages;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "project")
     private Set<FeedBackProject> feedbacks;
 
     public Long getId() {

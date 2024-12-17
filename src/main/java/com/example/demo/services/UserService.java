@@ -21,4 +21,5 @@ public interface UserService {
     public ListPageDto<QuestProfileDto> interactionQuest(Long id,Integer page, Integer size);
     public ListPageDto<AnwserProfileDto> interactionAnwser(Long id,Integer page, Integer size);
     public ListPageDto<TopicDto>  interactionTopic(Long id,Integer page, Integer size);
+    public ResponseDto updateAdmin(Long id);
 }

@@ -13,6 +13,7 @@ import com.example.demo.model.Vote;
 import com.example.demo.repositories.AnswerRepository;
 import com.example.demo.repositories.QuestionRepository;
 import com.example.demo.repositories.UserRepo;
+import com.example.demo.repositories.VoteRepository;
 import com.example.demo.services.AnswerService;
 import com.example.demo.services.ImageStorageService;
 
@@ -29,6 +30,9 @@ public class AnswerImpl implements AnswerService {
 
     @Autowired
     ImageStorageService imageServ;
+
+    @Autowired
+    VoteRepository voteRepo;
 
     @Override
     public AnswerDto create(Long idUser, Long idQuestion, String description) {
@@ -101,6 +105,12 @@ public class AnswerImpl implements AnswerService {
         vote.setUp(up);
         vote.setAnswer(answer);
         vote.setUser(user);
+        voteRepo.save(vote);
+
+        var votes = answer.getVotes();
+        votes.add(vote);
+        answer.setVotes(votes);
+        answerRepo.save(answer);
 
         return new VoteDto(vote.getId(), up, new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(), imageServ.toUrl(user.getImage()), user.getEts()));
     }

@@ -52,6 +52,9 @@ public class ProjectFeedbackImpl implements ProjectFeedbackService {
         feedback.setUser(user);
         feedbackProjectRepo.save(feedback);
 
+        user.getFeedBackProjects().add(feedback);
+        userRepo.save(user);
+
         return new FeedBackProjectDto(
             feedback.getId(), 
             feedback.getDescription(),
@@ -70,7 +73,7 @@ public class ProjectFeedbackImpl implements ProjectFeedbackService {
 
     @Override
     public ListPageDto<FeedBackProjectDto> getFeedbackByUser(Long idProject, Long idUser, Integer page, Integer size) {
-        if(page == null || size == null || page < 1 || size < 1 || idProject == null || idUser == null )
+        if(page == null || size == null || idProject == null || idUser == null )
             return null;
 
         var listFeedback = new ArrayList<>(userRepo.findById(idUser).get().getFeedBackProjects());
@@ -78,7 +81,7 @@ public class ProjectFeedbackImpl implements ProjectFeedbackService {
 
         Integer start = 0;
         Integer end = listFeedback.size();
-        Integer pages = (int)Math.floor(listFeedback.size()/size);
+        Integer pages = size>0?(int)Math.ceilDiv(listFeedback.size(), size):0;
         
         if(size > 0 && page > 0){
             start = (page-1)*size;
@@ -112,7 +115,7 @@ public class ProjectFeedbackImpl implements ProjectFeedbackService {
 
     @Override
     public ListPageDto<FeedBackProjectDto> getAllFeedback(Long idProject, Integer page, Integer size) {
-        if(page == null || size == null || page < 1 || size < 1 || idProject == null)
+        if(page == null || size == null || idProject == null)
             return null;
 
         var listFeedback = feedbackProjectRepo.findAll();
@@ -120,7 +123,7 @@ public class ProjectFeedbackImpl implements ProjectFeedbackService {
 
         Integer start = 0;
         Integer end = listFeedback.size();
-        Integer pages = (int)Math.floor(listFeedback.size()/size);
+        Integer pages = size>0?(int)Math.ceilDiv(listFeedback.size(), size):0;
         
         if(size > 0 || page > 0){
             start = (page-1)*size;
