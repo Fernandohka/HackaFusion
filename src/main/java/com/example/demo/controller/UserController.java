@@ -81,7 +81,7 @@ public class UserController {
     public  ResponseEntity<ReturnProfiledto> getUser(@RequestAttribute("token") Token token,@PathVariable Long id){
         
         var user = id!=0?service.getById(id):service.getById(token.getId());
-        var isCurrentUser = id==token.getId()?true:false;
+        var isCurrentUser = id.equals(token.getId());
 
         if(user == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
