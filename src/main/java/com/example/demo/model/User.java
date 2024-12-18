@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -51,31 +52,31 @@ public class User {
     @ManyToMany
     private Set<Ability> abilitys;
     
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.REMOVE)
     private Set<Carrer> carrers;
     
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.REMOVE)
     private Set<MessageTopic> messagesTopic;
     
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.REMOVE)
     private Set<Question> questions;
     
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.REMOVE)
     private Set<Answer> answers;
     
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.REMOVE)
     private Set<Vote> votes;
     
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.REMOVE)
     private Set<Chat> chats;
     
     @ManyToMany()
     private Set<Project> projects;
     
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.REMOVE)
     private Set<FeedBackProject> feedBackProjects;
     
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.REMOVE)
     private Set<Notification> notifications;
     
     public Long getId() {

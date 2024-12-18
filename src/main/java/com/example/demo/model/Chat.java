@@ -18,11 +18,11 @@ public class Chat {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "userAId")
     private User userA;
 
     @ManyToOne
-    @JoinColumn()
+    @JoinColumn(name = "userBId")
     private User userB; 
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "chat")

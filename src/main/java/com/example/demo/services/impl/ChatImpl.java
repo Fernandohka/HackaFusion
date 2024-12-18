@@ -41,9 +41,12 @@ public class ChatImpl implements ChatService{
         if(!userOP1.isPresent() || !userOP2.isPresent())
             return null;
 
+        var user1 = userOP1.get();
+        var user2 = userOP2.get();
+
         var newChat = new Chat();
-        newChat.setUserA(userOP1.get());
-        newChat.setUserB(userOP2.get());
+        newChat.setUserA(user1);
+        newChat.setUserB(user2);
 
         return repo.save(newChat);
     }
@@ -60,7 +63,7 @@ public class ChatImpl implements ChatService{
         var user = userOp.get();
         var chat = chatOp.get();
 
-        if(!user.getChats().contains(chat))
+        if(!chat.getUserA().equals(user) && !chat.getUserB().equals(user))
             return new ResponseDto(false, "Usuario Não participa deste chat");
 
         var newMessage = new MessageChat();
@@ -72,8 +75,7 @@ public class ChatImpl implements ChatService{
 
         var messages = chat.getMessages();
 
-        if (!messages.add(newMessage))
-            return new ResponseDto(false, "Erro ao adicionar nova mensagem");
+        messages.add(newMessage);
 
         chat.setMessages(messages);
 
@@ -92,15 +94,15 @@ public class ChatImpl implements ChatService{
         var user = userOp.get();
         var chat = chatOP.get();
 
-        if(!user.getChats().contains(chat))
+        if(!chat.getUserA().equals(user) && !chat.getUserB().equals(user))
             return null;
 
         var listMessage = new ArrayList<>(chat.getMessages());
-        var list = listMessage.stream().sorted().collect(Collectors.toList());
+        // var list = listMessage.stream().sorted().collect(Collectors.toList());
 
         var newList = new ArrayList<MessageDtoPriv>();
 
-        for (MessageChat message : list) {
+        for (MessageChat message : listMessage) {
             var currUser = message.getUser();
             newList.add(
                 new MessageDtoPriv(
@@ -124,17 +126,17 @@ public class ChatImpl implements ChatService{
 
         var quetyIsPresent = false;
 
-        if(query!="" && query!=null){
+        if(!"".equals(query) && query!=null){
             quetyIsPresent = true;
         }
 
-        var listChat = new ArrayList<>(user.getChats());
+        var listChat = new ArrayList<>(repo.findByUserAIdOrUserBId(iduser, iduser));
         var newList  = new ArrayList<ChatDto>();
 
 
 
         for (Chat  chatPriv : listChat) {
-            var receiver = chatPriv.getUserA().getId()!=user.getId()? chatPriv.getUserA():chatPriv.getUserB();
+            var receiver = !chatPriv.getUserA().getId().equals(user.getId())? chatPriv.getUserA():chatPriv.getUserB();
             if(quetyIsPresent && !receiver.getName().contains(query))
                 continue;
         
