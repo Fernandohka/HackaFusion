@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import com.example.demo.dto.UserDto;
 
 public record MessageDtoPriv(
+    Long id,
     UserDto user,
     String description,
     LocalDateTime timestamp

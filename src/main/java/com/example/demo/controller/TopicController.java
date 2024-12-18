@@ -41,7 +41,7 @@ public class TopicController {
         var res = topicService.create(data.name(), data.description());
         if(res == null)
             return new ResponseEntity<>(new MessageDto("Erro ao criar tópico"), HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(new MessageDto("Tópico criada com sucesso"), HttpStatus.OK);
+        return new ResponseEntity<>(new MessageDto("Tópico criado com sucesso"), HttpStatus.OK);
     }
 
     @GetMapping

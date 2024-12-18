@@ -99,6 +99,7 @@ public class ChatImpl implements ChatService{
 
         var listMessage = new ArrayList<>(chat.getMessages());
         // var list = listMessage.stream().sorted().collect(Collectors.toList());
+        // System.out.println(list);
 
         var newList = new ArrayList<MessageDtoPriv>();
 
@@ -106,6 +107,7 @@ public class ChatImpl implements ChatService{
             var currUser = message.getUser();
             newList.add(
                 new MessageDtoPriv(
+                    message.getId(),
                     new UserDto(currUser.getId(), currUser.getName(), currUser.getEdv(), currUser.getEmail(), currUser.getNumber(), imageServ.toUrl(currUser.getImage()), currUser.getEts(), currUser.isAdmin()),
                     message.getDescription(), 
                     message.getTimestamp()

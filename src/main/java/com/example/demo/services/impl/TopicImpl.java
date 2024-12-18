@@ -108,6 +108,7 @@ public class TopicImpl implements TopicService {
             var user = messageTopic.getUser();
 
             list.add(new MessageDtoPriv(
+                messageTopic.getId(),
                 new UserDto(user.getId(), user.getName(), user.getEdv(), user.getEmail(), user.getNumber(),imageServ.toUrl(user.getImage()), user.getEts(), user.isAdmin()),
                 messageTopic.getDescription(),
                 messageTopic.getTimestamp())
