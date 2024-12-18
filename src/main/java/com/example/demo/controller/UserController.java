@@ -142,7 +142,12 @@ public class UserController {
     @GetMapping("/user/interactions/question/{id}")
     public ResponseEntity<ListPageDto<QuestProfileDto>> getInteractionQuest(@RequestAttribute("token") Token token,@PathVariable Long id,@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size){
         try {
-            var res = service.interactionQuest(id, page, size);
+            ListPageDto<QuestProfileDto> res;
+            if(id != 0){
+                res = service.interactionQuest(id, page, size);
+            }else{
+                res = service.interactionQuest(token.getId(), page, size);
+            }
     
             if(res == null)
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -157,7 +162,12 @@ public class UserController {
     @GetMapping("/user/interactions/anwser/{id}")
     public ResponseEntity<ListPageDto<AnwserProfileDto>> getInteractionAnwser(@RequestAttribute("token") Token token,@PathVariable Long id,@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size){
         try {
-            var res = service.interactionAnwser(id, page, size);
+            ListPageDto<AnwserProfileDto> res;
+            if(id != 0){
+                res = service.interactionAnwser(id, page, size);
+            }else{
+                res = service.interactionAnwser(token.getId(), page, size);
+            }
     
             if(res == null)
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -172,8 +182,12 @@ public class UserController {
     @GetMapping("/user/interactions/topic/{id}")
     public ResponseEntity<ListPageDto<TopicDto>> getInteractionTopic(@RequestAttribute("token") Token token,@PathVariable Long id,@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "0") Integer size){
         try {
-            var res = service.interactionTopic(id, page, size);
-    
+            ListPageDto<TopicDto> res;
+            if(id != 0){
+                res = service.interactionTopic(id, page, size);
+            }else{
+                res = service.interactionTopic(token.getId(), page, size);
+            }
             if(res == null)
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             
